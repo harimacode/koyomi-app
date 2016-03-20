@@ -2,10 +2,18 @@
     <head>
         <title>播磨国陰陽暦</title>
         <script type="text/javascript">
-
+function set(id, value) {
+    document.getElementById(id).innerText = value;
+}
+function main() {
+    var today = new Date();
+    var month = today.getMonth() + 1; // 月は 0 始まり
+    set("date", month + '/' + today.getDate());
+    alert(today.month);
+}
         </script>
     </head>
-    <body>
+    <body onload="main()">
         <table border="border">
             <tr>
                 <th rowspan="2">西暦</th>
