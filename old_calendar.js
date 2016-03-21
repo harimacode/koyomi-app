@@ -252,6 +252,7 @@ function findSaku(t) {
     var lel = lunarEclipticLongitude(t);
     var deltaLambda = normalizeAngle(lel - sel);
     while (true) {
+        // TODO: 結果が振動して収束しないとき用の処理
         var deltaT = deltaLambda * 29.530589 / 360;
         t -= deltaT;
         // alert("dT: " + deltaT + ", t: " + t);
@@ -288,6 +289,13 @@ function findSaku(t) {
  */
 function findSakus(t) {
     var rv = [];
+    // TODO: 文献の以下のケースへの対応
+    //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
+    //   朔日行列が正常に組み立てられない場合があります。 本スクリプトでは、以下の
+    //   ２つのケースを想定して対策を施しておきました。
+
+    //      i   二分二至の前の朔の時刻を２組求めてしまう場合。以下の図ように、
+    //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
     for (var i = 0; i < 5; ++i) {
         var saku = findSaku(t);
         rv.push(saku);
