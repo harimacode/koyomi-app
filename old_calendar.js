@@ -39,13 +39,12 @@ function dynamicalTime(juliusDateJST) {
 /*!
  * @brief 与えられた力学時に対応する太陽黄経を計算します。
  * 
- * @param t 力学時
+ * @param juliusDateDynamicalTime 力学時
  * @return 太陽黄経を表す浮動小数点数
  */
 function solarEclipticLongitude(juliusDateDynamicalTime) {
     //    ｔ＝（JD+0.5-2451545.0）／36525
     var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
-    // alert(t);
     //           18
     //    λsun＝Σ Ａ*ｃｏｓ（ｋ*ｔ+θ0）
     //           n=1
@@ -69,6 +68,15 @@ function solarEclipticLongitude(juliusDateDynamicalTime) {
         [36000.7695*t,  0,  0],
         [280.4659,      0,  0],
     ];
+    return eclipticLongitude(table, t);
+}
+/*!
+ * @brief 与えられた天文時(もどき)に対応する黄経を計算します。
+ * 
+ * @param t 天文時(もどき)
+ * @return 黄経を表す浮動小数点数
+ */
+function eclipticLongitude(table, t) {
     var rv = 0;
     table.forEach(function (params) {
         var a = params[0];
