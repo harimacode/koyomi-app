@@ -207,9 +207,10 @@ function findNibunNishi(t) {
     return findSekki(t, 90);
 }
 
+/**
+ * @param t 直前の二分二至の時刻
+ */
 function findChukis(t) {
-    // TODO: メモ化
-    var nibunNishi = findNibunNishi(t);
     var rv = [];
     for (var i = 0; i < 3; ++i) {
         t += 32;
@@ -241,6 +242,10 @@ function findSekki(t, byAngle) {
     // t が期待する時刻
     var jst = t + (9/24);
     return jst;
+}
+
+function findSaku(t) {
+    
 }
 
 // precisely に比較する
@@ -307,7 +312,7 @@ function testFindNibunNishi() {
     checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)))
 }
 function testFindChukis() {
-    var result = findChukis(2449432.2276343490);
+    var result = findChukis(findNibunNishi(2449432.2276343490));
     var answers = [
         2449462.6910369310000,
         2449493.6580418450000,
