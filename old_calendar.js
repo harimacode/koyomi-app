@@ -177,36 +177,47 @@ function normalizeAngle(angle) {
     }
     return angle;
 }
-function check(a, b) {
-    var result = Math.abs(a - b) < 0.00000000001;
+// precisely に比較する
+function checkP(a, b) {
+    return check(a, b, 0.00000000001);
+}
+// roughly に比較する
+function checkR(a, b) {
+    return check(a, b, 0.0001);
+}
+function check(a, b, tolerance) {
+    var result = Math.abs(a - b) < tolerance;
     if (!result) {
         alert("FAILED: " + a + " !≒ " + b);
     }
 }
 function testDynamicalTime() {
     // 1994年5月1日0時 = 2449472.625
-    check(2449472.625, dynamicalTime(juliusDate(new Date(1994,4,1))));
+    checkP(2449472.625, dynamicalTime(juliusDate(new Date(1994,4,1))));
     // 1994年11月 8日 16:00(JST)
-    check(2449664.2916666665, dynamicalTime(juliusDate(new Date(1994,10,8,16,00))));
+    checkP(2449664.2916666665, dynamicalTime(juliusDate(new Date(1994,10,8,16,00))));
 }
 function testSolarEclipticLongitude() {
     // 1994年11月8日 16:00(JST)
-    check(225.6456900296, solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
+    checkP(225.6456900296, solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
     
-    check(359.9999999299906, solarEclipticLongitude(2449431.85263434904943));
-    check(21.16941167248130, solarEclipticLongitude(2449453.295651030494));
-    check(50.09737887498562, solarEclipticLongitude(2449483.01263787953888));
-    check(78.63143984057999, solarEclipticLongitude(2449512.7137218565143));
-    check(106.9141295248953, solarEclipticLongitude(2449542.3526236737596));
+    // 文献中の例から。
+    checkP(359.9999999299906, solarEclipticLongitude(2449431.85263434904943));
+    checkP(21.16941167248130, solarEclipticLongitude(2449453.295651030494));
+    checkP(50.09737887498562, solarEclipticLongitude(2449483.01263787953888));
+    checkP(78.63143984057999, solarEclipticLongitude(2449512.7137218565143));
+    checkP(106.9141295248953, solarEclipticLongitude(2449542.3526236737596));
 }
 function testLunarEclipticLongitude() {
+    // FIXME: 精度が 0.0001 程度しかなく、低すぎる気がするので
+    // 計算部分に見直しが必要かも。
+    
     // 文献中の例から。
-    // TODO 誤差があるので、期待値と一定の誤差内であることを判定条件とすべき
-    alert(93.93361955708315 == lunarEclipticLongitude(2449431.85263434904943));
-    alert(24.238007124316937 == lunarEclipticLongitude(2449453.295651030494));
-    alert(53.34929033535445 == lunarEclipticLongitude(2449483.01263787953888));
-    alert(82.69582747137247 == lunarEclipticLongitude(2449512.7137218565143));
-    alert(112.2766176528894 == lunarEclipticLongitude(2449542.3526236737596));
+    checkR(93.93361186916204, lunarEclipticLongitude(2449431.85263434904943));
+    checkR(24.23809602459182, lunarEclipticLongitude(2449453.295651030494));
+    checkR(53.34937446649215, lunarEclipticLongitude(2449483.01263787953888));
+    checkR(82.69589256228039, lunarEclipticLongitude(2449512.7137218565143));
+    checkR(112.2766488159473, lunarEclipticLongitude(2449542.3526236737596));
 }
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
