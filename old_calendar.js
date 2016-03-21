@@ -283,6 +283,19 @@ function findSaku(t) {
     return jst;
 }
 
+/**
+ * @param t 直前の二分二至の時刻
+ */
+function findSakus(t) {
+    var rv = [];
+    for (var i = 0; i < 5; ++i) {
+        var saku = findSaku(t);
+        rv.push(saku);
+        t = saku + 30;
+    }
+    return rv;
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return check(a, b, 0.00000000001);
@@ -360,5 +373,17 @@ function testFindChukis() {
 function testFindSaku() {
     var saku = findSaku(2449431.85263434904943); 
     checkR(2449423.6706510314940, saku);
-    alert(fromJuliusDate(saku));
+    // alert(fromJuliusDate(saku));
+    
+    var sakus = findSakus(2449431.85263434904943);
+    var answers = [
+        2449423.6706510314940,
+        2449453.3876378879538,
+        2449483.0887218565143,
+        2449512.7276236737596,
+        2449542.2768841335603,
+    ];
+    for (var i = 0; i < answers.length; ++i) {
+        checkR(answers[i], sakus[i]);
+    } 
 }
