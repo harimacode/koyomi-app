@@ -26,4 +26,5 @@ function main() {
     testFindNibunNishi();
     testFindChukis();
     testFindSaku();
+    testOldCalendar();
 }

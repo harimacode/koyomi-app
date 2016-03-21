@@ -204,7 +204,8 @@ function normalizeAngle(angle) {
  * @param date
  */
 function findNibunNishi(t) {
-    return findSekki(t, 90);
+    var nibunNishi = findSekki(t, 90);
+    return nibunNishi[1];
 }
 
 /**
@@ -214,11 +215,15 @@ function findChukis(t) {
     var rv = [];
     for (var i = 0; i < 3; ++i) {
         t += 32;
-        rv.push(findSekki(t, 30));
+        var chuki = findSekki(t, 30);
+        rv.push(chuki[1]);
     }
     return rv;
 }
 
+/**
+ * @return [angle, t] angle: 黄経, t: 節気
+ */
 function findSekki(t, byAngle) {
     // var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
     var sel = solarEclipticLongitude(t);
@@ -241,7 +246,7 @@ function findSekki(t, byAngle) {
     }
     // t が期待する時刻
     var jst = t + (9/24);
-    return jst;
+    return [angle, jst];
 }
 
 /**
@@ -302,6 +307,18 @@ function findSakus(t) {
         t = saku + 30;
     }
     return rv;
+}
+
+/**
+ * @param jd ユリウス日
+ */
+function oldCalendar(jd) {
+    var nibunNishi = findNibunNishi(jd);
+    alert(nibunNishi); // OK
+    var chukis = findChukis(nibunNishi);
+    // alert(chukis); // OK
+    var sakus = findSakus(nibunNishi);
+    // alert(sakus); // OK
 }
 
 // precisely に比較する
@@ -394,4 +411,8 @@ function testFindSaku() {
     for (var i = 0; i < answers.length; ++i) {
         checkR(answers[i], sakus[i]);
     } 
+}
+function testOldCalendar() {
+    // 1994年5月1日
+    alert(oldCalendar(juliusDate(new Date(1994,4,1))));
 }
