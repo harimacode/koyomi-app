@@ -27,14 +27,6 @@ function dayOfWeek(dow) {
  */
 function juliusDate(date) {
     // TODO 上記値域判定
-    
-//   Y年M月D日（グレゴリオ暦法による日付）のユリウス日を求めるには、以下の式を
-//   使用します。
-
-//        JD=INT(365.25*Y)+INT(Y/400)-INT(Y/100)+INT(30.59*(M-2))+D+1721088
-
-//        ※ M<3 の場合には、Mに12を加え、Yから1を引いてから計算します。
-//         また、INT()は () の中の整数部のみを取り出す関数です。
     var year  = date.getFullYear();
     var month = date.getMonth() + 1;
     var day   = date.getDate();
@@ -51,7 +43,7 @@ function juliusDate(date) {
          + 1721088;
 }
 function testJuliusDate() {
-    //        1994年5月1日 ＝ 2449473
+    // 1994年5月1日 ＝ 2449473
     alert(2449473==juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
 }
 function main() {    
