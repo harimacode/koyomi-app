@@ -204,8 +204,7 @@ function normalizeAngle(angle) {
  * @param date
  */
 function findNibunNishi(t) {
-    var nibunNishi = findSekki(t, 90);
-    return nibunNishi[1];
+    return findSekki(t, 90);
 }
 
 /**
@@ -309,31 +308,81 @@ function findSakus(t) {
     return rv;
 }
 
+function oldMonth(el) {
+    var months = [2, 5, 8, 11];
+    return months[el / 90];
+}
+
 /**
  * @param jd ユリウス日
  */
 function oldCalendar(jd) {
+    var gd = fromJuliusDate(Math.floor(jd));
+    
     var nibunNishi = findNibunNishi(jd);
-    alert(nibunNishi); // OK
-    var chukis = findChukis(nibunNishi);
+    // alert(nibunNishi); // OK
+    var chukis = findChukis(nibunNishi[1]);
     // alert(chukis); // OK
-    var sakus = findSakus(nibunNishi);
+    var sakus = findSakus(nibunNishi[1]);
     // alert(sakus); // OK
+    var oMonth = oldMonth(nibunNishi[0]);
+    // MEMO: sakus[0] == oldMonth
+    
+    var matrix = [];
+    sakus.forEach(function (saku) {
+        var jd = Math.floor(saku);
+        // 閏？, 旧暦の月, ユリウス日, グレゴリオ暦
+        matrix.push([false, 0, jd, fromJuliusDate(jd)]);
+    });
+    var cond1 = sakus[4] <= chukis[2];
+    for (var i = 0; i < matrix.length - 1; ++i) {
+        var start = matrix[i][2];
+        var next  = matrix[i + 1][2];
+        var containsChuki = false;
+        chukis.forEach(function (chuki) {
+            var chukiDate = Math.floor(chuki);
+            containsChuki |= start <= chukiDate && chukiDate < next;
+        });
+        var isLeapMonth = cond1 && !containsChuki;
+        matrix[i][0] = isLeapMonth;
+        if (isLeapMonth) {
+            --oMonth;
+        }
+        matrix[i][1] = oMonth;
+        ++oMonth;
+    }
+    
+    var oldDate = "";
+    for (var i = 0; i < matrix.length - 1; ++i) {
+        var nextDate = matrix[i + 1][3];
+        if (gd < nextDate) {
+            var isLeapMonth = matrix[i][0];
+            if (isLeapMonth) {
+                oldDate += "閏";
+            }
+            oldDate += matrix[i][1] + "月";
+            
+            var oldDay = jd - matrix[i][2] + 1;
+            oldDate += oldDay + "日";
+            break;
+        }
+    }
+    // alert(matrix.join('\n'));
+    // alert(oldDate);
+    return oldDate;
 }
 
 // precisely に比較する
 function checkP(a, b) {
-    return check(a, b, 0.00000000001);
+    return checkFloat(a, b, 0.00000000001);
 }
 // roughly に比較する
 function checkR(a, b) {
-    return check(a, b, 0.0001);
+    return checkFloat(a, b, 0.0001);
 }
-function check(a, b, tolerance) {
+function checkFloat(a, b, tolerance) {
     var result = Math.abs(a - b) < tolerance;
-    if (!result) {
-        alert("FAILED: " + a + " !≒ " + b);
-    }
+    check(result, a, b);
 }
 function checkDate(a, b) {
     // 分までだけ比較する。
@@ -342,6 +391,12 @@ function checkDate(a, b) {
         && a.getDate() == b.getDate()
         && a.getHours() == b.getHours()
         && a.getMinutes() == b.getMinutes();
+    check(result, a, b);
+}
+function checkStr(a, b) {
+    check(a === b, a, b);
+}
+function check(result, a, b) {
     if (!result) {
         alert("FAILED: " + a + " !≒ " + b);
     }
@@ -381,11 +436,11 @@ function testJuliusDate() {
     checkDate(new Date(1994,4,1), fromJuliusDate(2449473));
 }
 function testFindNibunNishi() {
-    checkR(2449432.2276343490000000, findNibunNishi(2449472.625));
-    checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)))
+    checkR(2449432.2276343490000000, findNibunNishi(2449472.625)[1]);
+    checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)[1]))
 }
 function testFindChukis() {
-    var result = findChukis(findNibunNishi(2449432.2276343490));
+    var result = findChukis(findNibunNishi(2449432.2276343490)[1]);
     var answers = [
         2449462.6910369310000,
         2449493.6580418450000,
@@ -414,5 +469,5 @@ function testFindSaku() {
 }
 function testOldCalendar() {
     // 1994年5月1日
-    alert(oldCalendar(juliusDate(new Date(1994,4,1))));
+    checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
 }
