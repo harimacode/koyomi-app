@@ -38,13 +38,9 @@ function fromJuliusDate(jd) {
     var k  = Math.floor(365.25*c);
     var e  = Math.floor((b-k)/30.6001);
 
-    var day = Math.floor(b-k-Math.floor(30.6001*e));
-    var month;
-    if(e<13.5)  month = e-1;
-    else        month = e-13;
-    var year;
-    if(month>2.5)   year = c-4716;
-    else            year = c-4715;
+    var day   = Math.floor(b-k-Math.floor(30.6001*e));
+    var month = e - (e < 13.5 ? 1 : 13);
+    var year  = c - (month > 2.5 ? 4716 : 4715);
     var hours   = Math.floor(f*24);
     var minutes = Math.floor((f*24-hours)*60); // おそらく分までの精度しかない…
     return new Date(year, month-1, day, hours, minutes);
