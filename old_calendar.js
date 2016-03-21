@@ -25,6 +25,29 @@ function juliusDate(date) {
          + 1721088
          + hours / 24;
 }
+function fromJuliusDate(jd) {
+    // http://mysteryart.web.fc2.com/library/calsmpl/cldttojd.html
+    var z,f,aa,a,b,c,k,e;
+
+    jd+=1; // JST
+    z =Math.floor(jd);
+    f =jd-z;
+    aa=Math.floor((z-1867216.25)/36524.25);
+    a =Math.floor(z+1+aa-Math.floor(aa/4));
+    b =a+1524;
+    c =Math.floor((b-122.1)/365.25);
+    k =Math.floor(365.25*c);
+    e =Math.floor((b-k)/30.6001);
+
+    iDay=Math.floor(b-k-Math.floor(30.6001*e));
+    if(e<13.5)  iMonth=e-1;
+    else        iMonth=e-13;
+    if(iMonth>2.5)  iYear=c-4716;
+    else            iYear=c-4715;
+    iHour  =Math.floor(f*24);
+    iMinute=Math.floor((f*24-iHour)*60+0.5);
+    return new Date(iYear, iMonth-1, iDay, iHour, iMinute);
+}
 
 /*!
  * JST のユリウス日から力学時を求めます。
@@ -254,6 +277,9 @@ function testLunarEclipticLongitude() {
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
     alert(2449473==juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
+    var d1 = new Date(1994,4,1,0);
+    var d2 = fromJuliusDate(2449473);
+    alert(d1.toString() == d2.toString());
 }
 function testPrevNibunNishi() {
     checkR(2449432.2276343490000000, prevNibunNishi(2449472.625));

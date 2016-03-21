@@ -19,7 +19,7 @@ function main() {
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
     
-    //testJuliusDate();
+    testJuliusDate();
     testDynamicalTime();
     testSolarEclipticLongitude();
     testLunarEclipticLongitude();
