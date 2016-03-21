@@ -21,5 +21,5 @@ function main() {
     
     //testJuliusDate();
     // testDynamicalTime();
-    testEclipticalLongitude();
+    testSolarEclipticLongitude();
 }

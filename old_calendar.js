@@ -42,7 +42,7 @@ function dynamicalTime(juliusDateJST) {
  * @param t 力学時
  * @return 太陽黄経を表す浮動小数点数
  */
-function eclipticLongitude(juliusDateDynamicalTime) {
+function solarEclipticLongitude(juliusDateDynamicalTime) {
     //    ｔ＝（JD+0.5-2451545.0）／36525
     var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
     // alert(t);
@@ -94,9 +94,9 @@ function testDynamicalTime() {
     // 1994年11月 8日 16:00(JST)
     alert(2449664.2916666665 == dynamicalTime(juliusDate(new Date(1994,10,8,16,00))));
 }
-function testEclipticalLongitude() {
+function testSolarEclipticLongitude() {
     // 1994年11月8日 16:00(JST)
-    alert(225.64569002960798 == eclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
+    alert(225.64569002960798 == solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
 }
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
