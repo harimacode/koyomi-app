@@ -25,4 +25,5 @@ function main() {
     testLunarEclipticLongitude();
     testFindNibunNishi();
     testFindChukis();
+    testFindSaku();
 }

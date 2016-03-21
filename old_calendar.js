@@ -244,8 +244,43 @@ function findSekki(t, byAngle) {
     return jst;
 }
 
+/**
+ * @param t 直前の二分二至の時刻
+ */
 function findSaku(t) {
-    
+    var sel = solarEclipticLongitude(t);
+    var lel = lunarEclipticLongitude(t);
+    var deltaLambda = normalizeAngle(lel - sel);
+    while (true) {
+        var deltaT = deltaLambda * 29.530589 / 360;
+        t -= deltaT;
+        // alert("dT: " + deltaT + ", t: " + t);
+        if (deltaT < 0.00001157407407) {
+            // 1s 未満
+            break;
+        }
+
+        lel = lunarEclipticLongitude(t);
+        sel = solarEclipticLongitude(t);
+        deltaLambda = normalizeAngle(lel - sel);
+        // ただし、春
+        //        分の近くで朔がある場合（0°≦λsun≦ 20°）で、月の黄経λmoon≧300°
+        //        の場合には以下のように補正を行ってΔλとする。
+
+        //             Δλ＝ 360.0 － Δλ
+        if (0 <= sel && sel <= 20 && lel >= 300) {
+            deltaLambda = 360.0 - deltaLambda;
+        }
+        // TODO: 正規化の内容が不明だが必要
+        //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
+        //    Δλとする。
+        // alert("moon: " + lel + "\n" +
+        //         "sun:  " + sel + "\n" +
+        //         "deltaLambda: " + deltaLambda);
+    }
+    // t が期待する時刻
+    var jst = t + (9/24);
+    return jst;
 }
 
 // precisely に比較する
@@ -321,4 +356,9 @@ function testFindChukis() {
     for (var i = 0; i < answers.length; ++i) {
         checkR(answers[i], result[i]);
     } 
+}
+function testFindSaku() {
+    var saku = findSaku(2449431.85263434904943); 
+    checkR(2449423.6706510314940, saku);
+    alert(fromJuliusDate(saku));
 }
