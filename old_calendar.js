@@ -29,25 +29,25 @@ function fromJuliusDate(jd) {
     // http://mysteryart.web.fc2.com/library/calsmpl/cldttojd.html
     jd+=1; // JST
     
-    var z =Math.floor(jd);
-    var f =jd-z;
-    var aa=Math.floor((z-1867216.25)/36524.25);
-    var a =Math.floor(z+1+aa-Math.floor(aa/4));
-    var b =a+1524;
-    var c =Math.floor((b-122.1)/365.25);
-    var k =Math.floor(365.25*c);
-    var e =Math.floor((b-k)/30.6001);
+    var z  = Math.floor(jd);
+    var f  = jd-z;
+    var aa = Math.floor((z-1867216.25)/36524.25);
+    var a  = Math.floor(z+1+aa-Math.floor(aa/4));
+    var b  = a+1524;
+    var c  = Math.floor((b-122.1)/365.25);
+    var k  = Math.floor(365.25*c);
+    var e  = Math.floor((b-k)/30.6001);
 
-    var iDay=Math.floor(b-k-Math.floor(30.6001*e));
-    var iMonth;
-    if(e<13.5)  iMonth=e-1;
-    else        iMonth=e-13;
-    var iYear;
-    if(iMonth>2.5)  iYear=c-4716;
-    else            iYear=c-4715;
-    var iHour  =Math.floor(f*24);
-    var iMinute=Math.floor((f*24-iHour)*60); // おそらく分までの精度しかない…
-    return new Date(iYear, iMonth-1, iDay, iHour, iMinute);
+    var day = Math.floor(b-k-Math.floor(30.6001*e));
+    var month;
+    if(e<13.5)  month = e-1;
+    else        month = e-13;
+    var year;
+    if(month>2.5)   year = c-4716;
+    else            year = c-4715;
+    var hours   = Math.floor(f*24);
+    var minutes = Math.floor((f*24-hours)*60); // おそらく分までの精度しかない…
+    return new Date(year, month-1, day, hours, minutes);
 }
 
 /*!
