@@ -203,12 +203,27 @@ function normalizeAngle(angle) {
  * 
  * @param date
  */
-function prevNibunNishi(t) {
+function findNibunNishi(t) {
+    return findSekki(t, 90);
+}
+
+function findChukis(t) {
+    // TODO: メモ化
+    var nibunNishi = findNibunNishi(t);
+    var rv = [];
+    for (var i = 0; i < 3; ++i) {
+        t += 32;
+        rv.push(findSekki(t, 30));
+    }
+    return rv;
+}
+
+function findSekki(t, byAngle) {
     // var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
     var sel = solarEclipticLongitude(t);
     // alert(sel);
-    var div = Math.floor(sel / 90);
-    var angle = div * 90;
+    var div = Math.floor(sel / byAngle);
+    var angle = div * byAngle;
     while (true) {
         var deltaAngle = sel - angle;
         if (deltaAngle >= 180) {
@@ -287,7 +302,18 @@ function testJuliusDate() {
     checkP(2449473, juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
     checkDate(new Date(1994,4,1), fromJuliusDate(2449473));
 }
-function testPrevNibunNishi() {
-    checkR(2449432.2276343490000000, prevNibunNishi(2449472.625));
-    checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(prevNibunNishi(2449472.625)))
+function testFindNibunNishi() {
+    checkR(2449432.2276343490000000, findNibunNishi(2449472.625));
+    checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)))
+}
+function testFindChukis() {
+    var result = findChukis(2449432.2276343490);
+    var answers = [
+        2449462.6910369310000,
+        2449493.6580418450000,
+        2449524.9906033690000,
+    ];
+    for (var i = 0; i < answers.length; ++i) {
+        checkR(answers[i], result[i]);
+    } 
 }
