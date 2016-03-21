@@ -334,7 +334,7 @@ function oldCalendar(jd) {
     var sakus = findSakus(nibunNishi[1]);
     // alert(sakus); // OK
     var oMonth = oldMonth(nibunNishi[0]);
-    alert(oMonth);
+    // alert(oMonth);
     // MEMO: sakus[0] == oldMonth
     
     var matrix = [];
@@ -344,13 +344,16 @@ function oldCalendar(jd) {
         matrix.push([false, 0, jd, fromJuliusDate(jd)]);
     });
     var cond1 = sakus[4] <= chukis[2];
+    chukis.push(nibunNishi[1]); // 二分二至も必ず中気なので中気判定に追加しています。
     for (var i = 0; i < matrix.length - 1; ++i) {
         var start = matrix[i][2];
         var next  = matrix[i + 1][2];
         var containsChuki = false;
         chukis.forEach(function (chuki) {
             var chukiDate = Math.floor(chuki);
-            containsChuki |= start <= chukiDate && chukiDate < next;
+            if (start <= chukiDate && chukiDate < next) {
+                containsChuki = true;
+            }
         });
         var isLeapMonth = cond1 && !containsChuki;
         matrix[i][0] = isLeapMonth;
@@ -376,7 +379,7 @@ function oldCalendar(jd) {
             break;
         }
     }
-    alert(matrix.join('\n'));
+    // alert(matrix.join('\n'));
     // alert(oldDate);
     return oldDate;
 }
@@ -458,6 +461,17 @@ function testFindChukis() {
     for (var i = 0; i < answers.length; ++i) {
         checkR(answers[i], result[i]);
     } 
+    
+    var result2 = findChukis(findNibunNishi(juliusDate(new Date(1993,4,1)))[1]);
+    var answers2 = [
+        2449097.4502,
+        2449128.4174,
+        2449159.7497,
+    ];
+    for (var i = 0; i < answers2.length; ++i) {
+        checkR(answers2[i], result2[i]);
+    } 
+
 }
 function testFindSaku() {
     var saku = findSaku(2449431.85263434904943, true); 
@@ -476,7 +490,7 @@ function testFindSaku() {
         checkR(answers[i], sakus[i]);
     } 
 
-    var sakus2 = findSakus(findNibunNishi(juliusDate(new Date(1993,5,1)))[1]);
+    var sakus2 = findSakus(findNibunNishi(juliusDate(new Date(1993,4,1)))[1]);
     var answers2 = [
         2449039.9209,
         2449069.6773,
@@ -490,7 +504,7 @@ function testFindSaku() {
 }
 function testOldCalendar() {
     // 1994年5月1日
-    // checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
+    checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
     // 1993年5月1日
-    // alert(oldCalendar(juliusDate(new Date(1993,4,1))));
+    checkStr("閏3月10日", oldCalendar(juliusDate(new Date(1993,4,1))));
 }
