@@ -17,11 +17,50 @@ function dayOfWeek(dow) {
     }
     return null;
 }
+/*!
+ * Date オブジェクトからユリウス日を計算します。
+ * ユリウス日は浮動小数点数として表現され、
+ * 小数点以下の数字は時刻を表します。
+ * 
+ * この関数では、グレゴリオ暦による計数となるAD 1582年10月15日
+ * 以降のみを対象とします。
+ */
+function juliusDate(date) {
+    // TODO 上記値域判定
+    
+//   Y年M月D日（グレゴリオ暦法による日付）のユリウス日を求めるには、以下の式を
+//   使用します。
+
+//        JD=INT(365.25*Y)+INT(Y/400)-INT(Y/100)+INT(30.59*(M-2))+D+1721088
+
+//        ※ M<3 の場合には、Mに12を加え、Yから1を引いてから計算します。
+//         また、INT()は () の中の整数部のみを取り出す関数です。
+    var year  = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day   = date.getDate();
+    if (month < 3) {
+        month += 12;
+        --year;
+    }
+    alert(year + "/" + month + "/" + day);
+    return Math.floor(365.25 * year)
+         + Math.floor(year / 400)
+         - Math.floor(year / 100)
+         + Math.floor(30.59 * (month - 2))
+         + day
+         + 1721088;
+}
+function testJuliusDate() {
+    //        1994年5月1日 ＝ 2449473
+    alert(2449473==juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
+}
 function main() {    
     var today = new Date();
     var month = today.getMonth() + 1; // 月は 0 始まり
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
+    
+    testJuliusDate();
 }
         </script>
     </head>
