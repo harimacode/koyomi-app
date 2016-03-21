@@ -27,25 +27,26 @@ function juliusDate(date) {
 }
 function fromJuliusDate(jd) {
     // http://mysteryart.web.fc2.com/library/calsmpl/cldttojd.html
-    var z,f,aa,a,b,c,k,e;
-
     jd+=1; // JST
-    z =Math.floor(jd);
-    f =jd-z;
-    aa=Math.floor((z-1867216.25)/36524.25);
-    a =Math.floor(z+1+aa-Math.floor(aa/4));
-    b =a+1524;
-    c =Math.floor((b-122.1)/365.25);
-    k =Math.floor(365.25*c);
-    e =Math.floor((b-k)/30.6001);
+    
+    var z =Math.floor(jd);
+    var f =jd-z;
+    var aa=Math.floor((z-1867216.25)/36524.25);
+    var a =Math.floor(z+1+aa-Math.floor(aa/4));
+    var b =a+1524;
+    var c =Math.floor((b-122.1)/365.25);
+    var k =Math.floor(365.25*c);
+    var e =Math.floor((b-k)/30.6001);
 
-    iDay=Math.floor(b-k-Math.floor(30.6001*e));
+    var iDay=Math.floor(b-k-Math.floor(30.6001*e));
+    var iMonth;
     if(e<13.5)  iMonth=e-1;
     else        iMonth=e-13;
+    var iYear;
     if(iMonth>2.5)  iYear=c-4716;
     else            iYear=c-4715;
-    iHour  =Math.floor(f*24);
-    iMinute=Math.floor((f*24-iHour)*60); // おそらく分までの精度しかない…
+    var iHour  =Math.floor(f*24);
+    var iMinute=Math.floor((f*24-iHour)*60); // おそらく分までの精度しかない…
     return new Date(iYear, iMonth-1, iDay, iHour, iMinute);
 }
 
