@@ -23,4 +23,5 @@ function main() {
     testDynamicalTime();
     testSolarEclipticLongitude();
     testLunarEclipticLongitude();
+    testPrevNibunNishi();
 }

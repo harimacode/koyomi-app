@@ -177,6 +177,37 @@ function normalizeAngle(angle) {
     }
     return angle;
 }
+
+/**
+ * 指定した日付の直前の二分二至(世間的には二至二分と呼ぶ場合が多いようですが)を求めます。
+ * 
+ * @param date
+ */
+function prevNibunNishi(t) {
+    // var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
+    var sel = solarEclipticLongitude(t);
+    // alert(sel);
+    var div = Math.floor(sel / 90);
+    var angle = div * 90;
+    while (true) {
+        var deltaAngle = sel - angle;
+        if (deltaAngle >= 180) {
+            deltaAngle = -360 + deltaAngle;
+        }
+        var deltaT = deltaAngle * 365.2 / 360;
+        // alert("lambda sun: " + sel + ", deltaT: " + deltaT);
+        t -= deltaT;
+        if (deltaT < 0.00001157407407) {
+            // 1s 未満
+            break;
+        }
+        sel = solarEclipticLongitude(t);
+    }
+    // t が期待する時刻
+    var jst = t + (9/24);
+    return jst;
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return check(a, b, 0.00000000001);
@@ -207,6 +238,7 @@ function testSolarEclipticLongitude() {
     checkP(50.09737887498562, solarEclipticLongitude(2449483.01263787953888));
     checkP(78.63143984057999, solarEclipticLongitude(2449512.7137218565143));
     checkP(106.9141295248953, solarEclipticLongitude(2449542.3526236737596));
+    checkP(40.0342792282334200, solarEclipticLongitude(2449472.625));
 }
 function testLunarEclipticLongitude() {
     // FIXME: 精度が 0.0001 程度しかなく、低すぎる気がするので
@@ -222,4 +254,7 @@ function testLunarEclipticLongitude() {
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
     alert(2449473==juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
+}
+function testPrevNibunNishi() {
+    checkR(2449432.2276343490000000, prevNibunNishi(2449472.625));
 }
