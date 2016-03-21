@@ -250,12 +250,32 @@ function findSekki(t, byAngle) {
 
 /**
  * @param t 直前の二分二至の時刻
+ * @param isFirst 最初の呼び出しかどうか(＝二分二至の時刻が引数か)
  */
-function findSaku(t) {
-    var sel = solarEclipticLongitude(t);
-    var lel = lunarEclipticLongitude(t);
-    var deltaLambda = normalizeAngle(lel - sel);
+function findSaku(t, isFirst) {
     while (true) {
+        var sel = solarEclipticLongitude(t);
+        var lel = lunarEclipticLongitude(t);
+        var deltaLambda = lel - sel;
+        if (isFirst) {
+            deltaLambda = normalizeAngle(deltaLambda);
+        } else {
+            // ただし、春
+            //        分の近くで朔がある場合（0°≦λsun≦ 20°）で、月の黄経λmoon≧300°
+            //        の場合には以下のように補正を行ってΔλとする。
+
+            //             Δλ＝ 360.0 － Δλ
+            if (0 <= sel && sel <= 20 && lel >= 300) {
+                deltaLambda = 360.0 - deltaLambda;
+            }
+            // TODO: 正規化の内容が不明だが必要
+            //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
+            //    Δλとする。
+            // alert("moon: " + lel + "\n" +
+            //         "sun:  " + sel + "\n" +
+            //         "deltaLambda: " + deltaLambda);
+        }
+
         // TODO: 結果が振動して収束しないとき用の処理
         var deltaT = deltaLambda * 29.530589 / 360;
         t -= deltaT;
@@ -264,24 +284,6 @@ function findSaku(t) {
             // 1s 未満
             break;
         }
-
-        lel = lunarEclipticLongitude(t);
-        sel = solarEclipticLongitude(t);
-        deltaLambda = normalizeAngle(lel - sel);
-        // ただし、春
-        //        分の近くで朔がある場合（0°≦λsun≦ 20°）で、月の黄経λmoon≧300°
-        //        の場合には以下のように補正を行ってΔλとする。
-
-        //             Δλ＝ 360.0 － Δλ
-        if (0 <= sel && sel <= 20 && lel >= 300) {
-            deltaLambda = 360.0 - deltaLambda;
-        }
-        // TODO: 正規化の内容が不明だが必要
-        //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
-        //    Δλとする。
-        // alert("moon: " + lel + "\n" +
-        //         "sun:  " + sel + "\n" +
-        //         "deltaLambda: " + deltaLambda);
     }
     // t が期待する時刻
     var jst = t + (9/24);
@@ -292,19 +294,25 @@ function findSaku(t) {
  * @param t 直前の二分二至の時刻
  */
 function findSakus(t) {
+    var nibunNishi = t;
     var rv = [];
-    // TODO: 文献の以下のケースへの対応
-    //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
-    //   朔日行列が正常に組み立てられない場合があります。 本スクリプトでは、以下の
-    //   ２つのケースを想定して対策を施しておきました。
-
-    //      i   二分二至の前の朔の時刻を２組求めてしまう場合。以下の図ように、
-    //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
     for (var i = 0; i < 5; ++i) {
-        var saku = findSaku(t);
+        var saku = findSaku(t, i == 0);
         rv.push(saku);
         t = saku + 30;
     }
+    
+    //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
+    //   朔日行列が正常に組み立てられない場合があります。 本スクリプトでは、以下の
+    //   ２つのケースを想定して対策を施しておきました。
+    if (rv[1] <= nibunNishi) {
+        //      i   二分二至の前の朔の時刻を２組求めてしまう場合。以下の図ように、
+        rv.shift();
+        rv.push(findSaku(rv[3] + 35, false)); // 前の朔 + 35
+    }
+    // TODO: 文献の以下のケースへの対応
+    //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
+    
     return rv;
 }
 
@@ -326,6 +334,7 @@ function oldCalendar(jd) {
     var sakus = findSakus(nibunNishi[1]);
     // alert(sakus); // OK
     var oMonth = oldMonth(nibunNishi[0]);
+    alert(oMonth);
     // MEMO: sakus[0] == oldMonth
     
     var matrix = [];
@@ -367,7 +376,7 @@ function oldCalendar(jd) {
             break;
         }
     }
-    // alert(matrix.join('\n'));
+    alert(matrix.join('\n'));
     // alert(oldDate);
     return oldDate;
 }
@@ -451,7 +460,7 @@ function testFindChukis() {
     } 
 }
 function testFindSaku() {
-    var saku = findSaku(2449431.85263434904943); 
+    var saku = findSaku(2449431.85263434904943, true); 
     checkR(2449423.6706510314940, saku);
     // alert(fromJuliusDate(saku));
     
@@ -466,8 +475,22 @@ function testFindSaku() {
     for (var i = 0; i < answers.length; ++i) {
         checkR(answers[i], sakus[i]);
     } 
+
+    var sakus2 = findSakus(findNibunNishi(juliusDate(new Date(1993,5,1)))[1]);
+    var answers2 = [
+        2449039.9209,
+        2449069.6773,
+        2449099.3680,
+        2449128.9637,
+        2449158.4619,
+    ];
+    for (var i = 0; i < answers2.length; ++i) {
+        checkR(answers2[i], sakus2[i]);
+    } 
 }
 function testOldCalendar() {
     // 1994年5月1日
-    checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
+    // checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
+    // 1993年5月1日
+    // alert(oldCalendar(juliusDate(new Date(1993,4,1))));
 }
