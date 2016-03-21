@@ -178,7 +178,7 @@ function normalizeAngle(angle) {
     return angle;
 }
 function check(a, b) {
-    var result = Math.abs(a - b) < 0.00001;
+    var result = Math.abs(a - b) < 0.00000000001;
     if (!result) {
         alert("FAILED: " + a + " !≒ " + b);
     }
@@ -191,13 +191,13 @@ function testDynamicalTime() {
 }
 function testSolarEclipticLongitude() {
     // 1994年11月8日 16:00(JST)
-    // 225.6456900296
-    alert(225.64569002960798 == solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
-    alert(359.99999992999096 == solarEclipticLongitude(2449431.85263434904943));
-    alert(21.169411672481374 == solarEclipticLongitude(2449453.295651030494));
-    alert(50.09737887498568 == solarEclipticLongitude(2449483.01263787953888));
-    alert(78.63143984058047 == solarEclipticLongitude(2449512.7137218565143));
-    alert(106.91412952489577 == solarEclipticLongitude(2449542.3526236737596));
+    check(225.6456900296, solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
+    
+    check(359.9999999299906, solarEclipticLongitude(2449431.85263434904943));
+    check(21.16941167248130, solarEclipticLongitude(2449453.295651030494));
+    check(50.09737887498562, solarEclipticLongitude(2449483.01263787953888));
+    check(78.63143984057999, solarEclipticLongitude(2449512.7137218565143));
+    check(106.9141295248953, solarEclipticLongitude(2449542.3526236737596));
 }
 function testLunarEclipticLongitude() {
     // 文献中の例から。
