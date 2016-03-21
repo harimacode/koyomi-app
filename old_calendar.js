@@ -45,7 +45,7 @@ function fromJuliusDate(jd) {
     if(iMonth>2.5)  iYear=c-4716;
     else            iYear=c-4715;
     iHour  =Math.floor(f*24);
-    iMinute=Math.floor((f*24-iHour)*60+0.5);
+    iMinute=Math.floor((f*24-iHour)*60); // おそらく分までの精度しかない…
     return new Date(iYear, iMonth-1, iDay, iHour, iMinute);
 }
 
@@ -245,6 +245,17 @@ function check(a, b, tolerance) {
         alert("FAILED: " + a + " !≒ " + b);
     }
 }
+function checkDate(a, b) {
+    // 分までだけ比較する。
+    var result = a.getFullYear() == b.getFullYear()
+        && a.getMonth() == b.getMonth()
+        && a.getDate() == b.getDate()
+        && a.getHours() == b.getHours()
+        && a.getMinutes() == b.getMinutes();
+    if (!result) {
+        alert("FAILED: " + a + " !≒ " + b);
+    }
+}
 function testDynamicalTime() {
     // 1994年5月1日0時 = 2449472.625
     checkP(2449472.625, dynamicalTime(juliusDate(new Date(1994,4,1))));
@@ -276,11 +287,10 @@ function testLunarEclipticLongitude() {
 }
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
-    alert(2449473==juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
-    var d1 = new Date(1994,4,1,0);
-    var d2 = fromJuliusDate(2449473);
-    alert(d1.toString() == d2.toString());
+    checkP(2449473, juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
+    checkDate(new Date(1994,4,1), fromJuliusDate(2449473));
 }
 function testPrevNibunNishi() {
     checkR(2449432.2276343490000000, prevNibunNishi(2449472.625));
+    checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(prevNibunNishi(2449472.625)))
 }
