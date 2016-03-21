@@ -17,22 +17,11 @@ function dayOfWeek(dow) {
     }
     return null;
 }
-function oldCalendar() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://www.calc-site.com/calendars/old_calendar', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            alert(xhr.responseXML);
-        }
-    };
-    xhr.send(null);
-}
 function main() {    
     var today = new Date();
     var month = today.getMonth() + 1; // 月は 0 始まり
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
-    oldCalendar();
 }
         </script>
     </head>
