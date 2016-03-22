@@ -835,4 +835,3 @@ function JD2YMDT(JD,TIME, x0,x1,x2,x3,x4,x5,x6,tm){
   TIME[5] = int( tm - 3600.0*TIME[3] - 60*TIME[4] );
 
 }
-
