@@ -18,6 +18,7 @@ function main() {
     var month = today.getMonth() + 1; // 月は 0 始まり
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
+    set('oldCalendar', oldCalendar(juliusDate(today)));
     
     testJuliusDate();
     testDynamicalTime();

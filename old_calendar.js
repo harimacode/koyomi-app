@@ -342,7 +342,8 @@ function oldMonth(el) {
  * @param jd ユリウス日
  */
 function oldCalendar(jd) {
-    var gd = fromJuliusDate(Math.floor(jd));
+    jd = Math.floor(jd);
+    var gd = fromJuliusDate(jd);
     
     var nibunNishi = findNibunNishi(jd);
     // alert(nibunNishi); // OK
