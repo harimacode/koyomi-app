@@ -339,6 +339,26 @@ function oldMonth(el) {
 }
 
 /**
+ * OldDate クラス
+ */
+function OldDate(leap, month, day) {
+    this.leap  = leap;
+    this.month = month;
+    this.day   = day;
+}
+OldDate.prototype = {
+    toString: function () {
+        var s = "";
+        if (this.leap) {
+            s += "閏";
+        }
+        s += this.month + "月";
+        s += this.day   + "日";
+        return s;
+    },
+};
+
+/**
  * @param jd ユリウス日
  */
 function oldCalendar(jd) {
@@ -382,24 +402,28 @@ function oldCalendar(jd) {
         ++oMonth;
     }
     
-    var oldDate = "";
+    var oldDate = new OldDate();
     for (var i = 0; i < matrix.length - 1; ++i) {
         var nextDate = matrix[i + 1][3];
         if (gd < nextDate) {
-            var isLeapMonth = matrix[i][0];
-            if (isLeapMonth) {
-                oldDate += "閏";
-            }
-            oldDate += matrix[i][1] + "月";
+            oldDate.leap = matrix[i][0];
+            oldDate.month = matrix[i][1];
             
             var oldDay = jd - matrix[i][2] + 1;
-            oldDate += oldDay + "日";
+            oldDate.day = oldDay;
             break;
         }
     }
     // alert(matrix.join('\n'));
     // alert(oldDate);
     return oldDate;
+}
+
+function rokki(oldDate) {
+    var kRokki = [
+        "先勝", "友引", "先負", "空亡", "大安", "赤口"
+    ];
+    return kRokki[(oldDate.month + oldDate.day - 2) % 6];
 }
 
 // precisely に比較する
@@ -536,11 +560,11 @@ function testFindSaku() {
 }
 function testOldCalendar() {
     // 1994年5月1日
-    checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
+    checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))).toString());
     // 1993年5月1日
-    checkStr("閏3月10日", oldCalendar(juliusDate(new Date(1993,4,1))));
+    checkStr("閏3月10日", oldCalendar(juliusDate(new Date(1993,4,1))).toString());
     // 1985年1月1日
-    checkStr("11月11日", oldCalendar(juliusDate(new Date(1985,0,1))));
+    checkStr("11月11日", oldCalendar(juliusDate(new Date(1985,0,1))).toString());
     // alert(oldCalendar(juliusDate(new Date(2012,0,1))));
     
     // // 2002-2021 年元日 は http://www.ajnet.ne.jp/diary/ との一致を確認
@@ -559,4 +583,13 @@ function testOldCalendar() {
     //     dates.push(s + '=>' + oldCalendar(jd + i));
     // }
     // alert(dates.join('\n'));
+}
+function testRokki() {
+    checkStr("先勝", rokki(new OldDate(false, 3, 17)));
+    checkStr("友引", rokki(new OldDate(false, 3, 18)));
+    checkStr("先負", rokki(new OldDate(false, 3, 19)));
+    checkStr("空亡", rokki(new OldDate(false, 3, 20)));
+    checkStr("大安", rokki(new OldDate(false, 3, 21)));
+    checkStr("赤口", rokki(new OldDate(false, 3, 22)));
+    checkStr("先勝", rokki(new OldDate(false, 3, 23)));
 }
