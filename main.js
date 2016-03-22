@@ -9,9 +9,11 @@ function main() {
     var month = today.getMonth() + 1; // 月は 0 始まり
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
-    var old = oldCalendar(juliusDate(today));
+    var jd  = juliusDate(today);
+    var old = oldCalendar(jd);
     set('oldCalendar', old);
     set('rokki', rokki(old));
+    set('animalSymbols', eto(jd));
     
     testJuliusDate();
     testDynamicalTime();
