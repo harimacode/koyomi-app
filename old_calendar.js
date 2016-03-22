@@ -549,11 +549,10 @@ function testOldCalendar() {
     // }
     // alert(dates.join('\n'));
     
-    // // 2016年で見ていってもおかしい
-    // // 3/9=>1月31日 は NG, 2016/02/01 が正しい
+    // 2016 年については正しい旧暦が得られていることを確認
     // var dates = [];
-    // var jd = juliusDate(new Date(2016,0,1));
-    // for (var i = 0; i < 180; ++i) {
+    // var jd = juliusDate(new Date(2016,6,1));
+    // for (var i = 0; i < 200; ++i) {
     //     var d = fromJuliusDate(jd + i);
     //     var s = (d.getMonth()+1) + "/" + d.getDate();
     //     dates.push(s + '=>' + oldCalendar(jd + i));
