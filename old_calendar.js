@@ -213,9 +213,9 @@ function findNibunNishi(t) {
 function findChukis(t) {
     var rv = [];
     for (var i = 0; i < 3; ++i) {
-        t += 32;
-        var chuki = findSekki(t, 30);
-        rv.push(chuki[1]);
+        var chuki = findSekki(t + 32, 30)[1];
+        rv.push(chuki);
+        t = chuki;
     }
     return rv;
 }
@@ -237,7 +237,7 @@ function findSekki(t, byAngle) {
         var deltaT = deltaAngle * 365.2 / 360;
         // alert("lambda sun: " + sel + ", deltaT: " + deltaT);
         t -= deltaT;
-        if (deltaT < 0.00001157407407) {
+        if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
             // 1s 未満
             break;
         }
@@ -250,41 +250,48 @@ function findSekki(t, byAngle) {
 
 /**
  * @param t 直前の二分二至の時刻
- * @param isFirst 最初の呼び出しかどうか(＝二分二至の時刻が引数か)
  */
-function findSaku(t, isFirst) {
-    while (true) {
+function findSaku(t) {
+    // var orig = t;
+    for (var i = 0; ; ++i) {
         var sel = solarEclipticLongitude(t);
         var lel = lunarEclipticLongitude(t);
         var deltaLambda = lel - sel;
-        if (isFirst) {
+        if (i == 0 && deltaLambda < 0) {
+            // alert([sel, lel, deltaLambda].join('\n'));
             deltaLambda = normalizeAngle(deltaLambda);
-        } else {
-            // ただし、春
-            //        分の近くで朔がある場合（0°≦λsun≦ 20°）で、月の黄経λmoon≧300°
-            //        の場合には以下のように補正を行ってΔλとする。
-
-            //             Δλ＝ 360.0 － Δλ
-            if (0 <= sel && sel <= 20 && lel >= 300) {
-                deltaLambda = 360.0 - deltaLambda;
-            }
-            // TODO: 正規化の内容が不明だが必要
-            //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
-            //    Δλとする。
-            // alert("moon: " + lel + "\n" +
-            //         "sun:  " + sel + "\n" +
-            //         "deltaLambda: " + deltaLambda);
         }
+        // ただし、春
+        //        分の近くで朔がある場合（0°≦λsun≦ 20°）で、月の黄経λmoon≧300°
+        //        の場合には以下のように補正を行ってΔλとする。
 
+        //             Δλ＝ 360.0 － Δλ
+        else if (0 <= sel && sel <= 20 && lel >= 300) {
+            deltaLambda = 360.0 - normalizeAngle(deltaLambda);
+        }
+        // TODO: 正規化の内容が不明だが必要
+        //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
+        //    Δλとする。
+        else if (Math.abs(deltaLambda) > 40) {
+            deltaLambda = normalizeAngle(deltaLambda);
+        }
+        // alert("moon: " + lel + "\n" +
+        //         "sun:  " + sel + "\n" +
+        //         "deltaLambda: " + deltaLambda);
+        
         // TODO: 結果が振動して収束しないとき用の処理
         var deltaT = deltaLambda * 29.530589 / 360;
         t -= deltaT;
-        // alert("dT: " + deltaT + ", t: " + t);
-        if (deltaT < 0.00001157407407) {
+        // alert("dT: " + deltaT + ",\n t: " + t);
+        if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
             // 1s 未満
             break;
         }
     }
+    // これはバグかと思ったが普通にあるよう
+    // if (t < orig) {
+    //     alert('bug');
+    // }
     // t が期待する時刻
     var jst = t + (9/24);
     return jst;
@@ -297,7 +304,11 @@ function findSakus(t) {
     var nibunNishi = t;
     var rv = [];
     for (var i = 0; i < 5; ++i) {
-        var saku = findSaku(t, i == 0);
+        var saku = findSaku(t);
+        if (i != 0 && Math.abs(Math.floor(rv[rv.length - 1]) - Math.floor(saku)) <= 26) {
+            t = rv[rv.length - 1] + 35;
+            saku = findSaku(t);
+        }
         rv.push(saku);
         t = saku + 30;
     }
@@ -305,14 +316,20 @@ function findSakus(t) {
     //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
     //   朔日行列が正常に組み立てられない場合があります。 本スクリプトでは、以下の
     //   ２つのケースを想定して対策を施しておきました。
-    if (rv[1] <= nibunNishi) {
+    if (Math.floor(rv[1]) <= Math.floor(nibunNishi)) {
         //      i   二分二至の前の朔の時刻を２組求めてしまう場合。以下の図ように、
+        // alert("hit");
         rv.shift();
-        rv.push(findSaku(rv[3] + 35, false)); // 前の朔 + 35
+        rv.push(findSaku(rv[3] + 35)); // 前の朔 + 35
     }
     // TODO: 文献の以下のケースへの対応
-    //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
-    
+    else if (Math.floor(rv[0]) >= Math.floor(nibunNishi)) {
+        //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
+        //    ［朔１の時刻］≧［直前の二分二至の時刻］
+        rv.pop();
+        rv.unshift(findSaku(rv[0] - 27));
+    }
+
     return rv;
 }
 
@@ -330,9 +347,9 @@ function oldCalendar(jd) {
     var nibunNishi = findNibunNishi(jd);
     // alert(nibunNishi); // OK
     var chukis = findChukis(nibunNishi[1]);
-    // alert(chukis); // OK
+    // alert(chukis.join('\n')); // OK
     var sakus = findSakus(nibunNishi[1]);
-    // alert(sakus); // OK
+    // alert(sakus.join('\n')); // OK
     var oMonth = oldMonth(nibunNishi[0]);
     // alert(oMonth);
     // MEMO: sakus[0] == oldMonth
@@ -360,7 +377,7 @@ function oldCalendar(jd) {
         if (isLeapMonth) {
             --oMonth;
         }
-        matrix[i][1] = oMonth;
+        matrix[i][1] = (oMonth - 1) % 12 + 1;
         ++oMonth;
     }
     
@@ -446,10 +463,12 @@ function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
     checkP(2449473, juliusDate(new Date(1994,4,1))); // Date#month は 0 origin
     checkDate(new Date(1994,4,1), fromJuliusDate(2449473));
+    checkP(2446056, juliusDate(new Date(1984,11,22))); // Date#month は 0 origin
 }
 function testFindNibunNishi() {
     checkR(2449432.2276343490000000, findNibunNishi(2449472.625)[1]);
     checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)[1]))
+    checkR(2446056.0489, findNibunNishi(juliusDate(new Date(1984,11,22)))[1]);
 }
 function testFindChukis() {
     var result = findChukis(findNibunNishi(2449432.2276343490)[1]);
@@ -474,7 +493,7 @@ function testFindChukis() {
 
 }
 function testFindSaku() {
-    var saku = findSaku(2449431.85263434904943, true); 
+    var saku = findSaku(2449431.85263434904943); 
     checkR(2449423.6706510314940, saku);
     // alert(fromJuliusDate(saku));
     
@@ -496,10 +515,22 @@ function testFindSaku() {
         2449069.6773,
         2449099.3680,
         2449128.9637,
-        2449158.4619,
+        2449158.4540,
     ];
     for (var i = 0; i < answers2.length; ++i) {
         checkR(answers2[i], sakus2[i]);
+    }
+    
+    var sakus3 = findSakus(findNibunNishi(juliusDate(new Date(1985,0,1)))[1]);
+    var answers3 = [
+        2446056.8671,
+        2446086.4793,
+        2446116.1560,
+        2446145.8755,
+        2446175.6000,
+    ];
+    for (var i = 0; i < answers3.length; ++i) {
+        checkR(answers3[i], sakus3[i]);
     } 
 }
 function testOldCalendar() {
@@ -507,4 +538,25 @@ function testOldCalendar() {
     checkStr("3月21日", oldCalendar(juliusDate(new Date(1994,4,1))));
     // 1993年5月1日
     checkStr("閏3月10日", oldCalendar(juliusDate(new Date(1993,4,1))));
+    // 1985年1月1日
+    checkStr("11月11日", oldCalendar(juliusDate(new Date(1985,0,1))));
+    // alert(oldCalendar(juliusDate(new Date(2012,0,1))));
+    
+    // // 2002-2021 年元日 は http://www.ajnet.ne.jp/diary/ との一致を確認
+    // var dates = [];
+    // for (var y = 2002; y < 2051; ++y) {
+    //     dates.push(y + ':' + oldCalendar(juliusDate(new Date(y,0,1))));
+    // }
+    // alert(dates.join('\n'));
+    
+    // // 2016年で見ていってもおかしい
+    // // 3/9=>1月31日 は NG, 2016/02/01 が正しい
+    // var dates = [];
+    // var jd = juliusDate(new Date(2016,0,1));
+    // for (var i = 0; i < 180; ++i) {
+    //     var d = fromJuliusDate(jd + i);
+    //     var s = (d.getMonth()+1) + "/" + d.getDate();
+    //     dates.push(s + '=>' + oldCalendar(jd + i));
+    // }
+    // alert(dates.join('\n'));
 }
