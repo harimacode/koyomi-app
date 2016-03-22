@@ -426,6 +426,15 @@ function rokki(oldDate) {
     return kRokki[(oldDate.month + oldDate.day - 2) % 6];
 }
 
+function eto(jd) {
+    var kJikkan = "甲乙丙丁戊己庚辛壬癸";
+    var kJunishi = "子丑寅卯辰巳午未申酉戌亥";
+    // 1873年 1月12日 が甲子の基準日
+    var days = Math.floor(jd) - Math.floor(juliusDate(new Date(1873, 0, 12)));
+    return kJikkan[days % kJikkan.length] +
+           kJunishi[days % kJunishi.length];
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -592,4 +601,13 @@ function testRokki() {
     checkStr("大安", rokki(new OldDate(false, 3, 21)));
     checkStr("赤口", rokki(new OldDate(false, 3, 22)));
     checkStr("先勝", rokki(new OldDate(false, 3, 23)));
+    checkStr("先勝", rokki(new OldDate(true, 3, 23))); // 閏月も同じだったはず
+}
+function testEto() {
+    // 1873年 1月12日 が甲子の基準日
+    checkStr("甲子", eto(juliusDate(new Date(1873,0,12))));
+    checkStr("丁巳", eto(juliusDate(new Date(2014,3,16))));
+    checkStr("戊午", eto(juliusDate(new Date(2014,3,17))));
+    checkStr("己未", eto(juliusDate(new Date(2014,3,18))));
+    checkStr("庚申", eto(juliusDate(new Date(2014,3,19))));
 }

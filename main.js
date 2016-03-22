@@ -22,4 +22,5 @@ function main() {
     testFindSaku();
     testOldCalendar();
     testRokki();
+    testEto();
 }
