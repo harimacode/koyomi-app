@@ -223,9 +223,12 @@ function findChukis(t) {
 /**
  * @return [angle, t] angle: 黄経, t: 節気
  */
-function findSekki(t, byAngle) {
+function findSekki(t, byAngle, offset) {
+    if (!offset) {
+        offset = 0;
+    }
     // var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
-    var sel = solarEclipticLongitude(t);
+    var sel = normalizeAngle(solarEclipticLongitude(t) + offset);
     // alert(sel);
     var div = Math.floor(sel / byAngle);
     var angle = div * byAngle;
@@ -241,11 +244,11 @@ function findSekki(t, byAngle) {
             // 1s 未満
             break;
         }
-        sel = solarEclipticLongitude(t);
+        sel = normalizeAngle(solarEclipticLongitude(t) + offset);
     }
     // t が期待する時刻
     var jst = t + (9/24);
-    return [angle, jst];
+    return [angle - offset, jst];
 }
 
 /**
@@ -435,6 +438,11 @@ function eto(jd) {
            kJunishi[days % kJunishi.length];
 }
 
+function findSetsugetsu(t) {
+    var sekki = findSekki(t, 30, 15);
+    return [normalizeAngle(sekki[0] + 15) / 30 + 2, sekki[1]]
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -610,4 +618,16 @@ function testEto() {
     checkStr("戊午", eto(juliusDate(new Date(2014,3,17))));
     checkStr("己未", eto(juliusDate(new Date(2014,3,18))));
     checkStr("庚申", eto(juliusDate(new Date(2014,3,19))));
+}
+function testFindSetsugetsu() {
+    var s;
+    // 2016年3月20日=春分→2月節、3/5
+    s = findSetsugetsu(juliusDate(new Date(2016,2,20)));
+    checkP(2, s[0]); // 2月節
+    checkDate(new Date(2016,2,5), s[1]); // 3/5
+    
+    // 2016年4月20日=穀雨→3月節、4/4
+    s = findSetsugetsu(juliusDate(new Date(2016,4,20)));
+    checkP(3, s[0]); // 3月節
+    checkDate(new Date(2016,3,4), s[1]); // 4/4
 }
