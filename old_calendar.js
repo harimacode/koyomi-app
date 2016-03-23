@@ -463,13 +463,15 @@ function choku(jd) {
             // ここで first + i が建となる日
             var ken = first + i;
             // alert(fromJuliusDate(ken));
-            var days = jd - ken;
+            var days = Math.floor(jd) - ken;
             while (days < 0) {
                 days += kChokus.length;
             }
+            // alert(days);
             return kChokus[days % kChokus.length];
         }
     }
+    // alert("NG");
 }
 
 // precisely に比較する
@@ -673,4 +675,5 @@ function testChoku() {
     checkStr("除", choku(juliusDate(new Date(2014,3,16))));
     checkStr("危", choku(juliusDate(new Date(2014,4,4))));
     checkStr("危", choku(juliusDate(new Date(2014,4,5))));
+    checkStr("除", choku(juliusDate(new Date(2014,3,16,12)))); // jd が整数とならないパターン
 }

@@ -5,7 +5,7 @@ function dayOfWeek(dow) {
     return "日月火水木金土".charAt(dow);
 }
 function main() {    
-    var today = new Date(2014,3,16);
+    var today = new Date(); //new Date(2014,3,16);
     var month = today.getMonth() + 1; // 月は 0 始まり
     set("date", month + '/' + today.getDate());
     set('dayOfWeek', dayOfWeek(today.getDay()));
