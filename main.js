@@ -26,4 +26,5 @@ function main() {
     testRokki();
     testEto();
     testFindSetsugetsu();
+    testChoku();
 }

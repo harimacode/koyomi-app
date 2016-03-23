@@ -438,9 +438,38 @@ function eto(jd) {
            kJunishi[days % kJunishi.length];
 }
 
-function findSetsugetsu(t) {
-    var sekki = findSekki(t, 30, 15);
-    return [normalizeAngle(sekki[0] + 15) / 30 + 2, sekki[1]]
+function findSetsugetsu(jd) {
+    // findSekki() は「前」の日付を探しに行くため、当日も含めるには +1 する
+    // 必要があります。
+    // FIXME: 元にしたスクリプトの仕様に引きずられている部分…
+    jd = Math.floor(jd) + 1;
+    var sekki = findSekki(jd, 30, 15);
+    return [(normalizeAngle(sekki[0] + 15) / 30 + 1) % 12 + 1, sekki[1]]
+}
+
+function choku(jd) {
+    // 正月 寅 	二月 卯 	三月 辰 	四月 巳
+    // 五月 午 	六月 未 	七月 申 	八月 酉
+    // 九月 戌 	十月 亥 	十一月 子 	十二月 丑
+    var kEto = "寅卯辰巳午未申酉戌亥子丑";
+    var kChokus = "建除満平定執破危成納開閉";
+    var s = findSetsugetsu(jd);
+    var etoToFind = kEto[s[0]-1];
+    // alert(fromJuliusDate(s[1]));
+    // alert(s[0] + "=>" + etoToFind);
+    var first = Math.floor(s[1]);
+    for (var i = 0; i < kEto.length; ++i) {
+        if (etoToFind == eto(first + i).charAt(1)) {
+            // ここで first + i が建となる日
+            var ken = first + i;
+            // alert(fromJuliusDate(ken));
+            var days = jd - ken;
+            while (days < 0) {
+                days += kChokus.length;
+            }
+            return kChokus[days % kChokus.length];
+        }
+    }
 }
 
 // precisely に比較する
@@ -624,10 +653,24 @@ function testFindSetsugetsu() {
     // 2016年3月20日=春分→2月節、3/5
     s = findSetsugetsu(juliusDate(new Date(2016,2,20)));
     checkP(2, s[0]); // 2月節
-    checkDate(new Date(2016,2,5), s[1]); // 3/5
+    checkDate(new Date(2016,2,5), fromJuliusDate(Math.floor(s[1]))); // 3/5
     
     // 2016年4月20日=穀雨→3月節、4/4
-    s = findSetsugetsu(juliusDate(new Date(2016,4,20)));
+    s = findSetsugetsu(juliusDate(new Date(2016,3,20)));
     checkP(3, s[0]); // 3月節
-    checkDate(new Date(2016,3,4), s[1]); // 4/4
+    checkDate(new Date(2016,3,4), fromJuliusDate(Math.floor(s[1]))); // 4/4
+    
+    // 2016年3月4日=1月節,2/4
+    s = findSetsugetsu(juliusDate(new Date(2016,2,4)));
+    checkP(1, s[0]); // 2月節
+    checkDate(new Date(2016,1,4), fromJuliusDate(Math.floor(s[1]))); // 2/4
+    // 2016年3月5日=2月節,3/5
+    s = findSetsugetsu(juliusDate(new Date(2016,2,5)));
+    checkP(2, s[0]); // 2月節
+    checkDate(new Date(2016,2,5), fromJuliusDate(Math.floor(s[1]))); // 3/5
+}
+function testChoku() {
+    checkStr("除", choku(juliusDate(new Date(2014,3,16))));
+    checkStr("危", choku(juliusDate(new Date(2014,4,4))));
+    checkStr("危", choku(juliusDate(new Date(2014,4,5))));
 }
