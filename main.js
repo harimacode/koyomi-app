@@ -31,4 +31,5 @@ function main() {
     testFindSetsugetsu();
     testChoku();
     testShuku();
+    testNattin();
 }

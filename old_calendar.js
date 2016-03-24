@@ -483,6 +483,23 @@ function shuku(oldDate) {
     return kShukus[i % kShukus.length];
 }
 
+function nattin(jd) {
+    var kNattins = [
+        "海中金", "爐中火", "大林木", "路傍土", "釼鋒金",
+        "山頭火", "澗下水", "城頭土", "白鑞金", "楊柳木",
+        "井泉水", "屋上土", "霹靂火", "松柏木", "長流水",
+        "沙中金", "山下火", "平地木", "壁上土", "金箔金",
+        "覆燈火", "天河水", "大駅土", "釵釧金", "桑柘木",
+        "大溪水", "沙中土", "天上火", "柘榴木", "大海水",        
+    ];
+    // FIXME: 甲子の日を求めるのが非効率なロジック…
+    var kousi = jd;
+    while (eto(kousi) != "甲子") {
+        --kousi;
+    }
+    return kNattins[Math.floor((jd - kousi) / 2)];
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -692,4 +709,8 @@ function testShuku() {
     checkStr("参", shuku(oldCalendar(juliusDate(new Date(2014,4,1)))));
     checkStr("房", shuku(oldCalendar(juliusDate(new Date(2014,4,12)))));
     checkStr("心", shuku(oldCalendar(juliusDate(new Date(2014,4,13)))));
+}
+function testNattin() {
+    checkStr("沙中土", nattin(juliusDate(new Date(2014,3,16))));
+    checkStr("天上火", nattin(juliusDate(new Date(2014,3,17))));
 }
