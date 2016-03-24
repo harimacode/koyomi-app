@@ -474,6 +474,15 @@ function choku(jd) {
     // alert("NG");
 }
 
+function shuku(oldDate) {
+    var kShukus = "角亢氐房心尾箕斗女虚危室壁奎婁胃昴畢觜参井鬼柳星張翼軫";
+    var kStarts = "室奎胃畢参鬼張角氐心斗虚";
+    var start = kStarts.charAt(oldDate.month - 1);
+    var i = kShukus.indexOf(start);
+    i += oldDate.day - 1;
+    return kShukus[i % kShukus.length];
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -676,4 +685,11 @@ function testChoku() {
     checkStr("危", choku(juliusDate(new Date(2014,4,4))));
     checkStr("危", choku(juliusDate(new Date(2014,4,5))));
     checkStr("除", choku(juliusDate(new Date(2014,3,16,12)))); // jd が整数とならないパターン
+}
+function testShuku() {
+    checkStr("心", shuku(oldCalendar(juliusDate(new Date(2014,3,16)))));
+    checkStr("尾", shuku(oldCalendar(juliusDate(new Date(2014,3,17)))));
+    checkStr("参", shuku(oldCalendar(juliusDate(new Date(2014,4,1)))));
+    checkStr("房", shuku(oldCalendar(juliusDate(new Date(2014,4,12)))));
+    checkStr("心", shuku(oldCalendar(juliusDate(new Date(2014,4,13)))));
 }

@@ -29,4 +29,5 @@ function main() {
     testEto();
     testFindSetsugetsu();
     testChoku();
+    testShuku();
 }
