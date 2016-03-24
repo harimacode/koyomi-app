@@ -17,6 +17,7 @@ function main() {
     // TODO: kyusei
     set('choku', choku(jd));
     set('shuku', shuku(old));
+    set('nattin', nattin(jd));
     
     testJuliusDate();
     testDynamicalTime();
