@@ -16,6 +16,7 @@ function main() {
     set('animalSymbols', eto(jd));
     // TODO: kyusei
     set('choku', choku(jd));
+    set('shuku', shuku(old));
     
     testJuliusDate();
     testDynamicalTime();
