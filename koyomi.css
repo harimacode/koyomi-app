@@ -51,7 +51,7 @@ h1#date .day {
     }
     /* モバイル用デザイン */
     h1#date {
-        font-size: 12vw;
+        font-size: 8vw;
         margin-top: 0;
     }
     #oldDate {
