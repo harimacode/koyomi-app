@@ -40,7 +40,7 @@ h1#date .day {
     color: #cccccc;
     font-size: 0.75em;
     font-weight: normal;
-    margin: 0 0 1.25em 0;
+    margin: 0 0 1em 0;
     text-align: left;
 }
 .box:nth-child(2n+1) {
@@ -78,6 +78,10 @@ address {
         padding: 1vw;
         width: 24vw;
         height: 24vw;
+    }
+    .box .title {
+        font-size: 5vw;
+        margin: 0 0 7vw 0;
     }
     #nijuShisekki {
         margin: 1vw auto;
