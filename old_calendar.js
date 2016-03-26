@@ -560,6 +560,25 @@ function nattin(jd) {
     return kNattins[Math.floor((jd - kousi) / 2)];
 }
 
+/**
+ * 本日が二十四節気の切り替わり日ならその節気を返す。
+ */
+function nijuShisekki(jd) {
+    jd = Math.floor(jd);
+    var kSekkis = [
+        "春分", "清明", "穀雨", "立夏", "小満", "芒種",
+        "夏至", "小暑", "大暑", "立秋", "処暑", "白露",
+        "秋分", "寒露", "霜降", "立冬", "小雪", "大雪",
+        "冬至", "小寒", "大寒", "立春", "雨水", "啓蟄",
+    ];
+    var sekki = findSekki(jd+1, 15);
+    // alert(sekki);
+    if (Math.floor(sekki[1]) == jd) {
+        return kSekkis[sekki[0] / 15];
+    }
+    return "";
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -793,4 +812,9 @@ function testShuku() {
 function testNattin() {
     checkStr("沙中土", nattin(juliusDate(new Date(2014,3,16))));
     checkStr("天上火", nattin(juliusDate(new Date(2014,3,17))));
+}
+function testNijuShisekki() {
+    checkStr("", nijuShisekki(juliusDate(new Date(2014,4,4))));
+    checkStr("立夏", nijuShisekki(juliusDate(new Date(2014,4,5))));
+    checkStr("", nijuShisekki(juliusDate(new Date(2014,4,6))));
 }
