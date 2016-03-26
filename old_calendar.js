@@ -475,20 +475,20 @@ function kyusei(jd) {
     var isYouton = nishi[0] == 270;
     var i = isYouton ? 0 : 8;
     var dir = isYouton ? +1 : -1;
-    // if (diff == 180) {
-    // } else if (diff == 240) {
-    //     alert("特殊ケース:" + fromJuliusDate(d1+180+30));
-    //     // 今回の陽遁・陰遁の長さが 240 日になる場合、
-    //     // 最後の 60 日は閏となり
-    //     // 特に最後の 30 日は次の陰遁・陽遁の一部になります。
-    //     // 特別扱いが必要なのはこの最後の 30 日だけです。
-    //     if (180 + 30 <= days) {
-    //         days -= 240; // days はマイナスになる
-    //         i = isYouton ? 6 : 2;
-    //     }
-    // } else {
-    //     alert("想定外のエラー:" + fromJuliusDate(jd));
-    // }
+    if (diff == 180) {
+    } else if (diff == 240) {
+        // alert("特殊ケース:" + fromJuliusDate(d1+180+30));
+        // 今回の陽遁・陰遁の長さが 240 日になる場合、
+        // 最後の 60 日は閏となり
+        // 特に最後の 30 日は次の陰遁・陽遁の一部になります。
+        // 特別扱いが必要なのはこの最後の 30 日だけです。
+        if (180 + 30 <= days) {
+            days -= 240 + 1; // days はマイナスになる
+            i = isYouton ? 6 : 2;
+        }
+    } else {
+        alert("想定外のエラー:" + fromJuliusDate(jd));
+    }
     
     i += days * dir;
     while (i < 0) {
@@ -741,20 +741,22 @@ function testKyusei() {
     // alert(kyusei(juliusDate(new Date(2016,11,21)))); // 2016/12月21日
     checkStr("六白", kyusei(juliusDate(new Date(2014,3,16))));
     checkStr("七赤", kyusei(juliusDate(new Date(2014,3,17))));
-    
-    // var r = [
-    //     kyusei(juliusDate(new Date(2008,11,17))),
-    //     kyusei(juliusDate(new Date(2008,11,18))),
-    //     kyusei(juliusDate(new Date(2008,11,19))),
-    //     kyusei(juliusDate(new Date(2008,11,20))),
-    //     kyusei(juliusDate(new Date(2008,11,21))),
-    //     kyusei(juliusDate(new Date(2008,11,22))),
-    // ];
+
+    checkStr("八白", kyusei(juliusDate(new Date(2008,11,18))));
+    checkStr("七赤", kyusei(juliusDate(new Date(2008,11,19))));
+    checkStr("七赤", kyusei(juliusDate(new Date(2008,11,20))));
+    checkStr("八白", kyusei(juliusDate(new Date(2008,11,21))));
+
+    checkStr("二黒", kyusei(juliusDate(new Date(1997,5,19))));
+    checkStr("三碧", kyusei(juliusDate(new Date(1997,5,20))));
+    checkStr("三碧", kyusei(juliusDate(new Date(1997,5,21))));
+    checkStr("二黒", kyusei(juliusDate(new Date(1997,5,22))));
+
+    // var r = [];    
+    // for (var i = 0; i < 6; ++i) {
+    //     r.push(kyusei(juliusDate(new Date(1997,5,18+i))));
+    // }
     // alert(r);
-    // checkStr("八白", );
-    // checkStr("七赤", kyusei(juliusDate(new Date(2008,11,19))));
-    // checkStr("七赤", kyusei(juliusDate(new Date(2008,11,20))));
-    // checkStr("八白", kyusei(juliusDate(new Date(2008,11,21))));
     
     // for (var y = 1985; y < 2100; ++y) {
     //     if (y == 1985 || y == 1996 || y == 1997 || y == 2008 ||
