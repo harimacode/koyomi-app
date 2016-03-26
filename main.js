@@ -4,11 +4,10 @@ function set(id, value) {
 function dayOfWeek(dow) {
     return "日月火水木金土".charAt(dow);
 }
-function main() {    
-    var today = new Date(); //new Date(2014,3,16);
-    var month = today.getMonth() + 1; // 月は 0 始まり
-    set("date", '<span class="month">' + month + '</span>月<span class="day">' + today.getDate() + '</span>日(' + dayOfWeek(today.getDay()) + ')');
-    var jd  = juliusDate(today);
+function update() {
+    var month = date.getMonth() + 1; // 月は 0 始まり
+    set("date", '<span class="month">' + month + '</span>月<span class="day">' + date.getDate() + '</span>日(' + dayOfWeek(date.getDay()) + ')');
+    var jd  = juliusDate(date);
     var old = oldCalendar(jd);
     set('oldDate', '旧暦 ' + old);
     set('rokki', rokki(old));
@@ -18,6 +17,22 @@ function main() {
     set('shuku', shuku(old));
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
-    
+}
+function tomorrow() {
+    var ms = date.getTime();
+    ms += 24 * 60 * 60 * 1000;
+    date.setTime(ms);
+    update();
+}
+function yesterday() {
+    var ms = date.getTime();
+    ms -= 24 * 60 * 60 * 1000;
+    date.setTime(ms);
+    update();
+}
+var date;
+function main() {
+    date = new Date();
+    update();
     // runTests();
 }
