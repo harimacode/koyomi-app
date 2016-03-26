@@ -47,6 +47,9 @@ h1 #date .day {
 #koyomi a:hover {
     background-color: #cccccc;
 }
+#koyomi a#today:hover {
+    background-color: transparent;
+}
 #koyomi a.box:nth-child(2n):hover {
     background-color:#999999;
 }
