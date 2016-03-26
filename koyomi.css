@@ -89,7 +89,6 @@ h1 #date .day {
     width: 40em;
 }
 #explanation h2 {
-    /*border: 1px solid red;*/
     float: left;
     font-size: 2em;
     margin: 0 0.5em 0 0;
@@ -162,6 +161,12 @@ address {
     #explanation {
         width: auto;
         margin: 2em;
+    }
+    #explanation h2 {
+        width: auto;
+    }
+    #explanation p {
+        padding: 0;
     }
     address {
         font-size: 4vw;
