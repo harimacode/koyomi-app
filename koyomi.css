@@ -115,7 +115,6 @@ address {
     color: #999999;
     font-size: 1em;
     text-align: center;
-    margin-top: 40em;
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
@@ -163,7 +162,7 @@ address {
     }
     #explanation {
         width: auto;
-        margin: 2em;
+        margin: 5vw;
     }
     #explanation h2 {
         width: auto;
