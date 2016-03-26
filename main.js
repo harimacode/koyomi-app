@@ -25,43 +25,24 @@ function update() {
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
     
-    markEto(newEto);
-    markChoku(newChoku);
-    markShuku(newShuku);
+    // 今解説に表がある項目について、マーカー表示します。
+    markItems([newEto.charAt(0), newEto.charAt(1), // 十干、十二支
+        newChoku, newShuku]); // 直、宿
 }
 
-var jikkan;
-var junishi;
-function markEto(eto) {
-    if (jikkan) {
-        removeClass(jikkan, "marked");
+var marked;
+function markItems(toBeMarked) {
+    if (marked) {
+        marked.forEach(function (item) {
+            removeClass(item, "marked");
+        });
     }
-    if (junishi) {
-        removeClass(junishi, "marked");
-    }
-    jikkan = document.getElementById(eto.charAt(0));
-    junishi = document.getElementById(eto.charAt(1));
-    [jikkan, junishi].forEach(function (e) {
+    marked = [];
+    toBeMarked.forEach(function (item) {
+        var e = document.getElementById(item);
         addClass(e, "marked");
+        marked.push(e);
     });
-}
-
-var markedChoku;
-function markChoku(choku) {
-    if (markedChoku) {
-        removeClass(markedChoku, "marked");
-    }
-    markedChoku = document.getElementById(choku);
-    addClass(markedChoku, "marked");
-}
-
-var markedShuku;
-function markShuku(shuku) {
-    if (markedShuku) {
-        removeClass(markedShuku, "marked");
-    }
-    markedShuku = document.getElementById(shuku);
-    addClass(markedShuku, "marked");
 }
 
 function today() {
