@@ -22,6 +22,8 @@ h1 #date .month,
 h1 #date .day {
     font-size: 1.5em;
 }
+.dayOfWeek0 { color: #ff6633; }
+.dayOfWeek6 { color: #3366ff; }
 .navi {
     background-color: #999999;
     border-radius: 1em;

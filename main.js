@@ -6,7 +6,11 @@ function dayOfWeek(dow) {
 }
 function update() {
     var month = date.getMonth() + 1; // 月は 0 始まり
-    set("date", '<span class="month">' + month + '</span>月<span class="day">' + date.getDate() + '</span>日(' + dayOfWeek(date.getDay()) + ')');
+    var dateString = "";
+    dateString += '<span class="month">' + month + '</span>月';
+    dateString += '<span class="day">' + date.getDate() + '</span>日';
+    dateString += '<span class="dayOfWeek' + date.getDay() + '">(' + dayOfWeek(date.getDay()) + ')</span>';
+    set("date", dateString);
     var jd  = juliusDate(date);
     var old = oldCalendar(jd);
     set('oldDate', '旧暦 ' + old);
