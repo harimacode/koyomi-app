@@ -248,7 +248,7 @@ function findSekki(t, byAngle, offset) {
     }
     // t が期待する時刻
     var jst = t + (9/24);
-    return [angle - offset, jst];
+    return [normalizeAngle(angle - offset), jst];
 }
 
 /**
@@ -436,6 +436,66 @@ function eto(jd) {
     var days = Math.floor(jd) - Math.floor(juliusDate(new Date(1873, 0, 12)));
     return kJikkan[days % kJikkan.length] +
            kJunishi[days % kJunishi.length];
+}
+
+function kyusei(jd) {
+    var kKyuseis = [
+        "一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫",        
+    ];
+    jd = Math.floor(jd);
+    // 対象の日を含む二至
+    var nishi = findSekki(jd+1, 180, 90);
+    // 次の二至
+    var theOther = findSekki(nishi[1]+240, 180, 90);
+    // alert(nishi);
+    // alert(theOther);
+    
+    var days;
+    var d1 = Math.floor(nishi[1]);
+    while (eto(d1) != "甲子") {
+        --d1;
+    }
+    days = Math.floor(nishi[1]) - d1;
+    if (days > 29) {
+        d1 += 60; // 基準日
+    }
+    
+    var d2 = Math.floor(theOther[1]);
+    while (eto(d2) != "甲子") {
+        --d2;
+    }
+    days = Math.floor(theOther[1]) - d2;
+    if (days > 29) {
+        d2 += 60; // 基準日
+    }
+    
+    var diff = d2 - d1;
+    days = jd - d1;
+    
+    var isYouton = nishi[0] == 270;
+    var i = isYouton ? 0 : 8;
+    var dir = isYouton ? +1 : -1;
+    // if (diff == 180) {
+    // } else if (diff == 240) {
+    //     alert("特殊ケース:" + fromJuliusDate(d1+180+30));
+    //     // 今回の陽遁・陰遁の長さが 240 日になる場合、
+    //     // 最後の 60 日は閏となり
+    //     // 特に最後の 30 日は次の陰遁・陽遁の一部になります。
+    //     // 特別扱いが必要なのはこの最後の 30 日だけです。
+    //     if (180 + 30 <= days) {
+    //         days -= 240; // days はマイナスになる
+    //         i = isYouton ? 6 : 2;
+    //     }
+    // } else {
+    //     alert("想定外のエラー:" + fromJuliusDate(jd));
+    // }
+    
+    i += days * dir;
+    while (i < 0) {
+        i += kKyuseis.length;
+    }
+    // alert(i);
+    return kKyuseis[i % kKyuseis.length];
 }
 
 function findSetsugetsu(jd) {
@@ -675,6 +735,43 @@ function testEto() {
     checkStr("戊午", eto(juliusDate(new Date(2014,3,17))));
     checkStr("己未", eto(juliusDate(new Date(2014,3,18))));
     checkStr("庚申", eto(juliusDate(new Date(2014,3,19))));
+}
+function testKyusei() {
+    // alert(kyusei(juliusDate(new Date(2016,5,21)))); // 2016/6月21日
+    // alert(kyusei(juliusDate(new Date(2016,11,21)))); // 2016/12月21日
+    checkStr("六白", kyusei(juliusDate(new Date(2014,3,16))));
+    checkStr("七赤", kyusei(juliusDate(new Date(2014,3,17))));
+    
+    // var r = [
+    //     kyusei(juliusDate(new Date(2008,11,17))),
+    //     kyusei(juliusDate(new Date(2008,11,18))),
+    //     kyusei(juliusDate(new Date(2008,11,19))),
+    //     kyusei(juliusDate(new Date(2008,11,20))),
+    //     kyusei(juliusDate(new Date(2008,11,21))),
+    //     kyusei(juliusDate(new Date(2008,11,22))),
+    // ];
+    // alert(r);
+    // checkStr("八白", );
+    // checkStr("七赤", kyusei(juliusDate(new Date(2008,11,19))));
+    // checkStr("七赤", kyusei(juliusDate(new Date(2008,11,20))));
+    // checkStr("八白", kyusei(juliusDate(new Date(2008,11,21))));
+    
+    // for (var y = 1985; y < 2100; ++y) {
+    //     if (y == 1985 || y == 1996 || y == 1997 || y == 2008 ||
+    //         y == 2019 || y == 2020 || y == 2031 || y == 2042 ||
+    //         y == 2054 || y == 2065 || y == 2076 || y == 2077 ||
+    //         y == 2088 || y == 2099 || y == 2100) {
+    //         continue;
+    //     }
+    //     var ganjitsu = juliusDate(new Date(y,0,1));
+    //     for (var i = 0; i < 365; ++i) {
+    //         kyusei(ganjitsu + i);
+    //     }
+    // }
+    
+    // 九星の閏があり、さらに最後の 30 日間に該当する日時
+    // 特殊ケース:Mon Jul 19 2032 00:00:00 GMT+0900 (JST)
+    // 特殊ケース:Mon Jul 19 2055 00:00:00 GMT+0900 (JST)
 }
 function testFindSetsugetsu() {
     var s;

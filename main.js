@@ -33,4 +33,5 @@ function main() {
     testChoku();
     testShuku();
     testNattin();
+    testKyusei();
 }
