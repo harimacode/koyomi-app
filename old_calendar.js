@@ -439,6 +439,9 @@ function eto(jd) {
 }
 
 function kyusei(jd) {
+    // 本実装では、主に以下を参照しました。
+    // https://ja.wikipedia.org/wiki/%E4%B9%9D%E6%98%9F
+    // http://koyomi.vis.ne.jp/doc/mlwa/200703270.htm
     var kKyuseis = [
         "一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫",        
     ];
