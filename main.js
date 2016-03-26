@@ -46,7 +46,11 @@ function main() {
 }
 
 function parseHash(url) {
-    return decodeURIComponent(url.split('#')[1]);
+    var parts = url.split('#');
+    if (parts.length < 2) {
+        return null;
+    }
+    return decodeURIComponent(parts[1]);
 }
 function addClass(e, cls) {
     var a = e.getAttribute("class");
@@ -66,8 +70,14 @@ function removeClass(e, cls) {
     e.setAttribute("class", newClasses.join(' '));
 }
 window.addEventListener("hashchange", function (e) {
-    var oldBox = document.getElementById(parseHash(e.oldURL));
-    removeClass(oldBox, "marked");
-    var newBox = document.getElementById(parseHash(e.newURL));
-    addClass(newBox, "marked");
+    var oldHash = parseHash(e.oldURL);
+    if (oldHash) {
+        var oldBox = document.getElementById(oldHash);
+        removeClass(oldBox, "marked");
+    }
+    var newHash = parseHash(e.newURL);
+    if (newHash) {
+        var newBox = document.getElementById(newHash);
+        addClass(newBox, "marked");
+    }
 }, true);
