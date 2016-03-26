@@ -20,5 +20,5 @@ function main() {
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
     
-    runTests();
+    // runTests();
 }
