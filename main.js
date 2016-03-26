@@ -15,13 +15,32 @@ function update() {
     var old = oldCalendar(jd);
     set('oldDate', '旧暦 ' + old);
     set('rokki', rokki(old));
-    set('eto', eto(jd));
+    var newEto = eto(jd);
+    set('eto', newEto);
     set('kyusei', kyusei(jd));
     set('choku', choku(jd));
     set('shuku', shuku(old));
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
+    
+    markEto(newEto);
 }
+
+var jikkan;
+var junishi;
+function markEto(eto) {
+    if (jikkan) {
+        removeClass(jikkan, "marked");
+    }
+    if (junishi) {
+        removeClass(junishi, "marked");
+    }
+    jikkan = document.getElementById(eto.charAt(0));
+    junishi = document.getElementById(eto.charAt(1));
+    [jikkan, junishi].forEach(function (e) {
+        addClass(e, "marked");
+    });}
+
 function today() {
     date = new Date();
     update();
