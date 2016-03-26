@@ -1,6 +1,8 @@
 body {
     color: #666666;
     font-family: serif;
+}
+#koyomi {
     text-align: center;
 }
 .header, .footer {
@@ -79,10 +81,39 @@ a.navi:hover {
     margin: 0.1em auto 1em auto;
     height: 1em;
 }
+#explanation {
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    padding: 1em;
+    margin: 2em auto;
+    width: 40em;
+}
+#explanation h2 {
+    /*border: 1px solid red;*/
+    float: left;
+    font-size: 2em;
+    margin: 0 0.5em 0 0;
+    text-align: right;
+    vertical-align: top;
+    width: 3em;
+}
+#explanation p {
+    margin: 0;
+    padding: 0 3em 0 7em;
+    vertical-align: bottom;
+}
+#explanation hr {
+    clear: both;
+    border: none;
+    border-bottom: 1px dotted #999999;
+    margin: 1em 0;
+}
 address {
     font-style: normal;
     color: #999999;
     font-size: 1em;
+    text-align: center;
+    margin-top: 40em;
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
@@ -127,6 +158,10 @@ address {
     #nijuShisekki {
         margin: 1vw auto;
         height: 8vw;
+    }
+    #explanation {
+        width: auto;
+        margin: 2em;
     }
     address {
         font-size: 4vw;

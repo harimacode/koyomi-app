@@ -9,26 +9,46 @@
         <script type="text/javascript" src="main.js"></script>
     </head>
     <body onload="main()">
-        <a href="#" onclick="today()"><img class="header" src="img/Five_Elements_and_Pentagram.png" /></a>
-        
-        <h1>
-            <a href="#" class="navi" onclick="yesterday()">&laquo;</a>
-            <span id="date"></span>
-            <a href="#" class="navi" onclick="tomorrow()">&raquo;</a>
-        </h1>
-        <p id="oldDate"></p>
-        
-        <div class="box"><div class="title">六輝</div><div id="rokki"></div></div><!--
-        --><div class="box"><div class="title">干支</div><div id="eto"></div></div><!--
-        --><div class="box"><div class="title">九星</div><div id="kyusei"></div></div><!--
-        --><div class="box"><div class="title">直</div><div id="choku"></div></div><!--
-        --><div class="box"><div class="title">宿</div><div id="shuku"></div></div><!--
-        --><div class="box"><div class="title">納音</div><div id="nattin"></div></div> 
-        
-        <p class="box" id="nijuShisekki"></p>
-        
-        <img class="footer" src="img/4×5.png" />
-        
+        <div id="koyomi">
+            <a href="#" onclick="today()"><img class="header" src="img/Five_Elements_and_Pentagram.png" /></a>
+            
+            <h1>
+                <a href="#" class="navi" onclick="yesterday()">&laquo;</a>
+                <span id="date"></span>
+                <a href="#" class="navi" onclick="tomorrow()">&raquo;</a>
+            </h1>
+            <p id="oldDate"></p>
+            
+            <a href="#六輝" class="box"><div class="title">六輝</div><div id="rokki"></div></a><!--
+            --><a href="#干支" class="box"><div class="title">干支</div><div id="eto"></div></a><!--
+            --><a href="#九星" class="box"><div class="title">九星</div><div id="kyusei"></div></a><!--
+            --><a href="#直" class="box"><div class="title">直</div><div id="choku"></div></adiv><!--
+            --><a href="#宿" class="box"><div class="title">宿</div><div id="shuku"></div></a><!--
+            --><a href="#納音" class="box"><div class="title">納音</div><div id="nattin"></div></a> 
+            
+            <p class="box" id="nijuShisekki"></p>
+            
+            <img class="footer" src="img/4×5.png" />
+        </div>
+        <div id="explanation">
+            <h2 id="六輝">六輝</h2>
+            <p>諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)</p>
+            <hr>
+            <h2 id="干支">干支</h2>
+            <p>木の幹にあたる”十干”と枝にあたる”十二支”を合わせて<strong>状態</strong>を表すものです。</p>
+            <hr>
+            <h2 id="九星">九星</h2>
+            <p>運命の流れの数学的な基本概念を表すガイドとして<strong>紫白</strong>九星(七色星)を採用。</p>
+            <hr>
+            <h2 id="直">直</h2>
+            <p>十二直。北斗七星信仰に由来するもので、<strong>吉凶</strong>がよくあたると重宝されています。</p>
+            <hr>
+            <h2 id="宿">宿</h2>
+            <p>インド由来の古法二十七宿を採用。<strong>星々</strong>に対応し<strong>様々</strong>な吉凶判断にも用います。</p>
+            <hr>
+            <h2 id="納音">納音</h2>
+            <p>物事の吉凶(人の気の現出)が変動するときに出る音のことで、<strong>兆し</strong>を読みます。</p>
+        </div>
         <address>&copy; 2016 東京☆播磨陰陽道研究会<br />(窓際組)</address>
     </body>
 </html>
