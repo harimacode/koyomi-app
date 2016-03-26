@@ -18,6 +18,7 @@ function main() {
     set('choku', choku(jd));
     set('shuku', shuku(old));
     set('nattin', nattin(jd));
+    set('nijuShisekki', nijuShisekki(jd) + "　");
     
     testJuliusDate();
     testDynamicalTime();
