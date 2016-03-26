@@ -114,6 +114,7 @@ h1 #date .day {
 #explanation th {
     font-size: 1.5em;
     vertical-align: center;
+    white-space: nowrap;
 }
 #explanation hr {
     clear: both;
