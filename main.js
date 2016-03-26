@@ -22,21 +22,3 @@ function main() {
     
     runTests();
 }
-function runTests() {
-    testJuliusDate();
-    testDynamicalTime();
-    testSolarEclipticLongitude();
-    testLunarEclipticLongitude();
-    testFindNibunNishi();
-    testFindChukis();
-    testFindSaku();
-    testOldCalendar();
-    testRokki();
-    testEto();
-    testKyusei();
-    testFindSetsugetsu();
-    testChoku();
-    testShuku();
-    testNattin();
-    testNijuShisekki();
-}

@@ -818,3 +818,22 @@ function testNijuShisekki() {
     checkStr("立夏", nijuShisekki(juliusDate(new Date(2014,4,5))));
     checkStr("", nijuShisekki(juliusDate(new Date(2014,4,6))));
 }
+
+function runTests() {
+    testJuliusDate();
+    testDynamicalTime();
+    testSolarEclipticLongitude();
+    testLunarEclipticLongitude();
+    testFindNibunNishi();
+    testFindChukis();
+    testFindSaku();
+    testOldCalendar();
+    testRokki();
+    testEto();
+    testKyusei();
+    testFindSetsugetsu();
+    testChoku();
+    testShuku();
+    testNattin();
+    testNijuShisekki();
+}
