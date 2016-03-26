@@ -18,6 +18,10 @@ function update() {
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
 }
+function today() {
+    date = new Date();
+    update();
+}
 function tomorrow() {
     var ms = date.getTime();
     ms += 24 * 60 * 60 * 1000;
@@ -32,7 +36,6 @@ function yesterday() {
 }
 var date;
 function main() {
-    date = new Date();
-    update();
+    today();
     // runTests();
 }
