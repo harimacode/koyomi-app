@@ -1,11 +1,11 @@
 body {
-    color: #333333;
+    color: #666666;
     font-family: serif;
     text-align: center;
 }
 .header, .footer {
     margin: 1em;
-    width: 7em;
+    width: 6.5em;
 }
 h1#date {
     font-size: 3em;
@@ -19,16 +19,22 @@ h1#date {
     margin-bottom: 1em;
 }
 .box {
-    background-color: #dddddd;
+    background-color: #666666;
+    color: white;
     display: inline-block;
-    font-size: 2em;
-    margin: 0.1em;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0.3em;
     padding: 0.1em;
     text-align: right;
     line-height: 5em;
     vertical-align: bottom;
     width: 3.2em;
     height: 3.2em;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.box:nth-child(2n+1) {
+    background-color: #999999;
 }
 #nijuShisekki {
     display: block;
@@ -37,7 +43,7 @@ h1#date {
 }
 @media (max-width: 768px) {
     .header, .footer {
-        width: 29vw;
+        width: 26vw;
     }
     /* モバイル用デザイン */
     h1#date {
@@ -49,14 +55,14 @@ h1#date {
         margin-bottom: 3vw;
     }
     .box {
-        font-size: 8vw;
-        margin: 1vw;
+        font-size: 7vw;
+        margin: 2vw;
         padding: 1vw;
-        width: 27vw;
-        height: 27vw;
+        width: 24vw;
+        height: 24vw;
     }
     #nijuShisekki {
         margin: 1vw auto;
-        height: 9vw;
+        height: 8vw;
     }
 }
