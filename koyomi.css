@@ -9,6 +9,9 @@ body {
     margin: 1em;
     width: 6.5em;
 }
+#today {
+    display: inline-block;
+}
 h1 {
     font-size: 1em;
     margin: 0;
@@ -42,7 +45,10 @@ h1 #date .day {
     text-decoration: none;
 }
 #koyomi a:hover {
-    background-color: black;
+    background-color: #cccccc;
+}
+#koyomi a.box:nth-child(2n):hover {
+    background-color:#999999;
 }
 #oldDate {
     font-size: 1.5em;
