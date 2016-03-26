@@ -737,8 +737,6 @@ function testEto() {
     checkStr("庚申", eto(juliusDate(new Date(2014,3,19))));
 }
 function testKyusei() {
-    // alert(kyusei(juliusDate(new Date(2016,5,21)))); // 2016/6月21日
-    // alert(kyusei(juliusDate(new Date(2016,11,21)))); // 2016/12月21日
     checkStr("六白", kyusei(juliusDate(new Date(2014,3,16))));
     checkStr("七赤", kyusei(juliusDate(new Date(2014,3,17))));
 
@@ -757,23 +755,6 @@ function testKyusei() {
     //     r.push(kyusei(juliusDate(new Date(1997,5,18+i))));
     // }
     // alert(r);
-    
-    // for (var y = 1985; y < 2100; ++y) {
-    //     if (y == 1985 || y == 1996 || y == 1997 || y == 2008 ||
-    //         y == 2019 || y == 2020 || y == 2031 || y == 2042 ||
-    //         y == 2054 || y == 2065 || y == 2076 || y == 2077 ||
-    //         y == 2088 || y == 2099 || y == 2100) {
-    //         continue;
-    //     }
-    //     var ganjitsu = juliusDate(new Date(y,0,1));
-    //     for (var i = 0; i < 365; ++i) {
-    //         kyusei(ganjitsu + i);
-    //     }
-    // }
-    
-    // 九星の閏があり、さらに最後の 30 日間に該当する日時
-    // 特殊ケース:Mon Jul 19 2032 00:00:00 GMT+0900 (JST)
-    // 特殊ケース:Mon Jul 19 2055 00:00:00 GMT+0900 (JST)
 }
 function testFindSetsugetsu() {
     var s;
