@@ -41,5 +41,33 @@ function yesterday() {
 var date;
 function main() {
     today();
+    
     // runTests();
 }
+
+function parseHash(url) {
+    return decodeURIComponent(url.split('#')[1]);
+}
+function addClass(e, cls) {
+    var a = e.getAttribute("class");
+    var classes = a ? a.split(' ') : [];
+    classes.push(cls);
+    e.setAttribute("class", classes.join(' '));
+}
+function removeClass(e, cls) {
+    var newClasses = [];
+    var a = e.getAttribute("class");
+    var classes = a ? a.split(' ') : [];
+    classes.forEach(function (c) {
+        if (c != cls) {
+            newClasses.push(c);
+        }
+    });
+    e.setAttribute("class", newClasses.join(' '));
+}
+window.addEventListener("hashchange", function (e) {
+    var oldBox = document.getElementById(parseHash(e.oldURL));
+    removeClass(oldBox, "marked");
+    var newBox = document.getElementById(parseHash(e.newURL));
+    addClass(newBox, "marked");
+}, true);

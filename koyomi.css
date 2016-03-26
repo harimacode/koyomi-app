@@ -107,6 +107,9 @@ h1 #date .day {
     border-bottom: 1px dotted #999999;
     margin: 1em 0;
 }
+.marked {
+    background-color: yellow;
+}
 address {
     font-style: normal;
     color: #999999;
