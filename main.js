@@ -7,13 +7,12 @@ function dayOfWeek(dow) {
 function main() {    
     var today = new Date(); //new Date(2014,3,16);
     var month = today.getMonth() + 1; // 月は 0 始まり
-    set("date", month + '/' + today.getDate());
-    set('dayOfWeek', dayOfWeek(today.getDay()));
+    set("date", month + '月' + today.getDate() + '日(' + dayOfWeek(today.getDay()) + ')');
     var jd  = juliusDate(today);
     var old = oldCalendar(jd);
-    set('oldCalendar', old);
+    set('oldDate', '旧暦 ' + old);
     set('rokki', rokki(old));
-    set('animalSymbols', eto(jd));
+    set('eto', eto(jd));
     set('kyusei', kyusei(jd));
     set('choku', choku(jd));
     set('shuku', shuku(old));

@@ -1,39 +1,22 @@
 <html>
     <head>
         <title>播磨国陰陽暦</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="koyomi.css" />
         <script type="text/javascript" src="old_calendar.js"></script>
         <script type="text/javascript" src="main.js"></script>
     </head>
     <body onload="main()">
-        <table border="border">
-            <tr>
-                <th rowspan="2">西暦</th>
-                <th rowspan="2">七曜</th>
-                <th rowspan="2">旧暦</th>
-                <th>六輝</th>
-                <th>干支</th>
-                <th>九星</th>
-                <th>直</th>
-                <th>宿</th>
-                <th>納音</th>
-            </tr>
-            <tr>
-                <th colspan="6">二十四節気</th>
-            </tr>
-            <tr>
-                <td rowspan="2" id="date"></td>
-                <td rowspan="2" id="dayOfWeek"></td>
-                <td rowspan="2" id="oldCalendar"></td>
-                <td id="rokki"></td>
-                <td id="animalSymbols"></td>
-                <td id="kyusei"></td>
-                <td id="choku"></td>
-                <td id="shuku"></td>
-                <td id="nattin"></td>
-            </tr>
-            <tr>
-                <td colspan="6" id="nijuShisekki"></td>
-            </tr>
-        </table>
+        <h1 id="date"></h1>
+        <p id="oldDate"></p>
+        
+        <div class="box" id="rokki"></div>
+        <div class="box" id="eto"></div>
+        <div class="box" id="kyusei"></div>
+        <div class="box" id="choku"></div>
+        <div class="box" id="shuku"></div>
+        <div class="box" id="nattin"></div> 
+        
+        <p class="box" id="nijuShisekki"></p>
     </body>
 </html>

@@ -1,0 +1,28 @@
+body {
+    color: #333333;
+    font-family: serif;
+    text-align: center;
+}
+h1#date {
+    font-size: 12vw;
+    margin: 9vw 0 0 0;
+}
+#oldDate {
+    font-size: 6vw;
+    margin: 0 0 3vw 0;
+}
+.box {
+    background-color: #dddddd;
+    display: inline-block;
+    font-size: 9vw;
+    margin: 1vw;
+    padding: 1vw;
+    text-align: right;
+    vertical-align: bottom;
+    width: 27vw;
+    height: 27vw;
+}
+#nijuShisekki {
+    width: 27vw;
+    height: 9vw;
+}
