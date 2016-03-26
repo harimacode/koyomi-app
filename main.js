@@ -18,12 +18,14 @@ function update() {
     var newEto = eto(jd);
     set('eto', newEto);
     set('kyusei', kyusei(jd));
-    set('choku', choku(jd));
+    var newChoku = choku(jd);
+    set('choku', newChoku);
     set('shuku', shuku(old));
     set('nattin', nattin(jd));
     set('nijuShisekki', nijuShisekki(jd) + "　");
     
     markEto(newEto);
+    markChoku(newChoku);
 }
 
 var jikkan;
@@ -39,7 +41,17 @@ function markEto(eto) {
     junishi = document.getElementById(eto.charAt(1));
     [jikkan, junishi].forEach(function (e) {
         addClass(e, "marked");
-    });}
+    });
+}
+
+var markedChoku;
+function markChoku(choku) {
+    if (markedChoku) {
+        removeClass(markedChoku, "marked");
+    }
+    markedChoku = document.getElementById(choku);
+    addClass(markedChoku, "marked");
+}
 
 function today() {
     date = new Date();
