@@ -101,6 +101,15 @@ h1 #date .day {
     padding: 0 3em 0 7em;
     vertical-align: bottom;
 }
+#explanation table {
+    margin: 1em auto 0em auto;
+    border: none;
+}
+#explanation td,
+#explanation th {
+    background-color: white;
+    border: none;
+}
 #explanation hr {
     clear: both;
     border: none;
