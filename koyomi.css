@@ -27,14 +27,14 @@ h1#date {
 }
 #nijuShisekki {
     display: block;
-    margin: 1vw auto;
+    margin: 0.1em auto;
     height: 1em;
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
     h1#date {
         font-size: 12vw;
-        margin-bottom: 9vw;
+        margin-top: 9vw;
     }
     #oldDate {
         font-size: 6vw;
@@ -48,6 +48,7 @@ h1#date {
         height: 27vw;
     }
     #nijuShisekki {
+        margin: 1vw auto;
         height: 9vw;
     }
 }
