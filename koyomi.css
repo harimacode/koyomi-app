@@ -93,9 +93,9 @@ h1 #date .day {
 #explanation {
     background-color: #eeeeee;
     border: 1px solid #cccccc;
-    padding: 1em;
+    padding: 1em 3em;
     margin: 2em auto;
-    width: 40em;
+    width: 36em;
 }
 #explanation h2 {
     float: left;
@@ -103,18 +103,17 @@ h1 #date .day {
     margin: 0 0.5em 0 0;
     text-align: right;
     vertical-align: top;
-    width: 3em;
 }
 #explanation p {
     margin: 0;
-    padding: 0 3em 0 7em;
+    padding: 0;
     vertical-align: bottom;
 }
 #explanation table {
     border: 2px solid #666666;
     border-collapse: collapse;
     clear: both;
-    margin: 1em auto 0em auto;
+    margin: 1em 0 0 0;
 }
 #explanation td,
 #explanation th {
@@ -130,7 +129,7 @@ h1 #date .day {
     clear: both;
     border: none;
     border-bottom: 1px dotted #999999;
-    margin: 1em 0;
+    margin: 1em -1.5em;
 }
 .marked {
     background-color: yellow;
@@ -186,11 +185,12 @@ address {
         height: 8vw;
     }
     #explanation {
-        width: auto;
         margin: 5vw;
-    }
-    #explanation h2 {
+        padding: 1em;
         width: auto;
+    }
+    #explanation hr {
+        margin: 1em 0;
     }
     #explanation p {
         padding: 0;
