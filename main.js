@@ -14,7 +14,7 @@ function main() {
     set('oldCalendar', old);
     set('rokki', rokki(old));
     set('animalSymbols', eto(jd));
-    // TODO: kyusei
+    set('kyusei', kyusei(jd));
     set('choku', choku(jd));
     set('shuku', shuku(old));
     set('nattin', nattin(jd));
@@ -29,9 +29,9 @@ function main() {
     testOldCalendar();
     testRokki();
     testEto();
+    testKyusei();
     testFindSetsugetsu();
     testChoku();
     testShuku();
     testNattin();
-    testKyusei();
 }
