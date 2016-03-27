@@ -111,6 +111,10 @@ h1 #date .day {
 .marked {
     background-color: yellow;
 }
+#top {
+    text-align: center;
+    text-decoration: none;
+}
 address {
     font-style: normal;
     color: #999999;
@@ -163,6 +167,20 @@ address {
     #explanation hr {
         margin: 1em -1.5em;
     }
+    #top-fixed {
+        bottom: 2em;
+        left: 0;
+        position: fixed;
+        width: 100%;
+    }
+    #top-container {
+        margin: 0 auto;
+        width: 44em;
+    }
+    #top {
+        width: 1.5em;
+        height: 1.5em;
+    }
     address {
         font-size: 1em;
     }
@@ -186,11 +204,11 @@ address {
         width: 9vw;
         height: 9vw;
     }
-    .navi:nth-child(1) {
+    #yesterday {
         float: left;
         margin-left: 5vw;
     }
-    .navi:nth-child(3) {
+    #tomorrow {
         float: right;
         margin-right: 5vw;
     }
@@ -215,6 +233,14 @@ address {
     }
     #explanation hr {
         margin: 1em 0;
+    }
+    #top-fixed {
+        left: 7vw;
+        bottom: 7vw;
+        position: fixed;
+    }
+    #top {
+        font-size: 5vw;
     }
     address {
         font-size: 4vw;
