@@ -6,10 +6,6 @@ body {
 #footer-container {
     text-align: center;
 }
-.header, .footer {
-    margin: 1em;
-    width: 6.5em;
-}
 #today {
     display: inline-block;
 }
@@ -19,9 +15,7 @@ h1 {
     margin-top: 0;
 }
 h1 #date {
-    font-size: 2em;
     margin: 0;
-    margin-top: 0;
     line-height: 1em;
 }
 h1 #date .month,
@@ -32,14 +26,8 @@ h1 #date .day {
 .dayOfWeek6 { color: #3366ff; }
 .navi {
     background-color: #999999;
-    border-radius: 1em;
     color: white;
     display: inline-block;
-    font-size: 1.5em;
-    margin: -1em 0.5em;
-    padding: -1em;
-    width: 1.5em;
-    height: 1.5em;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 #koyomi a:link {
@@ -55,29 +43,20 @@ h1 #date .day {
     background-color:#999999;
 }
 #oldDate {
-    font-size: 1.5em;
     margin: 0;
-    margin-bottom: 1em;
 }
 .box {
     background-color: #666666;
     color: white;
     display: inline-block;
-    font-size: 1.8em;
     font-weight: bold;
-    margin: 0.3em;
-    padding: 0.1em;
     text-align: right;
     vertical-align: bottom;
-    width: 3.2em;
-    height: 3.2em;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 .box .title {
     color: #cccccc;
-    font-size: 0.75em;
     font-weight: normal;
-    margin: 0 0 1em 0;
     text-align: left;
 }
 .box:nth-child(2n+1) {
@@ -88,15 +67,10 @@ h1 #date .day {
 }
 #nijuShisekki {
     display: block;
-    margin: 0.1em auto 1em auto;
-    height: 1em;
 }
 #explanation {
     background-color: #eeeeee;
     border: 1px solid #cccccc;
-    padding: 1em 3em;
-    margin: 2em auto;
-    width: 36em;
 }
 #explanation h2 {
     float: left;
@@ -130,7 +104,6 @@ h1 #date .day {
     clear: both;
     border: none;
     border-bottom: 1px dotted #999999;
-    margin: 1em -1.5em;
 }
 .marked {
     background-color: yellow;
@@ -138,12 +111,63 @@ h1 #date .day {
 address {
     font-style: normal;
     color: #999999;
-    font-size: 1em;
     text-align: center;
+}
+@media (min-width: 769px) {
+    /* PC・タブレット用表示 */
+    .header, .footer {
+        margin: 1em;
+        width: 6.5em;
+    }
+    h1 {
+        font-size: 1em;
+    }
+    h1 #date {
+        font-size: 2em;
+    }
+    .navi {
+        border-radius: 1em;
+        font-size: 1.5em;
+        margin: -1em 0.5em;
+        padding: -1em;
+        width: 1.5em;
+        height: 1.5em;
+    }
+    #oldDate {
+        font-size: 1.5em;
+        margin-bottom: 1em;
+    }
+    .box {
+        font-size: 1.8em;
+        margin: 0.3em;
+        padding: 0.1em;
+        width: 3.2em;
+        height: 3.2em;
+    }
+    .box .title {
+        font-size: 0.75em;
+        margin: 0 0 1em 0;
+    }
+    #nijuShisekki {
+        margin: 0.1em auto 1em auto;
+        height: 1em;
+    }
+    #explanation {
+        padding: 1em 3em;
+        margin: 2em auto;
+        width: 36em;
+    }
+    #explanation hr {
+        margin: 1em -1.5em;
+    }
+    address {
+        font-size: 1em;
+    }
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
     .header, .footer {
+        margin: 5vw;
         width: 26vw;
     }
     h1 #date {
