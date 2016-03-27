@@ -40,7 +40,7 @@ h1 #date .day {
     background-color: transparent;
 }
 #koyomi a.box:nth-child(2n):hover {
-    background-color:#999999;
+    background-color:#333333;
 }
 #oldDate {
     margin: 0;
