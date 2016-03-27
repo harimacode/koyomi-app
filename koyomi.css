@@ -57,6 +57,7 @@ h1 #date .day {
 .box .title {
     color: #cccccc;
     font-weight: normal;
+    margin: 0;
     text-align: left;
 }
 .box:nth-child(2n+1) {
@@ -71,6 +72,7 @@ h1 #date .day {
 #explanation {
     background-color: #eeeeee;
     border: 1px solid #cccccc;
+    padding: 1em;
 }
 #explanation h2 {
     float: left;
@@ -146,7 +148,7 @@ address {
     }
     .box .title {
         font-size: 0.75em;
-        margin: 0 0 1em 0;
+        margin-bottom: 1em;
     }
     #nijuShisekki {
         margin: 0.1em auto 1em auto;
@@ -172,7 +174,6 @@ address {
     }
     h1 #date {
         font-size: 8vw;
-        margin-top: 0;
     }
     #oldDate {
         font-size: 6vw;
@@ -181,8 +182,6 @@ address {
     .navi {
         border-radius: 8vw;
         font-size: 6vw;
-        margin: 0;
-        padding: 0;
         width: 9vw;
         height: 9vw;
     }
@@ -203,7 +202,7 @@ address {
     }
     .box .title {
         font-size: 5vw;
-        margin: 0 0 7vw 0;
+        margin-bottom: 7vw;
     }
     #nijuShisekki {
         margin: 1vw auto;
@@ -211,14 +210,10 @@ address {
     }
     #explanation {
         margin: 5vw;
-        padding: 1em;
         width: auto;
     }
     #explanation hr {
         margin: 1em 0;
-    }
-    #explanation p {
-        padding: 0;
     }
     address {
         font-size: 4vw;
