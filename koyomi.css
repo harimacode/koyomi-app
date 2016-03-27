@@ -91,6 +91,7 @@ h1 #date .day {
     border-collapse: collapse;
     clear: both;
     margin: 1em 0 0 0;
+    width: 100%;
 }
 #explanation td,
 #explanation th {
