@@ -111,6 +111,9 @@ h1 #date .day {
 .marked {
     background-color: yellow;
 }
+#top-container {
+    position: fixed;
+}
 #top {
     text-align: center;
     text-decoration: none;
@@ -167,19 +170,9 @@ address {
     #explanation hr {
         margin: 1em -1.5em;
     }
-    #top-fixed {
-        bottom: 2em;
-        left: 0;
-        position: fixed;
-        width: 100%;
-    }
     #top-container {
-        margin: 0 auto;
-        width: 44em;
-    }
-    #top {
-        width: 1.5em;
-        height: 1.5em;
+        right: 2em;
+        bottom: 2em;
     }
     address {
         font-size: 1em;
@@ -234,10 +227,9 @@ address {
     #explanation hr {
         margin: 1em 0;
     }
-    #top-fixed {
+    #top-container {
         left: 7vw;
         bottom: 7vw;
-        position: fixed;
     }
     #top {
         font-size: 5vw;
