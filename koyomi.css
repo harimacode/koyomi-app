@@ -31,7 +31,7 @@ h1 #date .day {
     display: inline-block;
 }
 .navi, .box {
-    box-shadow: 1px 2px 4px rgba(0,0,0,0.25);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
 }
 #koyomi a:link {
     text-decoration: none;
