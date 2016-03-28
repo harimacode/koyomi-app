@@ -73,6 +73,7 @@ h1 #date .day {
 }
 #explanation {
     background-color: #eeeeee;
+    color: #333333;
     border: 1px solid #cccccc;
     padding: 1em;
 }
@@ -89,7 +90,7 @@ h1 #date .day {
     vertical-align: bottom;
 }
 #explanation table {
-    border: 2px solid #666666;
+    border: 2px solid #333333;
     border-collapse: collapse;
     clear: both;
     margin: 1em 0 0 0;
@@ -98,7 +99,7 @@ h1 #date .day {
 #explanation td,
 #explanation th {
     background-color: white;
-    border: 1px solid #999999;
+    border: 1px solid #666666;
 }
 #explanation th {
     font-size: 1.5em;
