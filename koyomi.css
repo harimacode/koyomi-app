@@ -10,6 +10,7 @@ body {
     display: inline-block;
 }
 h1 {
+    color: #333333;
     font-size: 1em;
     margin: 0;
     margin-top: 0;
@@ -28,7 +29,9 @@ h1 #date .day {
     background-color: #999999;
     color: white;
     display: inline-block;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.navi, .box {
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.25);
 }
 #koyomi a:link {
     text-decoration: none;
@@ -52,7 +55,6 @@ h1 #date .day {
     font-weight: bold;
     text-align: right;
     vertical-align: bottom;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 .box .title {
     color: #cccccc;
