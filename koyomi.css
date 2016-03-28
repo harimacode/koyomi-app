@@ -73,7 +73,6 @@ h1 #date .day {
 }
 #explanation {
     background-color: #eeeeee;
-    color: #333333;
     border: 1px solid #cccccc;
     padding: 1em;
 }
@@ -93,6 +92,7 @@ h1 #date .day {
     border: 2px solid #333333;
     border-collapse: collapse;
     clear: both;
+    color: #333333;
     margin: 1em 0 0 0;
     width: 100%;
 }
