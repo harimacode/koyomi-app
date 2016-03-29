@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>播磨国陰陽暦</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="koyomi.css" />
+        <script type="text/javascript" src="old_calendar.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <style type="text/css">
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    border-bottom: 1px solid #999999;
+}
+tr td {
+    font-size: 6vw;
+    height: 20vw;
+    vertical-align: top;
+}
+tr > *:nth-child(1) { color: red; }
+tr > *:nth-child(7) { color: blue; }
+
+.newmoon {
+    background-color: #666666;
+    color: white;
+}
+table .date {
+    border: 2px solid transparent;
+    border-radius: 12vw;
+    line-height: 12vw;
+    margin: 0 auto;
+    width: 12vw;
+    height: 12vw;
+}
+table .fullmoon {
+    border: 2px solid #666666;
+}
+
+h1 *:nth-child(2) {
+    margin: 0;
+    line-height: 1em;
+}
+@media (max-width: 768px) {
+    /* モバイル用デザイン */
+    h1 *:nth-child(2) {
+        font-size: 8vw;
+    }
+}
+        </style>
+    </head>
+    <body>
+        <div id="koyomi">
+            <h1>
+                <a href="#" class="navi" id="yesterday" onclick="yesterday()">&laquo;</a>
+                <span class="current"><span class="year">2016</span>年<span class="month">3</span>月</span>
+                <a href="#" class="navi" id="tomorrow" onclick="tomorrow()">&raquo;</a>
+            </h1>
+            <p class="old">平成28年 弥生</p>
+            
+            <table>
+                <tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr>
+                <tr><td><div class="date"></div></td><td><div class="date"></div></td><td><div class="date">1</div></td><td><div class="date">2</div></td><td><div class="date">3</div></td><td><div class="date">4</div></td><td><div class="date">5</div></td></tr>
+                <tr><td><div class="date">6</div></td><td><div class="date">7</div></td><td><div class="date">8</div></td><td><div class="date newmoon">9</div></td><td><div class="date">10</div></td><td><div class="date">11</div></td><td><div class="date">12</div></td></tr>
+                <tr><td><div class="date">13</div></td><td><div class="date">14</div></td><td><div class="date">15</div></td><td><div class="date">16</div></td><td><div class="date">17</div></td><td><div class="date">18</div></td><td><div class="date">19</div></td></tr>
+                <tr><td><div class="date">20</div></td><td><div class="date">21</div></td><td><div class="date">22</div></td><td><div class="date fullmoon">23</div></td><td><div class="date">24</div></td><td><div class="date">25</div></td><td><div class="date">26</div></td></tr>
+                <tr><td><div class="date">27</div></td><td><div class="date">28</div></td><td><div class="date">29</div></td><td><div class="date">30</div></td><td><div class="date">31</div></td><td><div class="date"></div></td><td><div class="date"></div></td></tr>
+            </table>
+        </div>
+        
+        <address>&copy; 2016 東京☆播磨陰陽道研究会<br />(窓際組)</address>
+    </body>
+</html>
