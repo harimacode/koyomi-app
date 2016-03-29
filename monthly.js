@@ -77,8 +77,30 @@ function next() {
     update();
 }
 
+function heiseiYear(y) {
+    return "平成" + (y - 1988) + "年";
+}
+function jaMonth(m) {
+    var kJaNames = [
+        "睦月",
+        "如月",
+        "弥生",
+        "卯月",
+        "皐月",
+        "水無月",
+        "文月",
+        "葉月",
+        "長月",
+        "神無月",
+        "霜月",
+        "師走",
+    ];
+    return kJaNames[m];
+}
+
 function update() {
     document.getElementById("current").innerHTML = '<span class="year">' + month.year + '</span>年<span class="month">' + (month.month+1) + '</span>月';
+    document.getElementById("jaYearMonth").innerHTML = heiseiYear(month.year) + " " + jaMonth(month.month);
     document.getElementById("monthlyCalendar").innerHTML = month.render();
 }
 
