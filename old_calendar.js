@@ -255,11 +255,17 @@ function findSekki(t, byAngle, offset) {
  * @param t 直前の二分二至の時刻
  */
 function findSaku(t) {
+    return findSakuBou(t, 0);
+}
+function findBou(t) {
+    return [findSakuBou(t, -180), findSakuBou(t, 180)];
+}
+function findSakuBou(t, diff) {
     // var orig = t;
     for (var i = 0; ; ++i) {
         var sel = solarEclipticLongitude(t);
         var lel = lunarEclipticLongitude(t);
-        var deltaLambda = lel - sel;
+        var deltaLambda = lel - sel + diff;
         if (i == 0 && deltaLambda < 0) {
             // alert([sel, lel, deltaLambda].join('\n'));
             deltaLambda = normalizeAngle(deltaLambda);

@@ -15,12 +15,13 @@ h1 {
     margin: 0;
     margin-top: 0;
 }
-h1 #date {
+h1 .current {
     margin: 0;
     line-height: 1em;
 }
-h1 #date .month,
-h1 #date .day {
+h1 .current .year,
+h1 .current .month,
+h1 .current .day {
     font-size: 1.5em;
 }
 .dayOfWeek0 { color: #ff6633; }
@@ -45,7 +46,7 @@ h1 #date .day {
 #koyomi a.box:nth-child(2n):hover {
     background-color:#333333;
 }
-#oldDate {
+.old {
     margin: 0;
 }
 .box {
@@ -136,7 +137,7 @@ address {
     h1 {
         font-size: 1em;
     }
-    h1 #date {
+    h1 .current {
         font-size: 2em;
     }
     .navi {
@@ -147,7 +148,7 @@ address {
         width: 1.5em;
         height: 1.5em;
     }
-    #oldDate {
+    .old {
         font-size: 1.5em;
         margin-bottom: 1em;
     }
@@ -188,10 +189,10 @@ address {
         margin: 5vw;
         width: 26vw;
     }
-    h1 #date {
+    h1 .current {
         font-size: 8vw;
     }
-    #oldDate {
+    .old {
         font-size: 6vw;
         margin-bottom: 3vw;
     }
