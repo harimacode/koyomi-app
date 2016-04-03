@@ -14,7 +14,8 @@ function update() {
     var jd  = juliusDate(date);
     var old = oldCalendar(jd);
     set('oldDate', '旧暦 ' + old);
-    set('rokki', rokki(old));
+    var newRokki = rokki(old);
+    set('rokki', newRokki);
     var newEto = eto(jd);
     set('eto', newEto);
     set('kyusei', kyusei(jd));
@@ -26,7 +27,8 @@ function update() {
     set('nijuShisekki', nijuShisekki(jd) + "　");
     
     // 今解説に表がある項目について、マーカー表示します。
-    markItems([newEto.charAt(0), newEto.charAt(1), // 十干、十二支
+    markItems([newRokki, // 六輝
+        newEto.charAt(0), newEto.charAt(1), // 十干、十二支
         newChoku, newShuku]); // 直、宿
 }
 
