@@ -67,17 +67,17 @@ MonthlyCalendar.prototype = {
     },
     render: function () {
         // TODO: もうちょっとモダンな実現方法にしたいな…
-        var s = '<tr>';
+        var s = '<div class="week">';
         var dow = "日月火水木金土";
         for (var i = 0; i < dow.length; ++i) {
-            s += '<th>' + dow.charAt(i) + '</th>';
+            s += '<div class="dayOfWeek">' + dow.charAt(i) + '</div>';
         }
-        s += '</tr>';
+        s += '</div>';
         var that = this;
         this.weeks.forEach(function (week) {
-            s += '<tr>';
+            s += '<div class="week">';
             week.forEach(function (day) {
-                var clz = "date";
+                var clz = "dateContainer";
                 that.fullmoons.forEach(function (fullmoon) {
                     if (that.isSameDay(day, fullmoon)) {
                         clz += " fullmoon";
@@ -88,16 +88,16 @@ MonthlyCalendar.prototype = {
                         clz += " newmoon";
                     }
                 });
-                s += '<td><div class="' + clz + '">';
+                s += '<a href="#" class="' + clz + '"><div class="date">';
                 if (day) {
                 // alert(clz);
                     s += day.getDate();
                 } else {
                     s += "";
                 }
-                s += '</div></td></a>';
+                s += '</div></a>';
             });
-            s += '</tr>'
+            s += '</div>'
         });
         return s;
     },
