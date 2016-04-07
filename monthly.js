@@ -1,3 +1,9 @@
+// FIXME:
+// http://www.hottatakeshi.com/moon.html
+// のうち、以下の日付だけ正しく満月・新月が計算できていない
+// 2007/09/27
+// 2010/01/01
+
 function lastDay(y, m) {
     var nextDay = new Date(y, m + 1);
     var rv = new Date();
@@ -10,13 +16,18 @@ function MonthlyCalendar(year, month) {
     this.month = month;
 
     var date = new Date(year, month);
-    var last = lastDay(year, month);
-    this.newmoon = [fromJuliusDate(findSaku(juliusDate(date))),
-                    fromJuliusDate(findSaku(juliusDate(last)))];
-    var bou = findBou(juliusDate(last));
-    this.fullmoon = [fromJuliusDate(bou[0]),
-                     fromJuliusDate(bou[1])];
-    // alert(this.newmoon + "\n" + this.fullmoon);
+    var jd = juliusDate(lastDay(year, month));
+    var newmoons = [];
+    findSakus(jd).forEach(function (saku) {
+        newmoons.push(fromJuliusDate(saku));
+    });
+    this.newmoons = newmoons;
+    var fullmoons = [];
+    findBous(jd).forEach(function (bou) {
+        fullmoons.push(fromJuliusDate(bou));
+    });
+    // alert(fullmoons.join("\n"));
+    this.fullmoons = fullmoons;
 
     var weeks = [];
     var week = [];
@@ -67,18 +78,16 @@ MonthlyCalendar.prototype = {
             s += '<tr>';
             week.forEach(function (day) {
                 var clz = "date";
-                if (that.isSameDay(day, that.fullmoon[0])) {
-                    clz += " fullmoon";
-                }
-                if (that.isSameDay(day, that.fullmoon[1])) {
-                    clz += " fullmoon";
-                }
-                if (that.isSameDay(day, that.newmoon[0])) {
-                    clz += " newmoon";
-                }
-                if (that.isSameDay(day, that.newmoon[1])) {
-                    clz += " newmoon";
-                }
+                that.fullmoons.forEach(function (fullmoon) {
+                    if (that.isSameDay(day, fullmoon)) {
+                        clz += " fullmoon";
+                    }
+                });
+                that.newmoons.forEach(function (newmoon) {
+                    if (that.isSameDay(day, newmoon)) {
+                        clz += " newmoon";
+                    }
+                });
                 s += '<td><div class="' + clz + '">';
                 if (day) {
                 // alert(clz);

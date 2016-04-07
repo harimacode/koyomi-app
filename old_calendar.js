@@ -310,16 +310,32 @@ function findSakuBou(t, diff) {
  * @param t 直前の二分二至の時刻
  */
 function findSakus(t) {
+    return findSakuBous(t, 0);
+}
+function findBous(t) {
+    var rv = [];
+    [-180, 180].forEach(function (diff) {
+        findSakuBous(t, diff).forEach(function (bou) {
+            rv.push(bou);
+        });
+    });
+    return rv;
+}
+function findSakuBous(t, diff) {
     var nibunNishi = t;
     var rv = [];
     for (var i = 0; i < 5; ++i) {
-        var saku = findSaku(t);
+        var saku = findSakuBou(t, diff);
         if (i != 0 && Math.abs(Math.floor(rv[rv.length - 1]) - Math.floor(saku)) <= 26) {
             t = rv[rv.length - 1] + 35;
-            saku = findSaku(t);
+            saku = findSakuBou(t, diff);
         }
         rv.push(saku);
         t = saku + 30;
+    }
+    
+    if (diff) {
+        return rv;
     }
     
     //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
@@ -329,14 +345,14 @@ function findSakus(t) {
         //      i   二分二至の前の朔の時刻を２組求めてしまう場合。以下の図ように、
         // alert("hit");
         rv.shift();
-        rv.push(findSaku(rv[3] + 35)); // 前の朔 + 35
+        rv.push(findSakuBou(rv[3] + 35, diff)); // 前の朔 + 35
     }
     // TODO: 文献の以下のケースへの対応
     else if (Math.floor(rv[0]) >= Math.floor(nibunNishi)) {
         //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
         //    ［朔１の時刻］≧［直前の二分二至の時刻］
         rv.pop();
-        rv.unshift(findSaku(rv[0] - 27));
+        rv.unshift(findSakuBou(rv[0] - 27, diff));
     }
 
     return rv;
