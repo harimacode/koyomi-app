@@ -9,26 +9,40 @@
         <script type="text/javascript" src="main.js"></script>
         <script type="text/javascript" src="monthly.js"></script>
         <style type="text/css">
-table {
+#monthlyCalendar {
     border-collapse: collapse;
     width: 100%;
 }
-th {
+.dayOfWeek {
     border-bottom: 1px solid #999999;
+    display: inline-block;
+    text-align: center; 
+    width: 13.5vw;
 }
-tr td {
-    font-size: 6vw;
+.week {
     height: 18vw;
+    text-align: left;
+}
+.week:first-child { height: auto; }
+
+.week .dateContainer {
+    display: inline-block;
+    font-size: 6vw;
+    width: 13.5vw;
+    height: 20vw;
+    text-align: center;
     vertical-align: top;
 }
-tr > *:nth-child(1) { color: red; }
-tr > *:nth-child(7) { color: blue; }
+.week > *:nth-child(1) { color: red; }
+.week > *:nth-child(7) { color: blue; }
 
-.newmoon {
+.newmoon .date {
     background-color: #666666;
     color: white;
 }
-table .date {
+.week > .newmoon:nth-child(1) .date { background-color: red; }
+.week > .newmoon:nth-child(7) .date { background-color: blue; }
+#monthlyCalendar .date {
     border: 2px solid transparent;
     border-radius: 12vw;
     line-height: 12vw;
@@ -36,7 +50,9 @@ table .date {
     width: 12vw;
     height: 12vw;
 }
-table .fullmoon {
+#monthlyCalendar .fullmoon:nth-child(1) .date { border: 2px solid red; }
+#monthlyCalendar .fullmoon:nth-child(7) .date { border: 2px solid blue; }
+#monthlyCalendar .fullmoon .date {
     border: 2px solid #666666;
 }
 
@@ -61,8 +77,8 @@ h1 *:nth-child(2) {
             </h1>
             <p class="old" id="jaYearMonth"></p>
             
-            <table id="monthlyCalendar">
-            </table>
+            <div id="monthlyCalendar">
+            </div>
         </div>
         
         <address>&copy; 2016 東京☆播磨陰陽道研究会<br />(窓際組)</address>
