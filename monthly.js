@@ -155,9 +155,21 @@ function update() {
 }
 
 var month;
-function main2() {
-    month = MonthlyCalendar.forDate(new Date());
+function gotoMonthOfHash() {
+    var hash = parseHash(document.location.href);
+    var date = new Date();
+    if (hash) {
+        var comps = hash.split("/");
+        while (comps.length < 3) {
+            comps.push("1");
+        }
+        date = new Date(comps.join("/"));
+    }
+    month = MonthlyCalendar.forDate(date);
     update();
+}
+window.addEventListener('load', function () {
+    gotoMonthOfHash();
 
     document.getElementById("tomorrow").addEventListener("click", function () {
         next();
@@ -166,5 +178,7 @@ function main2() {
         prev();
 
     });
-}
-window.addEventListener('load', main2, false);
+}, false);
+window.addEventListener("hashchange", function (e) {
+    gotoMonthOfHash();
+});
