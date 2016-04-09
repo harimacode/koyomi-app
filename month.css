@@ -33,6 +33,10 @@
     border: 2px solid #666666;
     color: #666666;
 }
+.today .date {
+    font-weight: bold;
+    text-decoration: underline;
+}
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
     h1 {

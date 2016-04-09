@@ -75,6 +75,7 @@
             }
             s += '</div>';
             var that = this;
+            var today = new Date();
             this.weeks.forEach(function (week) {
                 s += '<div class="week">';
                 week.forEach(function (day) {
@@ -82,6 +83,9 @@
                     var date = "";
                     var link = "";
                     if (day) {
+                        if (that.isSameDay(day, today)) {
+                            clz += " today";
+                        }
                         that.fullmoons.forEach(function (fullmoon) {
                             if (that.isSameDay(day, fullmoon)) {
                                 clz += " fullmoon";
