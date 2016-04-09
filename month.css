@@ -41,18 +41,15 @@
     #koyomi {
         margin: 0 2em;
     }
-    .week {
-        height: 1em;
-    }
     .week .dateContainer {
-        font-size: 1.5em;
-        height: 4em;
+        font-size: 2.5vw;
+        height: 12vh;
     }
     #monthlyCalendar .date {
-        border-radius: 2em;
-        line-height: 2em;
-        width: 2em;
-        height: 2em;
+        border-radius: 5vw;
+        line-height: 5vw;
+        width: 5vw;
+        height: 5vw;
     }
 }
 @media (max-width: 768px) {
