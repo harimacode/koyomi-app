@@ -98,6 +98,7 @@ h1 .current .day {
     clear: both;
     color: #333333;
     margin: 1em 0 0 0;
+    ruby-align: center;
     width: 100%;
 }
 #explanation td,
