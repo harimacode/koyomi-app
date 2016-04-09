@@ -216,11 +216,11 @@ address {
         width: 9vw;
         height: 9vw;
     }
-    #yesterday {
+    #prev {
         float: left;
         margin-left: 5vw;
     }
-    #tomorrow {
+    #next {
         float: right;
         margin-right: 5vw;
     }

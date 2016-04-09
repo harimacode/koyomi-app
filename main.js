@@ -55,6 +55,14 @@ function today() {
     date = new Date();
     update();
 }
+function next(e) {
+    gotoDaysAfter(1);
+    e.preventDefault();
+}
+function prev(e) {
+    gotoDaysAfter(-1);
+    e.preventDefault();
+}
 function gotoDaysAfter(n) {
     var ms = date.getTime();
     ms += n * 24 * 60 * 60 * 1000;
@@ -91,12 +99,8 @@ window.addEventListener("load", function (e) {
     }
     
     document.getElementById("today").addEventListener("click", today);
-    document.getElementById("tomorrow").addEventListener("click", function () {
-        gotoDaysAfter(1);
-    });
-    document.getElementById("yesterday").addEventListener("click", function () {
-        gotoDaysAfter(-1);
-    });
+    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("prev").addEventListener("click", prev);
     
     // runTests();
 }, false);

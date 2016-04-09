@@ -105,7 +105,7 @@ MonthlyCalendar.prototype = {
     },
 }
 
-function prev() {
+function prev(e) {
     var y = month.year;
     var m = month.month - 1;
     if (m < 0) {
@@ -114,9 +114,10 @@ function prev() {
     }
     month = new MonthlyCalendar(y, m);
     update();
+    e.preventDefault();
 }
 
-function next() {
+function next(e) {
     var y = month.year;
     var m = month.month + 1;
     if (m > 11) {
@@ -125,6 +126,7 @@ function next() {
     }
     month = new MonthlyCalendar(y, m);
     update();
+    e.preventDefault();
 }
 
 function heiseiYear(y) {
@@ -171,13 +173,8 @@ function gotoMonthOfHash() {
 window.addEventListener('load', function () {
     gotoMonthOfHash();
 
-    document.getElementById("tomorrow").addEventListener("click", function () {
-        next();
-    });
-    document.getElementById("yesterday").addEventListener("click", function () {
-        prev();
-
-    });
+    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("prev").addEventListener("click", prev);
 }, false);
 window.addEventListener("hashchange", function (e) {
     var hash = parseHash(e.newURL);
