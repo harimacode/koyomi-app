@@ -60,13 +60,6 @@ function gotoDate(s) {
     date = new Date(s);
     update();
 } 
-function parseHash(url) {
-    var parts = url.split('#');
-    if (parts.length < 2) {
-        return null;
-    }
-    return decodeURIComponent(parts[1]);
-}
 function addClass(e, cls) {
     var a = e.getAttribute("class");
     var classes = a ? a.split(' ') : [];
