@@ -30,7 +30,12 @@
         var newShuku = shuku(old);
         set('shuku', newShuku);
         set('nattin', nattin(jd));
-        set('nijuShisekki', nijuShisekki(jd) + "　");
+        var tags = [];
+        var newNijuShisekki = nijuShisekki(jd);
+        if (newNijuShisekki) {
+            tags.push('<span class="nijuShisekki">' + newNijuShisekki + '</span>');
+        }
+        set('tags', tags.join(""));
         
         // 今解説に表がある項目について、マーカー表示します。
         markItems([newRokki, // 六輝
