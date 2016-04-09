@@ -1,25 +1,23 @@
 #monthlyCalendar {
+    display: table;
     border-collapse: collapse;
     width: 100%;
 }
-.dayOfWeek {
-    border-bottom: 1px solid #999999;
-    display: inline-block;
-    text-align: center; 
-    width: 13.5vw;
-}
 .week {
+    display: table-row;
     height: 18vw;
-    text-align: left;
 }
 .week:first-child { height: auto; }
 
+.dayOfWeek {
+    border-bottom: 1px solid #999999;
+    display: table-cell;
+}
+
 .week .dateContainer {
-    display: inline-block;
+    display: table-cell;
     font-size: 6vw;
-    width: 13.5vw;
     height: 20vw;
-    text-align: center;
     vertical-align: top;
 }
 .week > * { color: #666666; }
@@ -35,7 +33,6 @@
     border-radius: 12vw;
     line-height: 12vw;
     margin: 0 auto;
-    width: 12vw;
     height: 12vw;
 }
 #monthlyCalendar .fullmoon .date {
