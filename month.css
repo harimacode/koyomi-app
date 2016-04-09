@@ -30,8 +30,6 @@
     background-color: #666666;
     color: white;
 }
-.week > .newmoon:nth-child(1) .date { background-color: red; }
-.week > .newmoon:nth-child(7) .date { background-color: blue; }
 #monthlyCalendar .date {
     border: 2px solid transparent;
     border-radius: 12vw;
@@ -40,10 +38,9 @@
     width: 12vw;
     height: 12vw;
 }
-#monthlyCalendar .fullmoon:nth-child(1) .date { border: 2px solid red; }
-#monthlyCalendar .fullmoon:nth-child(7) .date { border: 2px solid blue; }
 #monthlyCalendar .fullmoon .date {
     border: 2px solid #666666;
+    color: #666666;
 }
 
 h1 *:nth-child(2) {
