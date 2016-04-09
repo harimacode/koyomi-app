@@ -33,6 +33,7 @@
     border-radius: 12vw;
     line-height: 12vw;
     margin: 0 auto;
+    width: 12vw;
     height: 12vw;
 }
 #monthlyCalendar .fullmoon .date {
