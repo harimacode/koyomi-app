@@ -1,0 +1,166 @@
+#footer-container {
+    text-align: center;
+}
+#gotoMonth {
+    position: absolute;
+}
+#today {
+    display: inline-block;
+}
+#koyomi a#today:hover {
+    background-color: transparent;
+}
+.box {
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+}
+#koyomi a.box:nth-child(2n):hover {
+    background-color:#333333;
+}
+.box {
+    background-color: #666666;
+    color: white;
+    display: inline-block;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: bottom;
+}
+.box .title {
+    color: #cccccc;
+    font-weight: normal;
+    margin: 0;
+    text-align: left;
+}
+.box:nth-child(2n+1) {
+    background-color: #999999;
+}
+.box:nth-child(2n+1) .title {
+    color: white;
+}
+#nijuShisekki {
+    display: block;
+}
+#explanation {
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    padding: 1em;
+}
+#explanation h2 {
+    float: left;
+    font-size: 2em;
+    margin: 0 0.5em 0 0;
+    text-align: right;
+    vertical-align: top;
+}
+#explanation p {
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
+}
+#explanation table {
+    border: 2px solid #333333;
+    border-collapse: collapse;
+    clear: both;
+    color: #333333;
+    margin: 1em 0 0 0;
+    ruby-align: center;
+    width: 100%;
+}
+#explanation td,
+#explanation th {
+    background-color: white;
+    border: 1px solid #666666;
+}
+#explanation th {
+    font-size: 1.5em;
+    vertical-align: center;
+    white-space: nowrap;
+}
+#explanation hr {
+    clear: both;
+    border: none;
+    border-bottom: 1px dotted #999999;
+}
+.marked {
+    background-color: yellow;
+}
+#top-container {
+    position: fixed;
+}
+#top {
+    text-align: center;
+    text-decoration: none;
+}
+@media (min-width: 769px) {
+    /* PC・タブレット用表示 */
+    #gotoMonth {
+        left: 2em;
+        top: 2em;
+    }
+    #gotoMonth a {
+        font-size: 2em;
+    }
+    .box {
+        font-size: 1.8em;
+        margin: 0.3em;
+        padding: 0.1em;
+        width: 3.2em;
+        height: 3.2em;
+    }
+    .box .title {
+        font-size: 0.75em;
+        margin-bottom: 1em;
+    }
+    #nijuShisekki {
+        margin: 0.1em auto 1em auto;
+        height: 1em;
+    }
+    #explanation {
+        padding: 1em 3em;
+        margin: 2em auto;
+        width: 36em;
+    }
+    #explanation hr {
+        margin: 1em -1.5em;
+    }
+    #top-container {
+        right: 2em;
+        bottom: 2em;
+    }
+}
+@media (max-width: 768px) {
+    /* モバイル用デザイン */
+    #gotoMonth {
+        font-size: 6vw;
+        left: 7vw;
+        top: 6vw;
+    }
+    .box {
+        font-size: 7vw;
+        margin: 2vw;
+        padding: 1vw;
+        width: 24vw;
+        height: 24vw;
+    }
+    .box .title {
+        font-size: 5vw;
+        margin-bottom: 7vw;
+    }
+    #nijuShisekki {
+        margin: 1vw auto;
+        height: 8vw;
+    }
+    #explanation {
+        margin: 5vw;
+        width: auto;
+    }
+    #explanation hr {
+        margin: 1em 0;
+    }
+    #top-container {
+        left: 7vw;
+        bottom: 7vw;
+    }
+    #top {
+        font-size: 5vw;
+    }
+}
