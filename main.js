@@ -50,12 +50,16 @@ function today() {
     date = new Date();
     update();
 }
-function daysAfter(n) {
+function gotoDaysAfter(n) {
     var ms = date.getTime();
     ms += n * 24 * 60 * 60 * 1000;
     date.setTime(ms);
     update();
 }
+function gotoDate(s) {
+    date = new Date(s);
+    update();
+} 
 function parseHash(url) {
     var parts = url.split('#');
     if (parts.length < 2) {
@@ -81,14 +85,19 @@ function removeClass(e, cls) {
     e.setAttribute("class", newClasses.join(' '));
 }
 window.addEventListener("load", function (e) {
-    today();
+    var hash = parseHash(document.location.href);
+    if (hash) {
+        gotoDate(hash);
+    } else {
+        today();
+    }
     
     document.getElementById("today").addEventListener("click", today);
     document.getElementById("tomorrow").addEventListener("click", function () {
-        daysAfter(+1);
+        gotoDaysAfter(1);
     });
     document.getElementById("yesterday").addEventListener("click", function () {
-        daysAfter(-1);
+        gotoDaysAfter(-1);
     });
     
     // runTests();
@@ -97,12 +106,22 @@ window.addEventListener("hashchange", function (e) {
     var oldHash = parseHash(e.oldURL);
     if (oldHash) {
         var oldBox = document.getElementById(oldHash);
-        removeClass(oldBox, "marked");
+        if (oldBox) {
+            removeClass(oldBox, "marked");
+        }
     }
     var newHash = parseHash(e.newURL);
     if (newHash) {
-        var newBox = document.getElementById(newHash);
-        addClass(newBox, "marked");
+        if (newHash.indexOf("/") > -1) {
+            // 日付指定
+            gotoDate(newHash);
+        } else {
+            // マーク
+            var newBox = document.getElementById(newHash);
+            if (newBox) {
+                addClass(newBox, "marked");
+            }
+        }
     }
 }, false);
 
