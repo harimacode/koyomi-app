@@ -156,8 +156,8 @@ function update() {
 
 var month;
 function gotoMonthOfHash() {
-    var hash = parseHash(document.location.href);
     var date = new Date();
+    var hash = parseHash(document.location.href);
     if (hash) {
         var comps = hash.split("/");
         while (comps.length < 3) {
@@ -180,5 +180,8 @@ window.addEventListener('load', function () {
     });
 }, false);
 window.addEventListener("hashchange", function (e) {
-    gotoMonthOfHash();
+    var hash = parseHash(e.newURL);
+    if (hash) {
+        gotoMonthOfHash();
+    }
 });
