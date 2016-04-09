@@ -45,29 +45,17 @@ function markItems(toBeMarked) {
     });
 }
 
+var date;
 function today() {
     date = new Date();
     update();
 }
-function tomorrow() {
+function daysAfter(n) {
     var ms = date.getTime();
-    ms += 24 * 60 * 60 * 1000;
+    ms += n * 24 * 60 * 60 * 1000;
     date.setTime(ms);
     update();
 }
-function yesterday() {
-    var ms = date.getTime();
-    ms -= 24 * 60 * 60 * 1000;
-    date.setTime(ms);
-    update();
-}
-var date;
-function main() {
-    today();
-    
-    // runTests();
-}
-
 function parseHash(url) {
     var parts = url.split('#');
     if (parts.length < 2) {
@@ -92,6 +80,19 @@ function removeClass(e, cls) {
     });
     e.setAttribute("class", newClasses.join(' '));
 }
+window.addEventListener("load", function (e) {
+    today();
+    
+    document.getElementById("today").addEventListener("click", today);
+    document.getElementById("tomorrow").addEventListener("click", function () {
+        daysAfter(+1);
+    });
+    document.getElementById("yesterday").addEventListener("click", function () {
+        daysAfter(-1);
+    });
+    
+    // runTests();
+}, false);
 window.addEventListener("hashchange", function (e) {
     var oldHash = parseHash(e.oldURL);
     if (oldHash) {
@@ -103,4 +104,5 @@ window.addEventListener("hashchange", function (e) {
         var newBox = document.getElementById(newHash);
         addClass(newBox, "marked");
     }
-}, true);
+}, false);
+
