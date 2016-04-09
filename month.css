@@ -22,9 +22,7 @@
     text-align: center;
     vertical-align: top;
 }
-.week > * {
-    color: #666666;
-}
+.week > * { color: #666666; }
 .week > *:nth-child(1) { color: red; }
 .week > *:nth-child(7) { color: blue; }
 
