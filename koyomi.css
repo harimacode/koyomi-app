@@ -6,6 +6,9 @@ body {
 #footer-container {
     text-align: center;
 }
+#gotoMonth {
+    position: absolute;
+}
 #today {
     display: inline-block;
 }
@@ -133,6 +136,13 @@ address {
         margin: 1em;
         width: 6.5em;
     }
+    #gotoMonth {
+        left: 2em;
+        top: 2em;
+    }
+    #gotoMonth a {
+        font-size: 2em;
+    }
     h1 {
         font-size: 1em;
     }
@@ -187,6 +197,11 @@ address {
     .header, .footer {
         margin: 5vw;
         width: 26vw;
+    }
+    #gotoMonth {
+        font-size: 6vw;
+        left: 7vw;
+        top: 6vw;
     }
     h1 .current {
         font-size: 8vw;

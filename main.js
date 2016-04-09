@@ -5,6 +5,11 @@ function dayOfWeek(dow) {
     return "日月火水木金土".charAt(dow);
 }
 function update() {
+    // 月表示の更新
+    var month = date.getMonth() + 1;
+    var yearMonth = [date.getFullYear(), month].join("/"); 
+    document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; '+ month +'月</a>';
+    
     var month = date.getMonth() + 1; // 月は 0 始まり
     var dateString = "";
     dateString += '<span class="month">' + month + '</span>月';
