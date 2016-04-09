@@ -22,11 +22,9 @@ h1 .current {
 .dayOfWeek6 { color: #3366ff; }
 .navi {
     background-color: #999999;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
     color: white;
     display: inline-block;
-}
-.navi {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
 }
 #koyomi a:link {
     text-decoration: none;
@@ -86,6 +84,7 @@ address {
     .navi {
         border-radius: 8vw;
         font-size: 6vw;
+        margin-top: 3vw;
         width: 9vw;
         height: 9vw;
     }
