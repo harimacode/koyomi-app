@@ -15,9 +15,7 @@ h1 .current {
     margin: 0;
     line-height: 1em;
 }
-h1 .current .year,
-h1 .current .month,
-h1 .current .day {
+.keyNumber {
     font-size: 1.5em;
 }
 .dayOfWeek0 { color: #ff6633; }

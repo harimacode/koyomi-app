@@ -9,12 +9,12 @@
         // 月表示の更新
         var month = date.getMonth() + 1;
         var yearMonth = [date.getFullYear(), month].join("/"); 
-        document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; '+ month +'月</a>';
+        document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
         
         var month = date.getMonth() + 1; // 月は 0 始まり
         var dateString = "";
-        dateString += '<span class="month">' + month + '</span>月';
-        dateString += '<span class="day">' + date.getDate() + '</span>日';
+        dateString += '<span class="keyNumber">' + month + '</span>月';
+        dateString += '<span class="keyNumber">' + date.getDate() + '</span>日';
         dateString += '<span class="dayOfWeek' + date.getDay() + '">(' + dayOfWeek(date.getDay()) + ')</span>';
         set("date", dateString);
         var jd  = juliusDate(date);
