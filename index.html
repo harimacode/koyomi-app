@@ -6,16 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="koyomi.css" />
         <script type="text/javascript" src="old_calendar.js"></script>
+        <script type="text/javascript" src="utils.js"></script>
         <script type="text/javascript" src="main.js"></script>
     </head>
-    <body onload="main()">
+    <body>
         <div id="koyomi">
-            <a href="#" id="today" onclick="today()"><img class="header" src="img/Five_Elements_and_Pentagram.png" /></a>
+            <div id="gotoMonth"></div>
+            <a href="#" id="today"><img class="header" src="img/Five_Elements_and_Pentagram.png" /></a>
             
             <h1>
-                <a href="#" class="navi" id="yesterday" onclick="yesterday()">&laquo;</a>
+                <a href="#" class="navi" id="yesterday">&laquo;</a>
                 <span class="current" id="date"></span>
-                <a href="#" class="navi" id="tomorrow" onclick="tomorrow()">&raquo;</a>
+                <a href="#" class="navi" id="tomorrow">&raquo;</a>
             </h1>
             <p class="old" id="oldDate"></p>
             

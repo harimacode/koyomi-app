@@ -78,23 +78,25 @@ MonthlyCalendar.prototype = {
             s += '<div class="week">';
             week.forEach(function (day) {
                 var clz = "dateContainer";
-                that.fullmoons.forEach(function (fullmoon) {
-                    if (that.isSameDay(day, fullmoon)) {
-                        clz += " fullmoon";
-                    }
-                });
-                that.newmoons.forEach(function (newmoon) {
-                    if (that.isSameDay(day, newmoon)) {
-                        clz += " newmoon";
-                    }
-                });
-                s += '<a href="#" class="' + clz + '"><div class="date">';
+                var date = "";
+                var link = "";
                 if (day) {
-                // alert(clz);
-                    s += day.getDate();
-                } else {
-                    s += "";
+                    that.fullmoons.forEach(function (fullmoon) {
+                        if (that.isSameDay(day, fullmoon)) {
+                            clz += " fullmoon";
+                        }
+                    });
+                    that.newmoons.forEach(function (newmoon) {
+                        if (that.isSameDay(day, newmoon)) {
+                            clz += " newmoon";
+                        }
+                    });
+                    date = day.getDate();
+                    var dateString = [that.year, that.month + 1, date].join('/');
+                    link = 'href="index.html#' + dateString + '"';
                 }
+                s += '<a class="' + clz + '" ' + link + '><div class="date">';
+                s += date;
                 s += '</div></a>';
             });
             s += '</div>'
@@ -153,9 +155,21 @@ function update() {
 }
 
 var month;
-function main2() {
-    month = MonthlyCalendar.forDate(new Date());
+function gotoMonthOfHash() {
+    var date = new Date();
+    var hash = parseHash(document.location.href);
+    if (hash) {
+        var comps = hash.split("/");
+        while (comps.length < 3) {
+            comps.push("1");
+        }
+        date = new Date(comps.join("/"));
+    }
+    month = MonthlyCalendar.forDate(date);
     update();
+}
+window.addEventListener('load', function () {
+    gotoMonthOfHash();
 
     document.getElementById("tomorrow").addEventListener("click", function () {
         next();
@@ -164,5 +178,10 @@ function main2() {
         prev();
 
     });
-}
-window.addEventListener('load', main2, false);
+}, false);
+window.addEventListener("hashchange", function (e) {
+    var hash = parseHash(e.newURL);
+    if (hash) {
+        gotoMonthOfHash();
+    }
+});

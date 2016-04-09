@@ -5,68 +5,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="koyomi.css" />
+        <link rel="stylesheet" type="text/css" href="month.css" />
         <script type="text/javascript" src="old_calendar.js"></script>
-        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript" src="utils.js"></script>
         <script type="text/javascript" src="monthly.js"></script>
-        <style type="text/css">
-#monthlyCalendar {
-    border-collapse: collapse;
-    width: 100%;
-}
-.dayOfWeek {
-    border-bottom: 1px solid #999999;
-    display: inline-block;
-    text-align: center; 
-    width: 13.5vw;
-}
-.week {
-    height: 18vw;
-    text-align: left;
-}
-.week:first-child { height: auto; }
-
-.week .dateContainer {
-    display: inline-block;
-    font-size: 6vw;
-    width: 13.5vw;
-    height: 20vw;
-    text-align: center;
-    vertical-align: top;
-}
-.week > *:nth-child(1) { color: red; }
-.week > *:nth-child(7) { color: blue; }
-
-.newmoon .date {
-    background-color: #666666;
-    color: white;
-}
-.week > .newmoon:nth-child(1) .date { background-color: red; }
-.week > .newmoon:nth-child(7) .date { background-color: blue; }
-#monthlyCalendar .date {
-    border: 2px solid transparent;
-    border-radius: 12vw;
-    line-height: 12vw;
-    margin: 0 auto;
-    width: 12vw;
-    height: 12vw;
-}
-#monthlyCalendar .fullmoon:nth-child(1) .date { border: 2px solid red; }
-#monthlyCalendar .fullmoon:nth-child(7) .date { border: 2px solid blue; }
-#monthlyCalendar .fullmoon .date {
-    border: 2px solid #666666;
-}
-
-h1 *:nth-child(2) {
-    margin: 0;
-    line-height: 1em;
-}
-@media (max-width: 768px) {
-    /* モバイル用デザイン */
-    h1 *:nth-child(2) {
-        font-size: 8vw;
-    }
-}
-        </style>
     </head>
     <body>
         <div id="koyomi">

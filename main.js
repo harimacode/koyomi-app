@@ -5,6 +5,11 @@ function dayOfWeek(dow) {
     return "日月火水木金土".charAt(dow);
 }
 function update() {
+    // 月表示の更新
+    var month = date.getMonth() + 1;
+    var yearMonth = [date.getFullYear(), month].join("/"); 
+    document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; '+ month +'月</a>';
+    
     var month = date.getMonth() + 1; // 月は 0 始まり
     var dateString = "";
     dateString += '<span class="month">' + month + '</span>月';
@@ -47,36 +52,21 @@ function markItems(toBeMarked) {
     });
 }
 
+var date;
 function today() {
     date = new Date();
     update();
 }
-function tomorrow() {
+function gotoDaysAfter(n) {
     var ms = date.getTime();
-    ms += 24 * 60 * 60 * 1000;
+    ms += n * 24 * 60 * 60 * 1000;
     date.setTime(ms);
     update();
 }
-function yesterday() {
-    var ms = date.getTime();
-    ms -= 24 * 60 * 60 * 1000;
-    date.setTime(ms);
+function gotoDate(s) {
+    date = new Date(s);
     update();
-}
-var date;
-function main() {
-    today();
-    
-    // runTests();
-}
-
-function parseHash(url) {
-    var parts = url.split('#');
-    if (parts.length < 2) {
-        return null;
-    }
-    return decodeURIComponent(parts[1]);
-}
+} 
 function addClass(e, cls) {
     var a = e.getAttribute("class");
     var classes = a ? a.split(' ') : [];
@@ -94,15 +84,44 @@ function removeClass(e, cls) {
     });
     e.setAttribute("class", newClasses.join(' '));
 }
+window.addEventListener("load", function (e) {
+    var hash = parseHash(document.location.href);
+    if (hash) {
+        gotoDate(hash);
+    } else {
+        today();
+    }
+    
+    document.getElementById("today").addEventListener("click", today);
+    document.getElementById("tomorrow").addEventListener("click", function () {
+        gotoDaysAfter(1);
+    });
+    document.getElementById("yesterday").addEventListener("click", function () {
+        gotoDaysAfter(-1);
+    });
+    
+    // runTests();
+}, false);
 window.addEventListener("hashchange", function (e) {
     var oldHash = parseHash(e.oldURL);
     if (oldHash) {
         var oldBox = document.getElementById(oldHash);
-        removeClass(oldBox, "marked");
+        if (oldBox) {
+            removeClass(oldBox, "marked");
+        }
     }
     var newHash = parseHash(e.newURL);
     if (newHash) {
-        var newBox = document.getElementById(newHash);
-        addClass(newBox, "marked");
+        if (newHash.indexOf("/") > -1) {
+            // 日付指定
+            gotoDate(newHash);
+        } else {
+            // マーク
+            var newBox = document.getElementById(newHash);
+            if (newBox) {
+                addClass(newBox, "marked");
+            }
+        }
     }
-}, true);
+}, false);
+
