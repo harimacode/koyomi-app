@@ -226,16 +226,33 @@ function findSeason(jd) {
 }
 
 /**
+ * キャッシュクラス
+ */
+function Cache() {}
+Cache.prototype = {
+    get: function (key, missed) {
+        if (typeof(this[key]) === 'undefined') {
+            this[key] = missed(); 
+        }
+        return this[key];
+    },
+};
+
+/**
  * @param t 直前の二分二至の時刻
  */
+var chukisCache = new Cache();
 function findChukis(t) {
-    var rv = [];
-    for (var i = 0; i < 3; ++i) {
-        var chuki = findSekki(t + 32, 30)[1];
-        rv.push(chuki);
-        t = chuki;
-    }
-    return rv;
+    var key = Math.floor(t);
+    return chukisCache.get(key, function () {
+        var rv = [];
+        for (var i = 0; i < 3; ++i) {
+            var chuki = findSekki(t + 32, 30)[1];
+            rv.push(chuki);
+            t = chuki;
+        }
+        return rv; 
+    });
 }
 
 /**
@@ -327,13 +344,12 @@ function findSakuBou(t, diff) {
 /**
  * @param t 直前の二分二至の時刻
  */
-var sakusCache = {};
+var sakusCache = new Cache();
 function findSakus(t) {
     var key = Math.floor(t);
-    if (typeof(sakusCache[key])==='undefined') {
-        sakusCache[key] = findSakuBous(t, 0); 
-    }
-    return sakusCache[key];
+    return sakusCache.get(key, function () {
+        return findSakuBous(t, 0); 
+    });
 }
 function findBous(t) {
     var rv = [];
