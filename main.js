@@ -33,10 +33,22 @@
         var tags = [];
         tagsForDate(date).forEach(function (tag) {
             var tagText = tag[1];
-            if (tag[0] === "fullmoon") {
-                tagText = "○満月";
-            } else if (tag[0] === "newmoon") {
-                tagText = "●新月";
+            var isFullmoon = tag[0] === "fullmoon";
+            var isNewmoon  = tag[0] === "newmoon";
+            if (isFullmoon || isNewmoon) {
+                var time = tag[2];
+                var mark = isFullmoon ? "○" : "●";
+                var h = time.getHours();
+                // どうも正確な計算と2分ほどずれているようなので、
+                // 下の桁を四捨五入して「ごろ」と表示しています。
+                var about = Math.round(time.getMinutes() / 10) * 10;
+                if (about >= 60) {
+                    about -= 60;
+                    ++h;
+                    h %= 24;
+                }
+                var m = ("0" + about).substr(-2);
+                tagText += mark + h + ":" + m + "ごろ";
             }
             tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
         });

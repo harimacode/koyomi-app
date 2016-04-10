@@ -53,10 +53,10 @@
                         if (isSameDay(day, today)) {
                             clz += " today";
                         }
-                        if (that.moon.isFullmoon(day)) {
+                        if (that.moon.fullmoonOf(day)) {
                             clz += " fullmoon";
                         }
-                        if (that.moon.isNewmoon(day)) {
+                        if (that.moon.newmoonOf(day)) {
                             clz += " newmoon";
                         }
                         date = day.getDate();

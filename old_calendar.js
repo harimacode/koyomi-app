@@ -417,20 +417,20 @@ Moon.prototype = {
         rv.setTime(nextDay.getTime() - 24 * 60 * 60 * 1000);
         return rv;
     },
-    isFullmoon: function (date) {
-        var rv = false;
+    fullmoonOf: function (date) {
+        var rv = null;
         this.fullmoons.forEach(function (fullmoon) {
             if (isSameDay(date, fullmoon)) {
-                rv = true;
+                rv = fullmoon;
             }
         });
         return rv;
     },
-    isNewmoon: function (date) {
-        var rv = false;
+    newmoonOf: function (date) {
+        var rv = null;
         this.newmoons.forEach(function (newmoon) {
             if (isSameDay(date, newmoon)) {
-                rv = true;
+                rv = newmoon;
             }
         });
         return rv;

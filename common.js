@@ -31,11 +31,13 @@ function tagsForDate(date, moon) {
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());
     }
-    if (moon.isFullmoon(date)) {
-        tags.push(["fullmoon", "満月"]);
+    var fullmoon = moon.fullmoonOf(date); 
+    if (fullmoon) {
+        tags.push(["fullmoon", "満月", fullmoon]);
     }
-    if (moon.isNewmoon(date)) {
-        tags.push(["newmoon", "新月"]);
+    var newmoon = moon.newmoonOf(date);
+    if (newmoon) {
+        tags.push(["newmoon", "新月", newmoon]);
     }
     return tags;
 }
