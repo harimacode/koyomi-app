@@ -376,6 +376,16 @@ function findSakuBous(t, diff) {
     return rv;
 }
 
+function isSameDay(a, b) {
+    // alert(a + ", " + b);
+    if (a == null || b == null) {
+        return false;
+    }
+    return a.getFullYear() == b.getFullYear() &&
+        a.getMonth() == b.getMonth() &&
+        a.getDate() == b.getDate();
+}
+
 // FIXME:
 // http://www.hottatakeshi.com/moon.html
 // のうち、以下の日付だけ正しく満月・新月が計算できていない
@@ -405,6 +415,24 @@ Moon.prototype = {
         var nextDay = new Date(y, m + 1);
         var rv = new Date();
         rv.setTime(nextDay.getTime() - 24 * 60 * 60 * 1000);
+        return rv;
+    },
+    isFullmoon: function (date) {
+        var rv = false;
+        this.fullmoons.forEach(function (fullmoon) {
+            if (isSameDay(date, fullmoon)) {
+                rv = true;
+            }
+        });
+        return rv;
+    },
+    isNewmoon: function (date) {
+        var rv = false;
+        this.newmoons.forEach(function (newmoon) {
+            if (isSameDay(date, newmoon)) {
+                rv = true;
+            }
+        });
         return rv;
     },
 };

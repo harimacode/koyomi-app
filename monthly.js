@@ -32,15 +32,6 @@
         return new MonthlyCalendar(date.getFullYear(), date.getMonth());
     };
     MonthlyCalendar.prototype = {
-        isSameDay: function (a, b) {
-            // alert(a + ", " + b);
-            if (a == null || b == null) {
-                return false;
-            }
-            return a.getFullYear() == b.getFullYear() &&
-                a.getMonth() == b.getMonth() &&
-                a.getDate() == b.getDate();
-        },
         render: function () {
             // TODO: もうちょっとモダンな実現方法にしたいな…
             var s = '<div class="week">';
@@ -59,22 +50,18 @@
                     var link = "";
                     var tags = "";
                     if (day) {
-                        if (that.isSameDay(day, today)) {
+                        if (isSameDay(day, today)) {
                             clz += " today";
                         }
                         tags = tagsForDate(day);
-                        that.moon.fullmoons.forEach(function (fullmoon) {
-                            if (that.isSameDay(day, fullmoon)) {
-                                clz += " fullmoon";
-                                tags.push('<span class="tag">満月</span>');
-                            }
-                        });
-                        that.moon.newmoons.forEach(function (newmoon) {
-                            if (that.isSameDay(day, newmoon)) {
-                                clz += " newmoon";
-                                tags.push('<span class="tag">新月</span>');
-                            }
-                        });
+                        if (that.moon.isFullmoon(day)) {
+                            clz += " fullmoon";
+                            tags.push('<span class="tag">満月</span>');
+                        }
+                        if (that.moon.isNewmoon(day)) {
+                            clz += " newmoon";
+                            tags.push('<span class="tag">新月</span>');
+                        }
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
