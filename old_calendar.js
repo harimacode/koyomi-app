@@ -327,8 +327,13 @@ function findSakuBou(t, diff) {
 /**
  * @param t 直前の二分二至の時刻
  */
+var sakusCache = {};
 function findSakus(t) {
-    return findSakuBous(t, 0);
+    var key = Math.floor(t);
+    if (typeof(sakusCache[key])==='undefined') {
+        sakusCache[key] = findSakuBous(t, 0); 
+    }
+    return sakusCache[key];
 }
 function findBous(t) {
     var rv = [];
