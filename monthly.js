@@ -82,6 +82,7 @@
                     var clz = "dateContainer";
                     var date = "";
                     var link = "";
+                    var tags = "";
                     if (day) {
                         if (that.isSameDay(day, today)) {
                             clz += " today";
@@ -99,10 +100,16 @@
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
+                        tags = tagsForJuliusDate(juliusDate(day));
+                        if (tags.length > 1) {
+                            tags = tags[0];
+                        }
                     }
                     s += '<a class="' + clz + '" ' + link + '><div class="date">';
                     s += date;
-                    s += '</div></a>';
+                    s += '</div>';
+                    s += tags;
+                    s += '</a>';
                 });
                 s += '</div>'
             });

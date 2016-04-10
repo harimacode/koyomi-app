@@ -15,6 +15,7 @@
 
 .week .dateContainer {
     display: table-cell;
+    min-width: 14.2%;
     vertical-align: top;
 }
 .week > * { color: #666666; }
@@ -40,6 +41,11 @@
     font-weight: bold;
     text-decoration: underline;
 }
+.tag {
+    display: inline-block;
+    height: 1em;
+    overflow: hidden;
+}
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
     h1 {
@@ -49,11 +55,12 @@
         margin: 0 2em;
     }
     .week .dateContainer {
-        font-size: 4vh;
+        font-size: 2vh;
         height: 12vh;
     }
     #monthlyCalendar .date {
         border-radius: 7vh;
+        font-size: 4vh;
         line-height: 7vh;
         width: 7vh;
         height: 7vh;
@@ -65,11 +72,12 @@
         margin-top: 8vw;
     }
     .week .dateContainer {
-        font-size: 6vw;
+        font-size: 3vw;
         height: 18vw;
     }
     #monthlyCalendar .date {
         border-radius: 11vw;
+        font-size: 6vw;
         line-height: 11vw;
         width: 11vw;
         height: 11vw;

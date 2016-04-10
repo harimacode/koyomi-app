@@ -9,10 +9,10 @@ function tagsForJuliusDate(jd) {
     var tags = [];
     var newNijuShisekki = nijuShisekki(jd);
     if (newNijuShisekki) {
-        tags.push('<span class="nijuShisekki">' + newNijuShisekki + '</span>');
+        tags.push('<span class="tag nijuShisekki">' + newNijuShisekki + '</span>');
     }
     if (isIchiryuManbai(jd)) {
-        tags.push('<span class="ichiryuManbai">一粒万倍日</span>');
+        tags.push('<span class="tag ichiryuManbai">一粒万倍日</span>');
     }
     return tags;
 }

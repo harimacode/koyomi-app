@@ -36,8 +36,7 @@
 .box:nth-child(2n+1) .title {
     color: white;
 }
-.nijuShisekki,
-.ichiryuManbai {
+.tag {
     border: 1px solid black;
     border-radius: 3px;
     box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
