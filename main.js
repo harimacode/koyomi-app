@@ -79,6 +79,11 @@
     }
     function gotoDate(s) {
         date = new Date(s);
+        if (s.indexOf("/") < 0) {
+            // 有効な Date String でない場合ハングするので
+            // ここで today に差し替えています。
+            date = new Date();
+        }
         update();
     } 
     function addClass(e, cls) {
