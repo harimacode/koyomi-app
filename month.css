@@ -48,6 +48,9 @@
     white-space: nowrap;
     width: 4em;
 }
+.nijuShisekki {
+    background-color: #ddffdd;
+}
 .ichiryuManbai {
     background-color: #ddddff;
 }
