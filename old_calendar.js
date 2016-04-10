@@ -491,6 +491,7 @@ OldDate.prototype = {
 /**
  * @param jd ユリウス日
  */
+var bugAlerted = new Cache();
 function oldCalendar(jd) {
     jd = Math.floor(jd);
     var gd = fromJuliusDate(jd);
@@ -543,6 +544,14 @@ function oldCalendar(jd) {
             oldDate.day = oldDay;
             break;
         }
+    }
+    if (typeof(oldDate.month) == "undefined") {
+        // 2015/03/20,
+        // 2017/09/20-22の旧暦が計算できていないよう
+        bugAlerted.get(jd, function () {
+            alert("旧暦計算に不具合があります:\n" + fromJuliusDate(jd).toLocaleDateString());
+            return true;
+        });
     }
     // alert(matrix.join('\n'));
     // alert(oldDate);
@@ -736,6 +745,10 @@ function isFujoju(oldDate) {
         [6, 14, 22, 30],
     ];
     var days = kFujojus[(oldDate.month - 1) % 6];
+    if (typeof(days) === "undefined") {
+        // FIXME: 月表示が更新されないよりはマシな動作に調整中。
+        return false;
+    }
     return days.indexOf(oldDate.day) > -1;
 }
 function isSanrinbou(jd) {
