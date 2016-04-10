@@ -25,6 +25,9 @@ function tagsForDate(date, moon) {
     if (isFujoju(oldCalendar(jd))) {
         tags.push('<span class="tag badDay">不成就日</span>');
     }
+    if (isSanrinbou(jd)) {
+        tags.push('<span class="tag badDay">三隣亡</span>');
+    }
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());
     }
