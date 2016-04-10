@@ -10,32 +10,32 @@ function tagsForDate(date, moon) {
     var tags = [];
     var newSekku = sekku(date);
     if (newSekku) {
-        tags.push('<span class="tag sekku">' + newSekku + '</span>');
+        tags.push(["sekku", newSekku]);
     }
     var newNijuShisekki = nijuShisekki(jd);
     if (newNijuShisekki) {
-        tags.push('<span class="tag nijuShisekki">' + newNijuShisekki + '</span>');
+        tags.push(["nijuShisekki", newNijuShisekki]);
     }
     if (isIchiryuManbai(jd)) {
-        tags.push('<span class="tag goodDay">一粒万倍日</span>');
+        tags.push(["goodDay", "一粒万倍日"]);
     }
     if (isTensya(jd)) {
-        tags.push('<span class="tag goodDay">天赦日</span>');
+        tags.push(["goodDay", "天赦日"]);
     }
     if (isFujoju(oldCalendar(jd))) {
-        tags.push('<span class="tag badDay">不成就日</span>');
+        tags.push(["badDay", "不成就日"]);
     }
     if (isSanrinbou(jd)) {
-        tags.push('<span class="tag badDay">三隣亡</span>');
+        tags.push(["badDay", "三隣亡"]);
     }
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());
     }
     if (moon.isFullmoon(date)) {
-        tags.push('<span class="tag">満月</span>');
+        tags.push(["fullmoon", "満月"]);
     }
     if (moon.isNewmoon(date)) {
-        tags.push('<span class="tag">新月</span>');
+        tags.push(["newmoon", "新月"]);
     }
     return tags;
 }

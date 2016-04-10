@@ -48,7 +48,7 @@
                     var clz = "dateContainer";
                     var date = "";
                     var link = "";
-                    var tags = "";
+                    var topTag = "";
                     if (day) {
                         if (isSameDay(day, today)) {
                             clz += " today";
@@ -62,15 +62,16 @@
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
-                        tags = tagsForDate(day, that.moon);
-                        if (tags.length > 1) {
-                            tags = tags[0];
+                        var tags = tagsForDate(day, that.moon);
+                        if (tags.length > 0) {
+                            topTag = tags[0];
+                            topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>'; 
                         }
                     }
                     s += '<a class="' + clz + '" ' + link + '><div class="date">';
                     s += date;
                     s += '</div>';
-                    s += tags;
+                    s += topTag;
                     s += '</a>';
                 });
                 s += '</div>'

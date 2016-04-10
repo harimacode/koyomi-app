@@ -30,7 +30,10 @@
         var newShuku = shuku(old);
         set('shuku', newShuku);
         set('nattin', nattin(jd));
-        var tags = tagsForDate(date);
+        var tags = [];
+        tagsForDate(date).forEach(function (tag) {
+            tags.push('<span class="tag ' + tag[0] + '">' + tag[1] + '</span>'); 
+        });
         set('tags', tags.join(" ･ "));
         
         // 今解説に表がある項目について、マーカー表示します。
