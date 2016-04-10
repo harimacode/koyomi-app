@@ -376,6 +376,41 @@ function findSakuBous(t, diff) {
     return rv;
 }
 
+// FIXME:
+// http://www.hottatakeshi.com/moon.html
+// のうち、以下の日付だけ正しく満月・新月が計算できていない
+// 2007/09/27
+// 2010/01/01
+
+/**
+ * Moon クラス
+ */
+function Moon(year, month) {
+    var jd = juliusDate(this.lastDay(year, month));
+    var newmoons = [];
+    findSakus(jd).forEach(function (saku) {
+        newmoons.push(fromJuliusDate(saku));
+    });
+    this.newmoons = newmoons;
+    var fullmoons = [];
+    findBous(jd).forEach(function (bou) {
+        fullmoons.push(fromJuliusDate(bou));
+    });
+    // alert(fullmoons.join("\n"));
+    this.fullmoons = fullmoons;
+}
+
+Moon.prototype.lastDay = function (y, m) {
+    var nextDay = new Date(y, m + 1);
+    var rv = new Date();
+    rv.setTime(nextDay.getTime() - 24 * 60 * 60 * 1000);
+    return rv;
+}
+
+function calcMoons(y, m) {
+    
+}
+
 function oldMonth(el) {
     var months = [2, 5, 8, 11];
     return months[el / 90];
