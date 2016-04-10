@@ -32,7 +32,13 @@
         set('nattin', nattin(jd));
         var tags = [];
         tagsForDate(date).forEach(function (tag) {
-            tags.push('<span class="tag ' + tag[0] + '">' + tag[1] + '</span>'); 
+            var tagText = tag[1];
+            if (tag[0] === "fullmoon") {
+                tagText = "○満月";
+            } else if (tag[0] === "newmoon") {
+                tagText = "●新月";
+            }
+            tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
         });
         set('tags', tags.join(" ･ "));
         
