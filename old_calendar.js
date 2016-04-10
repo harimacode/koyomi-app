@@ -698,13 +698,24 @@ function isIchiryuManbai(jd) {
     var todayJunishi = eto(jd)[1];
     return etos.indexOf(todayJunishi) > -1;
 }
-
 function isTensya(jd) {
     var kEtoForSeason = [
         "戊寅", "甲午", "戊申", "甲子"
     ];
     var etoToFind = kEtoForSeason[findSeason(jd)];
     return eto(jd) == etoToFind;
+}
+function isFujoju(oldDate) {
+    var kFujojus = [
+        [3, 11, 19, 27],
+        [2, 10, 18, 26],
+        [1,  9, 17, 25],
+        [4, 12, 20, 28],
+        [5, 13, 21, 29],
+        [6, 14, 22, 30],
+    ];
+    var days = kFujojus[(oldDate.month - 1) % 6];
+    return days.indexOf(oldDate.day) > -1;
 }
 
 function sekku(date) {
@@ -992,6 +1003,12 @@ function testIsTensya() {
     checkBool(true,  isTensya(juliusDate(new Date(2016, 1, 26))));
     checkBool(false, isTensya(juliusDate(new Date(2016, 1, 27))));
 }
+function testIsFujoju() {
+    // 2016/01/08 は不成就日
+    checkBool(false, isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 7)))));
+    checkBool(true,  isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 8)))));
+    checkBool(false, isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 9)))));
+}
 
 function runTests() {
     testJuliusDate();
@@ -1013,4 +1030,5 @@ function runTests() {
     testNijuShisekki();
     testIsIchiryuManbai();
     testIsTensya();
+    testIsFujoju();
 }
