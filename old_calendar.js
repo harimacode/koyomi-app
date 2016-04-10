@@ -400,12 +400,15 @@ function Moon(year, month) {
     this.fullmoons = fullmoons;
 }
 
-Moon.prototype.lastDay = function (y, m) {
-    var nextDay = new Date(y, m + 1);
-    var rv = new Date();
-    rv.setTime(nextDay.getTime() - 24 * 60 * 60 * 1000);
-    return rv;
-}
+Moon.prototype = {
+    lastDay: function (y, m) {
+        var nextDay = new Date(y, m + 1);
+        var rv = new Date();
+        rv.setTime(nextDay.getTime() - 24 * 60 * 60 * 1000);
+        return rv;
+    },
+};
+
 
 function calcMoons(y, m) {
     
