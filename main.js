@@ -49,6 +49,10 @@
                 }
                 var m = ("0" + about).substr(-2);
                 tagText += mark + h + ":" + m + "ごろ";
+            } else if (tag[0] == "sekku" &&
+                     !(tag[1] == "雛祭" || tag[1] == "七夕"))
+            {
+                tagText += "の節句";
             }
             tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
         });
