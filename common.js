@@ -19,5 +19,8 @@ function tagsForDate(date) {
     if (isIchiryuManbai(jd)) {
         tags.push('<span class="tag ichiryuManbai">一粒万倍日</span>');
     }
+    if (isTensya(jd)) {
+        tags.push('<span class="tag">天赦日</span>');
+    }
     return tags;
 }
