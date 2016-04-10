@@ -5,7 +5,7 @@ function parseHash(url) {
     }
     return decodeURIComponent(parts[1]);
 }
-function tagsForDate(date) {
+function tagsForDate(date, moon) {
     var jd = juliusDate(date);
     var tags = [];
     var newSekku = sekku(date);
@@ -21,6 +21,15 @@ function tagsForDate(date) {
     }
     if (isTensya(jd)) {
         tags.push('<span class="tag goodDay">天赦日</span>');
+    }
+    if (!moon) {
+        moon = new Moon(date.getFullYear(), date.getMonth());
+    }
+    if (moon.isFullmoon(date)) {
+        tags.push('<span class="tag">満月</span>');
+    }
+    if (moon.isNewmoon(date)) {
+        tags.push('<span class="tag">新月</span>');
     }
     return tags;
 }

@@ -53,18 +53,16 @@
                         if (isSameDay(day, today)) {
                             clz += " today";
                         }
-                        tags = tagsForDate(day);
                         if (that.moon.isFullmoon(day)) {
                             clz += " fullmoon";
-                            tags.push('<span class="tag">満月</span>');
                         }
                         if (that.moon.isNewmoon(day)) {
                             clz += " newmoon";
-                            tags.push('<span class="tag">新月</span>');
                         }
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
+                        tags = tagsForDate(day, that.moon);
                         if (tags.length > 1) {
                             tags = tags[0];
                         }
