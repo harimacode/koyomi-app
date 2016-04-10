@@ -57,6 +57,9 @@
 .goodDay {
     background-color: #ddddff;
 }
+.badDay {
+    color: #cccccc;
+}
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
     h1 {

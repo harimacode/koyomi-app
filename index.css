@@ -53,6 +53,11 @@
     border-color: blue;
     color: darkblue;
 }
+.badDay {
+    background-color: #dddddd;
+    border-color: darkgray;
+    color: gray;
+}
 #explanation {
     background-color: #eeeeee;
     border: 1px solid #cccccc;

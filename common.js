@@ -22,6 +22,9 @@ function tagsForDate(date, moon) {
     if (isTensya(jd)) {
         tags.push('<span class="tag goodDay">天赦日</span>');
     }
+    if (isFujoju(oldCalendar(jd))) {
+        tags.push('<span class="tag badDay">不成就日</span>');
+    }
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());
     }
