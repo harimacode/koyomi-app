@@ -42,10 +42,14 @@
     text-decoration: underline;
 }
 .tag {
+    color: #666666;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     width: 4em;
+}
+.ichiryuManbai {
+    background-color: #ddddff;
 }
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
