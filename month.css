@@ -1,6 +1,7 @@
 #monthlyCalendar {
     display: table;
     border-collapse: collapse;
+    table-layout: fixed;
     width: 100%;
 }
 .week {
@@ -15,7 +16,6 @@
 
 .week .dateContainer {
     display: table-cell;
-    min-width: 14.2%;
     vertical-align: top;
 }
 .week > * { color: #666666; }
@@ -43,8 +43,9 @@
 }
 .tag {
     display: inline-block;
-    height: 1em;
     overflow: hidden;
+    white-space: nowrap;
+    width: 4em;
 }
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
