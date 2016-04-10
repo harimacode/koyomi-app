@@ -87,20 +87,22 @@
                         if (that.isSameDay(day, today)) {
                             clz += " today";
                         }
+                        tags = tagsForJuliusDate(juliusDate(day));
                         that.fullmoons.forEach(function (fullmoon) {
                             if (that.isSameDay(day, fullmoon)) {
                                 clz += " fullmoon";
+                                tags.push('<span class="tag">満月</span>');
                             }
                         });
                         that.newmoons.forEach(function (newmoon) {
                             if (that.isSameDay(day, newmoon)) {
                                 clz += " newmoon";
+                                tags.push('<span class="tag">新月</span>');
                             }
                         });
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
-                        tags = tagsForJuliusDate(juliusDate(day));
                         if (tags.length > 1) {
                             tags = tags[0];
                         }
