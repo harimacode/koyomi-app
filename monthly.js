@@ -87,7 +87,7 @@
                         if (that.isSameDay(day, today)) {
                             clz += " today";
                         }
-                        tags = tagsForJuliusDate(juliusDate(day));
+                        tags = tagsForDate(day);
                         that.fullmoons.forEach(function (fullmoon) {
                             if (that.isSameDay(day, fullmoon)) {
                                 clz += " fullmoon";

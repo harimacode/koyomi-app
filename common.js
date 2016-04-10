@@ -5,8 +5,13 @@ function parseHash(url) {
     }
     return decodeURIComponent(parts[1]);
 }
-function tagsForJuliusDate(jd) {
+function tagsForDate(date) {
+    var jd = juliusDate(date);
     var tags = [];
+    var newSekku = sekku(date);
+    if (newSekku) {
+        tags.push('<span class="tag sekku">' + newSekku + '</span>');
+    }
     var newNijuShisekki = nijuShisekki(jd);
     if (newNijuShisekki) {
         tags.push('<span class="tag nijuShisekki">' + newNijuShisekki + '</span>');

@@ -615,6 +615,26 @@ function isIchiryuManbai(jd) {
     return etos.indexOf(todayJunishi) > -1;
 }
 
+function sekku(date) {
+    var kSekkus = [
+        [[1, 7], "七草"],
+        [[3, 3], "雛祭"],
+        [[5, 5], "端午"],
+        [[7, 7], "七夕"],
+        [[9, 9], "重陽"],
+    ];
+    var rv = "";
+    kSekkus.forEach(function (aSekku) {
+        var sekkuDate = aSekku[0];
+        if (date.getMonth() + 1 == sekkuDate[0] &&
+            date.getDate()      == sekkuDate[1])
+        {
+            rv = aSekku[1];
+        }
+    });
+    return rv;
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);

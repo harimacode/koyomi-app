@@ -30,7 +30,7 @@
         var newShuku = shuku(old);
         set('shuku', newShuku);
         set('nattin', nattin(jd));
-        var tags = tagsForJuliusDate(jd);
+        var tags = tagsForDate(date);
         set('tags', tags.join(" ･ "));
         
         // 今解説に表がある項目について、マーカー表示します。
