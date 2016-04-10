@@ -633,6 +633,14 @@ function isIchiryuManbai(jd) {
     return etos.indexOf(todayJunishi) > -1;
 }
 
+function isTensya(jd) {
+    var kEtoForSeason = [
+        "戊寅", "甲午", "戊申", "甲子"
+    ];
+    var etoToFind = kEtoForSeason[findSeason(jd)];
+    return eto(jd) == etoToFind;
+}
+
 function sekku(date) {
     var kSekkus = [
         [[1, 7], "七草"],
@@ -913,6 +921,11 @@ function testIsIchiryuManbai() {
     
     checkBool(true,  isIchiryuManbai(juliusDate(new Date(2016,0,10)))); // 2016/1/10 も
 }
+function testIsTensya() {
+    checkBool(false, isTensya(juliusDate(new Date(2016, 1, 25))));
+    checkBool(true,  isTensya(juliusDate(new Date(2016, 1, 26))));
+    checkBool(false, isTensya(juliusDate(new Date(2016, 1, 27))));
+}
 
 function runTests() {
     testJuliusDate();
@@ -933,4 +946,5 @@ function runTests() {
     testNattin();
     testNijuShisekki();
     testIsIchiryuManbai();
+    testIsTensya();
 }
