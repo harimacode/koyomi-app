@@ -604,6 +604,17 @@ function nijuShisekki(jd) {
     return "";
 }
 
+function isIchiryuManbai(jd) {
+    var kEtosForSetsugetsu = [
+        "丑午", "酉寅", "子卯", "卯辰", "巳午", "酉午",
+        "子未", "卯申", "酉午", "酉戌", "亥子", "卯子",
+    ];
+    var s = findSetsugetsu(jd);
+    var etos = kEtosForSetsugetsu[s[0]-1];
+    var todayJunishi = eto(jd)[1];
+    return etos.indexOf(todayJunishi) > -1;
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
@@ -615,6 +626,9 @@ function checkR(a, b) {
 function checkFloat(a, b, tolerance) {
     var result = Math.abs(a - b) < tolerance;
     check(result, a, b);
+}
+function checkBool(a, b) {
+    check(a == b, a, b);
 }
 function checkDate(a, b) {
     // 分までだけ比較する。
@@ -843,6 +857,14 @@ function testNijuShisekki() {
     checkStr("立夏", nijuShisekki(juliusDate(new Date(2014,4,5))));
     checkStr("", nijuShisekki(juliusDate(new Date(2014,4,6))));
 }
+function testIsIchiryuManbai() {
+    // 2016/1/7 は一粒万倍日
+    checkBool(false, isIchiryuManbai(juliusDate(new Date(2016,0,6))));
+    checkBool(true,  isIchiryuManbai(juliusDate(new Date(2016,0,7))));
+    checkBool(false, isIchiryuManbai(juliusDate(new Date(2016,0,8))));
+    
+    checkBool(true,  isIchiryuManbai(juliusDate(new Date(2016,0,10)))); // 2016/1/10 も
+}
 
 function runTests() {
     testJuliusDate();
@@ -861,4 +883,5 @@ function runTests() {
     testShuku();
     testNattin();
     testNijuShisekki();
+    testIsIchiryuManbai();
 }
