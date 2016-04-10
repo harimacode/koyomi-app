@@ -717,6 +717,13 @@ function isFujoju(oldDate) {
     var days = kFujojus[(oldDate.month - 1) % 6];
     return days.indexOf(oldDate.day) > -1;
 }
+function isSanrinbou(jd) {
+    var kEtoForSetsugetsu = "亥寅午亥寅午亥寅午亥寅午";
+    var s = findSetsugetsu(jd);
+    var etoToFind = kEtoForSetsugetsu[s[0]-1];
+    var todayJunishi = eto(jd)[1];
+    return etoToFind === todayJunishi;
+}
 
 function sekku(date) {
     var kSekkus = [
@@ -1009,6 +1016,12 @@ function testIsFujoju() {
     checkBool(true,  isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 8)))));
     checkBool(false, isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 9)))));
 }
+function testIsSanrinbou() {
+    // 2016/1/13は三隣亡
+    checkBool(false, isSanrinbou(juliusDate(new Date(2016, 0, 12))));
+    checkBool(true,  isSanrinbou(juliusDate(new Date(2016, 0, 13))));
+    checkBool(false, isSanrinbou(juliusDate(new Date(2016, 0, 14))));
+}
 
 function runTests() {
     testJuliusDate();
@@ -1031,4 +1044,5 @@ function runTests() {
     testIsIchiryuManbai();
     testIsTensya();
     testIsFujoju();
+    testIsSanrinbou();
 }
