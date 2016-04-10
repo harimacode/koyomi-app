@@ -17,10 +17,10 @@ function tagsForDate(date) {
         tags.push('<span class="tag nijuShisekki">' + newNijuShisekki + '</span>');
     }
     if (isIchiryuManbai(jd)) {
-        tags.push('<span class="tag ichiryuManbai">一粒万倍日</span>');
+        tags.push('<span class="tag goodDay">一粒万倍日</span>');
     }
     if (isTensya(jd)) {
-        tags.push('<span class="tag">天赦日</span>');
+        tags.push('<span class="tag goodDay">天赦日</span>');
     }
     return tags;
 }
