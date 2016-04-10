@@ -26,7 +26,7 @@ function tagsForDate(date, moon) {
         tags.push(["badDay", "不成就日"]);
     }
     if (isSanrinbou(jd)) {
-        tags.push(["badDay", "三隣亡"]);
+        tags.push(["goodDay", "三輪宝"]);
     }
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());

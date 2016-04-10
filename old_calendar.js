@@ -1038,7 +1038,7 @@ function testIsFujoju() {
     checkBool(false, isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 9)))));
 }
 function testIsSanrinbou() {
-    // 2016/1/13は三隣亡
+    // 2016/1/13は三輪宝
     checkBool(false, isSanrinbou(juliusDate(new Date(2016, 0, 12))));
     checkBool(true,  isSanrinbou(juliusDate(new Date(2016, 0, 13))));
     checkBool(false, isSanrinbou(juliusDate(new Date(2016, 0, 14))));
