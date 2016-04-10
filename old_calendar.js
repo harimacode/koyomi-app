@@ -208,6 +208,24 @@ function findNibunNishi(t) {
 }
 
 /**
+ * 季節を求めます。春が0
+ */
+function findSeason(jd) {
+    var sekki = findSekki(jd+1, 90, 45);
+    angle = sekki[0];
+    // alert(angle);
+    angle += 45;
+    while (angle >= 360) {
+        angle -= 360;
+    }
+    var season = angle / 90;
+    if (jd < Math.floor(sekki[1])) {
+        --season;
+    }
+    return season;
+}
+
+/**
  * @param t 直前の二分二至の時刻
  */
 function findChukis(t) {
@@ -707,6 +725,16 @@ function testFindNibunNishi() {
     checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)[1]))
     checkR(2446056.0489, findNibunNishi(juliusDate(new Date(1984,11,22)))[1]);
 }
+function testFindSeason() {
+    checkP(3, findSeason(juliusDate(new Date(2016, 1, 3))));
+    checkP(0, findSeason(juliusDate(new Date(2016, 1, 4))));  // 2016年2月4日 は春
+    checkP(0, findSeason(juliusDate(new Date(2016, 4, 4))));
+    checkP(1, findSeason(juliusDate(new Date(2016, 4, 5))));  // 2016年5月5日 は夏
+    checkP(1, findSeason(juliusDate(new Date(2016, 7, 6))));
+    checkP(2, findSeason(juliusDate(new Date(2016, 7, 7))));  // 2016年8月7日 は秋
+    checkP(2, findSeason(juliusDate(new Date(2016, 10, 6))));
+    checkP(3, findSeason(juliusDate(new Date(2016, 10, 7)))); // 2016年11月7日 は冬
+}
 function testFindChukis() {
     var result = findChukis(findNibunNishi(2449432.2276343490)[1]);
     var answers = [
@@ -892,6 +920,7 @@ function runTests() {
     testSolarEclipticLongitude();
     testLunarEclipticLongitude();
     testFindNibunNishi();
+    testFindSeason();
     testFindChukis();
     testFindSaku();
     testOldCalendar();
