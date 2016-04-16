@@ -39,16 +39,16 @@
                 var time = tag[2];
                 var mark = isFullmoon ? "○" : "●";
                 var h = time.getHours();
-                // どうも正確な計算と2分ほどずれているようなので、
-                // 下の桁を四捨五入して「ごろ」と表示しています。
-                var about = Math.round(time.getMinutes() / 10) * 10;
-                if (about >= 60) {
-                    about -= 60;
-                    ++h;
+                // XXX どうも正確な計算と2分だけずれているようなので、ここで2分足しています。
+                // FIXME ずれている原因が分かったらこのごまかしを消す。
+                var workaround = time.getMinutes() - 2;
+                if (workaround < 0) {
+                    workaround += 60;
+                    h += 24 - 1;
                     h %= 24;
                 }
-                var m = ("0" + about).substr(-2);
-                tagText += mark + h + ":" + m + "ごろ";
+                var m = ("0" + workaround).substr(-2);
+                tagText += mark + h + ":" + m;
             } else if (tag[0] == "sekku" &&
                      !(tag[1] == "雛祭" || tag[1] == "七夕"))
             {
