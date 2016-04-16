@@ -514,13 +514,16 @@ function oldCalendar(jd) {
     });
     var cond1 = sakus[4] <= chukis[2];
     chukis.push(nibunNishi[1]); // 二分二至も必ず中気なので中気判定に追加しています。
-    for (var i = 0; i < matrix.length - 1; ++i) {
+    for (var i = 0; i < matrix.length; ++i) {
         var start = matrix[i][2];
-        var next  = matrix[i + 1][2];
+        var next  = 0;
+        if (i + 1 < matrix.length) {
+            next = matrix[i + 1][2];
+        }
         var containsChuki = false;
         chukis.forEach(function (chuki) {
             var chukiDate = Math.floor(chuki);
-            if (start <= chukiDate && chukiDate < next) {
+            if (start <= chukiDate && (!next || chukiDate < next)) {
                 containsChuki = true;
             }
         });
@@ -534,9 +537,12 @@ function oldCalendar(jd) {
     }
     
     var oldDate = new OldDate();
-    for (var i = 0; i < matrix.length - 1; ++i) {
-        var nextDate = matrix[i + 1][3];
-        if (gd < nextDate) {
+    for (var i = 0; i < matrix.length; ++i) {
+        var nextDate = null;
+        if (i + 1 < matrix.length) {
+            nextDate = matrix[i + 1][3];
+        }
+        if (!nextDate || gd < nextDate) {
             oldDate.leap = matrix[i][0];
             oldDate.month = matrix[i][1];
             
@@ -949,6 +955,7 @@ function testOldCalendar() {
     //     dates.push(s + '=>' + oldCalendar(jd + i));
     // }
     // alert(dates.join('\n'));
+    checkStr("8月1日", oldCalendar(juliusDate(new Date(2017,8,20))).toString());
 }
 function testRokki() {
     checkStr("先勝", rokki(new OldDate(false, 3, 17)));
