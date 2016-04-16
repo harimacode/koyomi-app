@@ -132,13 +132,6 @@
             today();
         }
         
-        document.getElementById("gotoMonth").addEventListener("click", function (e) {
-            var link = e.target.getAttribute("href");
-            if (link) {
-                e.preventDefault();
-                window.location = link;
-            }
-        }, false);
         document.getElementById("today").addEventListener("click", today);
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
