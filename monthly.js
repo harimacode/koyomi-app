@@ -148,7 +148,7 @@
     window.addEventListener('load', function () {
         gotoMonthOfHash();
 
-        Array.prototype.forEach.call(document.querySelectorAll(".dateContainer"), function (link) {
+        document.querySelectorAll(".dateContainer").forEach(function (link) {
             link.addEventListener("click", function (e) {
                 e.preventDefault();
                 window.location = link.getAttribute("href");
