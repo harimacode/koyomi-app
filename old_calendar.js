@@ -262,8 +262,8 @@ function findSekki(t, byAngle, offset) {
     if (!offset) {
         offset = 0;
     }
-    // var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
-    var sel = normalizeAngle(solarEclipticLongitude(t) + offset);
+    var dt = dynamicalTime(t);
+    var sel = solarEclipticLongitude(dt) + offset;
     // alert(sel);
     var div = Math.floor(sel / byAngle);
     var angle = div * byAngle;
@@ -274,15 +274,15 @@ function findSekki(t, byAngle, offset) {
         }
         var deltaT = deltaAngle * 365.2 / 360;
         // alert("lambda sun: " + sel + ", deltaT: " + deltaT);
-        t -= deltaT;
+        dt -= deltaT;
         if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
             // 1s 未満
             break;
         }
-        sel = normalizeAngle(solarEclipticLongitude(t) + offset);
+        sel = solarEclipticLongitude(dt) + offset;
     }
     // t が期待する時刻
-    var jst = t + (9/24);
+    var jst = dt + (9/24);
     return [normalizeAngle(angle - offset), jst];
 }
 
@@ -296,10 +296,10 @@ function findBou(t) {
     return [findSakuBou(t, -180), findSakuBou(t, 180)];
 }
 function findSakuBou(t, diff) {
-    // var orig = t;
+    var dt = dynamicalTime(t);
     for (var i = 0; ; ++i) {
-        var sel = solarEclipticLongitude(t);
-        var lel = lunarEclipticLongitude(t);
+        var sel = solarEclipticLongitude(dt);
+        var lel = lunarEclipticLongitude(dt);
         var deltaLambda = lel - sel + diff;
         if (i == 0 && deltaLambda < 0) {
             // alert([sel, lel, deltaLambda].join('\n'));
@@ -325,7 +325,7 @@ function findSakuBou(t, diff) {
         
         // TODO: 結果が振動して収束しないとき用の処理
         var deltaT = deltaLambda * 29.530589 / 360;
-        t -= deltaT;
+        dt -= deltaT;
         // alert("dT: " + deltaT + ",\n t: " + t);
         if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
             // 1s 未満
@@ -337,7 +337,7 @@ function findSakuBou(t, diff) {
     //     alert('bug');
     // }
     // t が期待する時刻
-    var jst = t + (9/24);
+    var jst = dt + (9/24);
     return jst;
 }
 
@@ -855,7 +855,7 @@ function testJuliusDate() {
 function testFindNibunNishi() {
     checkR(2449432.2276343490000000, findNibunNishi(2449472.625)[1]);
     checkDate(new Date(1994,2,21,5,27,48), fromJuliusDate(findNibunNishi(2449472.625)[1]))
-    checkR(2446056.0489, findNibunNishi(juliusDate(new Date(1984,11,22)))[1]);
+    checkR(2446056.0489, findNibunNishi(juliusDate(new Date(1984,11,23)))[1]);
 }
 function testFindSeason() {
     checkP(3, findSeason(juliusDate(new Date(2016, 1, 3))));
@@ -868,7 +868,7 @@ function testFindSeason() {
     checkP(3, findSeason(juliusDate(new Date(2016, 10, 7)))); // 2016年11月7日 は冬
 }
 function testFindChukis() {
-    var result = findChukis(findNibunNishi(2449432.2276343490)[1]);
+    var result = findChukis(2449432.2276343490);
     var answers = [
         2449462.6910369310000,
         2449493.6580418450000,
