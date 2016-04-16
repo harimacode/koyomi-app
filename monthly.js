@@ -148,6 +148,12 @@
     window.addEventListener('load', function () {
         gotoMonthOfHash();
 
+        Array.prototype.forEach.call(document.querySelectorAll(".dateContainer"), function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.location = link.getAttribute("href");
+            }, false);
+        });
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
     }, false);
