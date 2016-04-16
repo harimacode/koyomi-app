@@ -129,6 +129,16 @@
         document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
         document.getElementById("jaYearMonth").innerHTML = heiseiYear(month.year) + " " + jaMonth(month.month);
         document.getElementById("monthlyCalendar").innerHTML = month.render();
+        
+        rewriteLinks();
+    }
+    function rewriteLinks() {
+        Array.prototype.forEach.call(document.querySelectorAll(".dateContainer"), function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.location = link.getAttribute("href");
+            }, false);
+        });
     }
 
     var month;
@@ -148,12 +158,6 @@
     window.addEventListener('load', function () {
         gotoMonthOfHash();
 
-        Array.prototype.forEach.call(document.querySelectorAll(".dateContainer"), function (link) {
-            link.addEventListener("click", function (e) {
-                e.preventDefault();
-                window.location = link.getAttribute("href");
-            }, false);
-        });
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
     }, false);

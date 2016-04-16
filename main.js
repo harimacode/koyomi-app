@@ -10,6 +10,7 @@
         var month = date.getMonth() + 1;
         var yearMonth = [date.getFullYear(), month].join("/"); 
         document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
+        rewriteLinks();
         
         var month = date.getMonth() + 1; // 月は 0 始まり
         var dateString = "";
@@ -62,6 +63,15 @@
         markItems([newRokki, // 六輝
             newEto.charAt(0), newEto.charAt(1), // 十干、十二支
             newChoku, newShuku]); // 直、宿
+    }
+    function rewriteLinks() {
+        document.getElementById("gotoMonth").addEventListener("click", function (e) {
+            var link = e.target.getAttribute("href");
+            if (link) {
+                e.preventDefault();
+                window.location = link;
+            }
+        }, false);
     }
 
     var marked;
@@ -132,13 +142,6 @@
             today();
         }
         
-        document.getElementById("gotoMonth").addEventListener("click", function (e) {
-            var link = e.target.getAttribute("href");
-            if (link) {
-                e.preventDefault();
-                window.location = link;
-            }
-        }, false);
         document.getElementById("today").addEventListener("click", today);
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
