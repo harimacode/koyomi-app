@@ -41,7 +41,7 @@
                 var h = time.getHours();
                 // XXX どうも正確な計算と2分だけずれているようなので、ここで2分足しています。
                 // FIXME ずれている原因が分かったらこのごまかしを消す。
-                var workaround = time.getMinutes() - 2;
+                var workaround = time.getMinutes();
                 if (workaround < 0) {
                     workaround += 60;
                     h += 24 - 1;
@@ -136,7 +136,7 @@
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
         
-        // runTests();
+        runTests();
     }, false);
     window.addEventListener("hashchange", function (e) {
         var oldHash = parseHash(e.oldURL);

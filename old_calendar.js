@@ -1,3 +1,52 @@
+function HighPrecision(v1, v2) {
+    if (typeof(v1) != "number") {
+        this.value = [v1.value[0], v1.value[1]];
+        return;
+    }
+    var i = Math.floor(v1);
+    var f = v1 - i;
+    if (typeof(v2) == "number") {
+        var i2 = Math.floor(v2);
+        var f2 = v2 - i2;
+        i += i2;
+        f += f2;
+    }
+    this.value = [i, f];
+}
+HighPrecision.prototype = {
+    ensure: function (n) {
+        if (typeof(n) == "number") {
+            return new HighPrecision(n);
+        }
+        return n;
+    },
+    toNumber: function () {
+        return this.value[0] + this.value[1];
+    },
+    plus: function (n) {
+        n = this.ensure(n);
+        return new HighPrecision(
+            this.value[0] + n.value[0],
+            this.value[1] + n.value[1]);
+    },
+    minus: function (n) {
+        n = this.ensure(n);
+        return new HighPrecision(
+            this.value[0] - n.value[0],
+            this.value[1] - n.value[1]);
+    },
+    multiply: function (f) {
+        return new HighPrecision(
+            this.value[0] * f,
+            this.value[1] * f);
+    },
+    divide: function (f) {
+        return new HighPrecision(
+            this.value[0] / f,
+            this.value[1] / f);
+    },
+};
+
 /*!
  * Date オブジェクトからユリウス日を計算します。
  * ユリウス日は浮動小数点数として表現され、
@@ -53,7 +102,7 @@ function dynamicalTime(juliusDateJST) {
     // 元とした文献と同様、協定世界時と力学時の誤差
     // ΔTについては無視しています。
     // 日本標準時からの時差-9時間を引いています。
-    return juliusDateJST - (9/24);
+    return new HighPrecision(juliusDateJST).minus(9/24);
 }
 
 /*!
@@ -64,7 +113,7 @@ function dynamicalTime(juliusDateJST) {
  */
 function solarEclipticLongitude(juliusDateDynamicalTime) {
     //    ｔ＝（JD+0.5-2451545.0）／36525
-    var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
+    var t = juliusDateDynamicalTime.plus(0.5).minus(2451545.0).divide(36525);
     //           18
     //    λsun＝Σ Ａ*ｃｏｓ（ｋ*ｔ+θ0）
     //           n=1
@@ -83,9 +132,9 @@ function solarEclipticLongitude(juliusDateDynamicalTime) {
         [0.0018,    19.0,       159.0],
         [0.0020,    32964.0,    158.0],
         [0.0200,    71998.1,    265.1],
-        [-0.0048*t, 35999.05,   267.52],
+        [t.multiply(-0.0048), 35999.05,   267.52],
         [1.9147,    35999.05,   267.52],
-        [36000.7695*t,  0,  0],
+        [t.multiply(36000.7695),  0,  0],
         [280.4659,      0,  0],
     ];
     return eclipticLongitude(table, t);
@@ -99,7 +148,7 @@ function solarEclipticLongitude(juliusDateDynamicalTime) {
  */
 function lunarEclipticLongitude(juliusDateDynamicalTime) {
     // TODO 共通化
-    var t = (juliusDateDynamicalTime + 0.5 - 2451545.0) / 36525;
+    var t = juliusDateDynamicalTime.plus(0.5).minus(2451545.0).divide(36525);
     //           63
     //    λsun＝Σ Ａ*ｃｏｓ（ｋ*ｔ+θ0）
     //           n=1
@@ -166,7 +215,7 @@ function lunarEclipticLongitude(juliusDateDynamicalTime) {
         [1.2740,    413335.3,   10.74],
         [6.2888,    477198.86,  44.963],
         [218.3162,          0,  0],
-        [481267.8809 * t,   0,  0],
+        [t.multiply(481267.8809),   0,  0],
     ];
     return eclipticLongitude(table, t);
 }
@@ -178,22 +227,22 @@ function lunarEclipticLongitude(juliusDateDynamicalTime) {
  * @return 黄経を表す浮動小数点数
  */
 function eclipticLongitude(table, t) {
-    var rv = 0;
+    var rv = new HighPrecision(0);
     table.forEach(function (params) {
         var a = params[0];
         var k = params[1];
         var theta0 = params[2];
-        var angle = normalizeAngle(k * t + theta0);
-        rv += a * Math.cos(angle * Math.PI / 180.0); // 毎回計算するのが遅ければ Math.PI/180.0 は定数化する
+        var angle = normalizeAngle(t.multiply(k).plus(theta0));
+        rv = rv.plus(new HighPrecision(a).multiply(Math.cos(angle.multiply(Math.PI).divide(180.0).toNumber()))); // 毎回計算するのが遅ければ Math.PI/180.0 は定数化する
     });
     return normalizeAngle(rv);
 }
 function normalizeAngle(angle) {
-    while (angle < 0) {
-        angle += 360;
+    while (angle.toNumber() < 0) {
+        angle = angle.plus(360);
     }
-    while (angle >= 360) {
-        angle -= 360;
+    while (angle.toNumber() >= 360) {
+        angle = angle.minus(360);
     }
     return angle;
 }
@@ -263,27 +312,27 @@ function findSekki(t, byAngle, offset) {
         offset = 0;
     }
     var dt = dynamicalTime(t);
-    var sel = solarEclipticLongitude(dt) + offset;
+    var sel = solarEclipticLongitude(dt).plus(offset);
     // alert(sel);
-    var div = Math.floor(sel / byAngle);
-    var angle = div * byAngle;
+    var div = new HighPrecision(Math.floor(sel.divide(byAngle).toNumber()));
+    var angle = div.multiply(byAngle);
     while (true) {
-        var deltaAngle = sel - angle;
-        if (deltaAngle >= 180) {
-            deltaAngle = -360 + deltaAngle;
+        var deltaAngle = sel.minus(angle);
+        if (deltaAngle.toNumber() >= 180) {
+            deltaAngle = deltaAngle.minus(360);
         }
-        var deltaT = deltaAngle * 365.2 / 360;
+        var deltaT = deltaAngle.multiply(365.2).divide(360);
         // alert("lambda sun: " + sel + ", deltaT: " + deltaT);
-        dt -= deltaT;
-        if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
+        dt = dt.minus(deltaT);
+        if (Math.abs(deltaT.toNumber()) < 1 / (24 * 60 * 60)) {
             // 1s 未満
             break;
         }
-        sel = solarEclipticLongitude(dt) + offset;
+        sel = solarEclipticLongitude(dt).plus(offset);
     }
     // t が期待する時刻
-    var jst = dt + (9/24);
-    return [normalizeAngle(angle - offset), jst];
+    var jst = dt.plus(9/24);
+    return [normalizeAngle(angle.minus(offset)).toNumber(), jst.toNumber()];
 }
 
 /**
@@ -300,8 +349,8 @@ function findSakuBou(t, diff) {
     for (var i = 0; ; ++i) {
         var sel = solarEclipticLongitude(dt);
         var lel = lunarEclipticLongitude(dt);
-        var deltaLambda = lel - sel + diff;
-        if (i == 0 && deltaLambda < 0) {
+        var deltaLambda = lel.minus(sel).plus(diff);
+        if (i == 0 && deltaLambda.toNumber() < 0) {
             // alert([sel, lel, deltaLambda].join('\n'));
             deltaLambda = normalizeAngle(deltaLambda);
         }
@@ -310,13 +359,13 @@ function findSakuBou(t, diff) {
         //        の場合には以下のように補正を行ってΔλとする。
 
         //             Δλ＝ 360.0 － Δλ
-        else if (0 <= sel && sel <= 20 && lel >= 300) {
-            deltaLambda = 360.0 - normalizeAngle(deltaLambda);
+        else if (0 <= sel.toNumber() && sel.toNumber() <= 20 && lel.toNumber() >= 300) {
+            deltaLambda = new HighPrecision(360.0).minus(normalizeAngle(deltaLambda));
         }
         // TODO: 正規化の内容が不明だが必要
         //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
         //    Δλとする。
-        else if (Math.abs(deltaLambda) > 40) {
+        else if (Math.abs(deltaLambda.toNumber()) > 40) {
             deltaLambda = normalizeAngle(deltaLambda);
         }
         // alert("moon: " + lel + "\n" +
@@ -324,10 +373,10 @@ function findSakuBou(t, diff) {
         //         "deltaLambda: " + deltaLambda);
         
         // TODO: 結果が振動して収束しないとき用の処理
-        var deltaT = deltaLambda * 29.530589 / 360;
-        dt -= deltaT;
+        var deltaT = deltaLambda.multiply(29.530589).divide(360);
+        dt = dt.minus(deltaT);
         // alert("dT: " + deltaT + ",\n t: " + t);
-        if (Math.abs(deltaT) < 1 / (24 * 60 * 60)) {
+        if (Math.abs(deltaT.toNumber()) < 1 / (24 * 60 * 60)) {
             // 1s 未満
             break;
         }
@@ -337,8 +386,8 @@ function findSakuBou(t, diff) {
     //     alert('bug');
     // }
     // t が期待する時刻
-    var jst = dt + (9/24);
-    return jst;
+    var jst = dt.plus(9/24);
+    return jst.toNumber();
 }
 
 /**
@@ -649,7 +698,7 @@ function findSetsugetsu(jd) {
     // FIXME: 元にしたスクリプトの仕様に引きずられている部分…
     jd = Math.floor(jd) + 1;
     var sekki = findSekki(jd, 30, 15);
-    return [(normalizeAngle(sekki[0] + 15) / 30 + 1) % 12 + 1, sekki[1]]
+    return [(normalizeAngle(new HighPrecision(sekki[0] + 15)).toNumber() / 30 + 1) % 12 + 1, sekki[1]]
 }
 
 function choku(jd) {
@@ -819,32 +868,32 @@ function check(result, a, b) {
 }
 function testDynamicalTime() {
     // 1994年5月1日0時 = 2449472.625
-    checkP(2449472.625, dynamicalTime(juliusDate(new Date(1994,4,1))));
+    checkP(2449472.625, dynamicalTime(juliusDate(new Date(1994,4,1))).toNumber());
     // 1994年11月 8日 16:00(JST)
-    checkP(2449664.2916666665, dynamicalTime(juliusDate(new Date(1994,10,8,16,00))));
+    checkP(2449664.2916666665, dynamicalTime(juliusDate(new Date(1994,10,8,16,00))).toNumber());
 }
 function testSolarEclipticLongitude() {
     // 1994年11月8日 16:00(JST)
-    checkP(225.6456900296, solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))));
+    checkP(225.6456900296, solarEclipticLongitude(dynamicalTime(juliusDate(new Date(1994,10,8,16,00)))).toNumber());
     
     // 文献中の例から。
-    checkP(359.9999999299906, solarEclipticLongitude(2449431.85263434904943));
-    checkP(21.16941167248130, solarEclipticLongitude(2449453.295651030494));
-    checkP(50.09737887498562, solarEclipticLongitude(2449483.01263787953888));
-    checkP(78.63143984057999, solarEclipticLongitude(2449512.7137218565143));
-    checkP(106.9141295248953, solarEclipticLongitude(2449542.3526236737596));
-    checkP(40.0342792282334200, solarEclipticLongitude(2449472.625));
+    checkP(359.9999999299906, solarEclipticLongitude(new HighPrecision(2449431.85263434904943)).toNumber());
+    checkP(21.16941167248130, solarEclipticLongitude(new HighPrecision(2449453.295651030494)).toNumber());
+    checkP(50.09737887498562, solarEclipticLongitude(new HighPrecision(2449483.01263787953888)).toNumber());
+    checkP(78.63143984057999, solarEclipticLongitude(new HighPrecision(2449512.7137218565143)).toNumber());
+    checkP(106.9141295248953, solarEclipticLongitude(new HighPrecision(2449542.3526236737596)).toNumber());
+    checkP(40.0342792282334200, solarEclipticLongitude(new HighPrecision(2449472.625)).toNumber());
 }
 function testLunarEclipticLongitude() {
     // FIXME: 精度が 0.0001 程度しかなく、低すぎる気がするので
     // 計算部分に見直しが必要かも。
     
     // 文献中の例から。
-    checkR(93.93361186916204, lunarEclipticLongitude(2449431.85263434904943));
-    checkR(24.23809602459182, lunarEclipticLongitude(2449453.295651030494));
-    checkR(53.34937446649215, lunarEclipticLongitude(2449483.01263787953888));
-    checkR(82.69589256228039, lunarEclipticLongitude(2449512.7137218565143));
-    checkR(112.2766488159473, lunarEclipticLongitude(2449542.3526236737596));
+    checkR(93.93361186916204, lunarEclipticLongitude(new HighPrecision(2449431.85263434904943)).toNumber());
+    checkR(24.23809602459182, lunarEclipticLongitude(new HighPrecision(2449453.295651030494)).toNumber());
+    checkR(53.34937446649215, lunarEclipticLongitude(new HighPrecision(2449483.01263787953888)).toNumber());
+    checkR(82.69589256228039, lunarEclipticLongitude(new HighPrecision(2449512.7137218565143)).toNumber());
+    checkR(112.2766488159473, lunarEclipticLongitude(new HighPrecision(2449542.3526236737596)).toNumber());
 }
 function testJuliusDate() {
     // 1994年5月1日 ＝ 2449473
