@@ -30,7 +30,8 @@
         set('choku', newChoku);
         var newShuku = shuku(old);
         set('shuku', newShuku);
-        set('nattin', nattin(jd));
+        var newNattin = nattin(jd);
+        set('nattin', newNattin);
         var tags = [];
         tagsForDate(date).forEach(function (tag) {
             var tagText = tag[1];
@@ -69,7 +70,7 @@
         markItems([newRokki, // 六輝
             newEto.charAt(0), newEto.charAt(1), // 十干、十二支
             newKyusei, // 九星
-            newChoku, newShuku]); // 直、宿
+            newChoku, newShuku, newNattin]); // 直、宿, 納音
     }
 
     var marked;
