@@ -24,7 +24,8 @@
         set('rokki', newRokki);
         var newEto = eto(jd);
         set('eto', newEto);
-        set('kyusei', kyusei(jd));
+        var newKyusei = kyusei(jd);
+        set('kyusei', newKyusei);
         var newChoku = choku(jd);
         set('choku', newChoku);
         var newShuku = shuku(old);
@@ -67,6 +68,7 @@
         // 今解説に表がある項目について、マーカー表示します。
         markItems([newRokki, // 六輝
             newEto.charAt(0), newEto.charAt(1), // 十干、十二支
+            newKyusei, // 九星
             newChoku, newShuku]); // 直、宿
     }
 
