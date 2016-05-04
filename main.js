@@ -171,11 +171,12 @@
                     }
                     var reading = aItem[1];
                     var desc = aItem[2];
+                    var id = name + '_' + title[0];
                     var titleHtml = '';
                     if (reading) {
-                        titleHtml = '<ruby id="' + title[0] + '">' + title[1] + '<rt>' + reading + '</rt></ruby>';
+                        titleHtml = '<ruby id="' + id + '">' + title[1] + '<rt>' + reading + '</rt></ruby>';
                     } else {
-                        titleHtml = '<span id="' + title[0] + '">' + title[1] + '</span>';
+                        titleHtml = '<span id="' + id + '">' + title[1] + '</span>';
                     }
                     section.push('<tr><th>' + titleHtml + '</th><td>' + desc + '</td></tr>');
                 });
@@ -258,10 +259,10 @@
         set('tags', tags.join(" ･ "));
         
         // 今解説に表がある項目について、マーカー表示します。
-        markItems([newRokki, // 六輝
-            newEto.charAt(0), newEto.charAt(1), // 十干、十二支
-            newKyusei, // 九星
-            newChoku, newShuku, newNattin]); // 直、宿, 納音
+        markItems([["六輝", newRokki], // 六輝
+            ["干支", newEto.charAt(0)], ["干支", newEto.charAt(1)], // 十干、十二支
+            ["九星", newKyusei], // 九星
+            ["直", newChoku], ["宿", newShuku], ["納音", newNattin]]); // 直、宿、納音
     }
 
     var marked;
@@ -273,7 +274,7 @@
         }
         marked = [];
         toBeMarked.forEach(function (item) {
-            var e = document.getElementById(item);
+            var e = document.getElementById(item.join("_"));
             addClass(e, "marked");
             marked.push(e);
         });
