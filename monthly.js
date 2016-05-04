@@ -179,11 +179,13 @@
     function update() {
         document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
         document.getElementById("jaYearMonth").innerHTML = heiseiYear(month.year) + " " + jaMonth(month.month);
+        
+        var newMode = document.getElementById("mode").value;
+        var tagger = (newMode == "") ? new DefaultTagger() : new ModeTagger(newMode);
         document.getElementById("monthlyCalendar").innerHTML = month.render(tagger);
     }
 
     var month;
-    var tagger;
     function gotoMonthOfHash() {
         var date = new Date();
         var hash = parseHash(document.location.href);
@@ -198,17 +200,12 @@
         update();
     }
     window.addEventListener('load', function () {
-        tagger = new DefaultTagger();
         gotoMonthOfHash();
 
         document.getElementById("next").addEventListener("click", next, false);
         document.getElementById("prev").addEventListener("click", prev, false);
         
-        document.getElementById("mode").addEventListener("change", function (e) {
-            var newMode = e.target.value;
-            tagger = (newMode == '') ? new DefaultTagger() : new ModeTagger(newMode);
-            update();
-        }, false);
+        document.getElementById("mode").addEventListener("change", update, false);
     }, false);
     window.addEventListener("hashchange", function (e) {
         var hash = parseHash(e.newURL);
