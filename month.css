@@ -61,6 +61,30 @@
 .badDay {
     color: #cccccc;
 }
+#modeContainer {
+    position: fixed;
+    
+    background-color: #999999;
+    border-radius: 2em;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+    color: white;
+}
+#mode {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    padding: 0.5em 1.5em 0.5em 0.5em;
+    text-align: center;
+}
+#modeContainer label {
+    margin: 0 0.5em 0 -1.5em;
+}
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
     h1 {
@@ -80,6 +104,10 @@
         width: 7vh;
         height: 7vh;
     }
+    #modeContainer {
+        right: 2em;
+        bottom: 2em;
+    }
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
@@ -96,5 +124,10 @@
         line-height: 11vw;
         width: 11vw;
         height: 11vw;
+    }
+    #modeContainer {
+        font-size: 4vw;
+        right: 7vw;
+        bottom: 7vw;
     }
 }

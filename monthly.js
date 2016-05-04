@@ -1,4 +1,45 @@
 (function () {
+    function DefaultTagger() {
+    }
+    DefaultTagger.prototype = {
+        tagForDate: function (aDate, aMoon) {
+            var topTag = "";
+            var tags = tagsForDate(aDate, aMoon);
+            if (tags.length > 0) {
+                topTag = tags[0];
+                topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>'; 
+            }
+            return topTag;
+        },
+    };
+    
+    function ModeTagger(aMode) {
+        this.mode = aMode;
+    }
+    ModeTagger.prototype = {
+        stringForDate: function (aDate, aMoon) {
+            // 月表示の更新
+            var jd  = juliusDate(aDate);
+            switch (this.mode) {
+                case "六輝":
+                    return rokki(oldCalendar(jd));
+                case "干支":
+                    return eto(jd);
+                case "九星":
+                    return kyusei(jd);
+                case "直":
+                    return choku(jd);
+                case "宿":
+                    return shuku(oldCalendar(jd));
+                case "納音":
+                    return nattin(jd);
+            }
+        },
+        tagForDate: function (aDate, aMoon) {
+            return '<span class="tag">' + this.stringForDate(aDate, aMoon) + '</span>';
+        },
+    };
+    
     function MonthlyCalendar(year, month) {
         this.year = year;
         this.month = month;
@@ -32,7 +73,7 @@
         return new MonthlyCalendar(date.getFullYear(), date.getMonth());
     };
     MonthlyCalendar.prototype = {
-        render: function () {
+        render: function (aTagger) {
             // TODO: もうちょっとモダンな実現方法にしたいな…
             var s = '<div class="week">';
             var dow = "日月火水木金土";
@@ -62,11 +103,7 @@
                         date = day.getDate();
                         var dateString = [that.year, that.month + 1, date].join('/');
                         link = 'href="index.html#' + dateString + '"';
-                        var tags = tagsForDate(day, that.moon);
-                        if (tags.length > 0) {
-                            topTag = tags[0];
-                            topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>'; 
-                        }
+                        topTag = aTagger.tagForDate(day, that.moon);
                     }
                     s += '<a class="' + clz + '" ' + link + '><div class="date">';
                     s += date;
@@ -128,10 +165,11 @@
     function update() {
         document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
         document.getElementById("jaYearMonth").innerHTML = heiseiYear(month.year) + " " + jaMonth(month.month);
-        document.getElementById("monthlyCalendar").innerHTML = month.render();
+        document.getElementById("monthlyCalendar").innerHTML = month.render(tagger);
     }
 
     var month;
+    var tagger;
     function gotoMonthOfHash() {
         var date = new Date();
         var hash = parseHash(document.location.href);
@@ -146,10 +184,17 @@
         update();
     }
     window.addEventListener('load', function () {
+        tagger = new DefaultTagger();
         gotoMonthOfHash();
 
-        document.getElementById("next").addEventListener("click", next);
-        document.getElementById("prev").addEventListener("click", prev);
+        document.getElementById("next").addEventListener("click", next, false);
+        document.getElementById("prev").addEventListener("click", prev, false);
+        
+        document.getElementById("mode").addEventListener("change", function (e) {
+            var newMode = e.target.value;
+            tagger = (newMode == '') ? new DefaultTagger() : new ModeTagger(newMode);
+            update();
+        }, false);
     }, false);
     window.addEventListener("hashchange", function (e) {
         var hash = parseHash(e.newURL);
