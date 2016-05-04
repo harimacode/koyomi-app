@@ -35,8 +35,22 @@
                     return nattin(jd);
             }
         },
+        hueForString: function (aString) {
+            var all = null;
+            switch (this.mode) {
+                case "六輝": all = allRokkis(); break;
+                case "干支": all = allEtos(); break;
+                case "九星": all = allKyuseis(); break;
+                case "直": all = allChokus(); break;
+                case "宿": all = allShukus(); break;
+                case "納音": all = allNattins(); break;
+            }
+            return 360 * all.indexOf(aString) / all.length;
+        },
         tagForDate: function (aDate, aMoon) {
-            return '<span class="tag">' + this.stringForDate(aDate, aMoon) + '</span>';
+            var s = this.stringForDate(aDate, aMoon);
+            var hue = this.hueForString(s);
+            return '<span class="tag" style="background-color: hsl(' + hue + ', 100%, 93%);">' + s + '</span>';
         },
     };
     

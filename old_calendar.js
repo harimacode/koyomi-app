@@ -564,13 +564,27 @@ function oldCalendar(jd) {
     return oldDate;
 }
 
-function rokki(oldDate) {
-    var kRokki = [
+function allRokkis() {
+    return [
         "先勝", "友引", "先負", "空亡", "大安", "赤口"
     ];
-    return kRokki[(oldDate.month + oldDate.day - 2) % 6];
+}
+function rokki(oldDate) {
+    return allRokkis()[(oldDate.month + oldDate.day - 2) % 6];
 }
 
+var gAllEtos = null;
+function allEtos() {
+    if (!gAllEtos) {
+        var kJikkan = "甲乙丙丁戊己庚辛壬癸";
+        var kJunishi = "子丑寅卯辰巳午未申酉戌亥";
+        gAllEtos = [];
+        for (var i = 0; i < 60; ++i) {
+            gAllEtos.push(kJikkan[i % kJikkan.length] + kJunishi[i % kJunishi.length]);
+        }
+    }
+    return gAllEtos;
+}
 function eto(jd) {
     var kJikkan = "甲乙丙丁戊己庚辛壬癸";
     var kJunishi = "子丑寅卯辰巳午未申酉戌亥";
@@ -580,13 +594,16 @@ function eto(jd) {
            kJunishi[days % kJunishi.length];
 }
 
+function allKyuseis() {
+    return [
+        "一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫",        
+    ];
+}
 function kyusei(jd) {
     // 本実装では、主に以下を参照しました。
     // https://ja.wikipedia.org/wiki/%E4%B9%9D%E6%98%9F
     // http://koyomi.vis.ne.jp/doc/mlwa/200703270.htm
-    var kKyuseis = [
-        "一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫",        
-    ];
+    var kKyuseis = allKyuseis();
     jd = Math.floor(jd);
     // 対象の日を含む二至
     var nishi = findSekki(jd+1, 180, 90);
@@ -652,6 +669,9 @@ function findSetsugetsu(jd) {
     return [(normalizeAngle(sekki[0] + 15) / 30 + 1) % 12 + 1, sekki[1]]
 }
 
+function allChokus() {
+    return "建除満平定執破危成納開閉".split("");
+}
 function choku(jd) {
     // 正月 寅 	二月 卯 	三月 辰 	四月 巳
     // 五月 午 	六月 未 	七月 申 	八月 酉
@@ -679,6 +699,9 @@ function choku(jd) {
     // alert("NG");
 }
 
+function allShukus() {
+    return "角亢氐房心尾箕斗女虚危室壁奎婁胃昴畢觜参井鬼柳星張翼軫".split("");
+}
 function shuku(oldDate) {
     var kShukus = "角亢氐房心尾箕斗女虚危室壁奎婁胃昴畢觜参井鬼柳星張翼軫";
     var kStarts = "室奎胃畢参鬼張角氐心斗虚";
@@ -688,8 +711,8 @@ function shuku(oldDate) {
     return kShukus[i % kShukus.length];
 }
 
-function nattin(jd) {
-    var kNattins = [
+function allNattins() {
+    return [
         "海中金", "爐中火", "大林木", "路傍土", "剣鋒金",
         "山頭火", "澗下水", "城頭土", "白蝋金", "楊柳木",
         "井泉水", "屋上土", "霹靂火", "松柏木", "長流水",
@@ -697,12 +720,14 @@ function nattin(jd) {
         "覆燈火", "天河水", "大駅土", "剣釧金", "桑柘木",
         "大渓水", "沙中土", "天上火", "柘榴木", "大海水",        
     ];
+}
+function nattin(jd) {
     // FIXME: 甲子の日を求めるのが非効率なロジック…
     var kousi = jd;
     while (eto(kousi) != "甲子") {
         --kousi;
     }
-    return kNattins[Math.floor((jd - kousi) / 2)];
+    return allNattins()[Math.floor((jd - kousi) / 2)];
 }
 
 /**
