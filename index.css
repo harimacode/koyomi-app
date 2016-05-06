@@ -33,6 +33,7 @@
 }
 .box div:last-child {
     position: absolute;
+    bottom: 0;
 }
 .box:nth-child(2n+1) {
     background-color: #999999;
@@ -134,7 +135,6 @@
     }
     .box div:last-child {
         right: 0.1em;
-        bottom: 0.1em;
     }
     #tags {
         margin: 0.1em auto 1em auto;
@@ -171,7 +171,6 @@
     }
     .box div:last-child {
         right: 1vw;
-        bottom: 1vw;
     }
     #tags {
         margin: 1vw auto;
