@@ -25,6 +25,9 @@ function tagsForDate(date, moon) {
     if (isFujoju(oldCalendar(jd))) {
         tags.push(["badDay", "不成就日"]);
     }
+    if (isHassen(jd)) {
+        tags.push(["badDay", "八専"]);
+    }
     if (isSanrinbou(jd)) {
         tags.push(["goodDay", "三輪宝"]);
     }

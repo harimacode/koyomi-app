@@ -782,6 +782,13 @@ function isFujoju(oldDate) {
     }
     return days.indexOf(oldDate.day) > -1;
 }
+function isHassen(jd) {
+    var kHassens = [
+        "壬子", "甲寅", "乙卯", "丁巳",
+        "己未", "庚申", "辛酉", "癸亥",
+    ];
+    return kHassens.indexOf(eto(jd)) > -1;
+}
 function isSanrinbou(jd) {
     var kEtoForSetsugetsu = "亥寅午亥寅午亥寅午亥寅午";
     var s = findSetsugetsu(jd);
@@ -1082,6 +1089,17 @@ function testIsFujoju() {
     checkBool(true,  isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 8)))));
     checkBool(false, isFujoju(oldCalendar(juliusDate(new Date(2016, 0, 9)))));
 }
+function testIsHassen() {
+    checkBool(true,  isHassen(juliusDate(new Date(2014, 3, 16))));
+    checkBool(false, isHassen(juliusDate(new Date(2014, 3, 17))));
+    checkBool(true,  isHassen(juliusDate(new Date(2014, 3, 18))));
+    checkBool(true,  isHassen(juliusDate(new Date(2014, 3, 19))));
+    checkBool(true,  isHassen(juliusDate(new Date(2014, 3, 20))));
+    checkBool(false, isHassen(juliusDate(new Date(2014, 3, 21))));
+    checkBool(true,  isHassen(juliusDate(new Date(2014, 3, 22))));
+    checkBool(false, isHassen(juliusDate(new Date(2014, 3, 23))));
+    checkBool(false, isHassen(juliusDate(new Date(2014, 3, 24))));
+}
 function testIsSanrinbou() {
     // 2016/1/13は三輪宝
     checkBool(false, isSanrinbou(juliusDate(new Date(2016, 0, 12))));
@@ -1110,5 +1128,6 @@ function runTests() {
     testIsIchiryuManbai();
     testIsTensya();
     testIsFujoju();
+    testIsHassen();
     testIsSanrinbou();
 }
