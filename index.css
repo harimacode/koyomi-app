@@ -86,7 +86,6 @@
     clear: both;
     color: #333333;
     margin: 1em 0 0 0;
-    ruby-align: center;
     width: 100%;
 }
 #explanation td,
@@ -103,6 +102,10 @@
     clear: both;
     border: none;
     border-bottom: 1px dotted #999999;
+}
+#explanation .ruby {
+    font-size: 0.5em;
+    margin-bottom: -0.5em;
 }
 .marked {
     background-color: yellow;

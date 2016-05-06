@@ -172,11 +172,9 @@
                     var reading = aItem[1];
                     var desc = aItem[2];
                     var id = name + '_' + title[0];
-                    var titleHtml = '';
+                    var titleHtml = '<span id="' + id + '">' + title[1] + '</span>';
                     if (reading) {
-                        titleHtml = '<ruby id="' + id + '">' + title[1] + '<rt>' + reading + '</rt></ruby>';
-                    } else {
-                        titleHtml = '<span id="' + id + '">' + title[1] + '</span>';
+                        titleHtml = '<div class="ruby">' + reading + '</div>' + titleHtml;
                     }
                     section.push('<tr><th>' + titleHtml + '</th><td>' + desc + '</td></tr>');
                 });
