@@ -23,10 +23,10 @@ function tagsForDate(date, moon) {
         tags.push(["badDay", "十方暮終"]);
     }
     if (isTenichiTenjoStart(jd)) {
-        tags.push(["goodDay", "天一天上入"]);
+        tags.push(["goodDay", "天天上入"]);
     }
     if (isTenichiTenjoEnd(jd)) {
-        tags.push(["goodDay", "天一天上終"]);
+        tags.push(["goodDay", "天天上終"]);
     }
     if (isIchiryuManbai(jd)) {
         tags.push(["goodDay", "一粒万倍日"]);

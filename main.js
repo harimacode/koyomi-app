@@ -253,6 +253,8 @@
                      !(tag[1] == "雛祭" || tag[1] == "七夕"))
             {
                 tagText += "の節句";
+            } else if (tag[1].indexOf("天天上") == 0) {
+                tagText = tag[1].substr(0, 1) + "一" + tag[1].substr(1);
             }
             tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
         });
