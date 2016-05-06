@@ -749,6 +749,12 @@ function nijuShisekki(jd) {
     return "";
 }
 
+function isJippouGureStart(jd) {
+    return eto(jd) == "甲申";
+}
+function isJippouGureEnd(jd) {
+    return eto(jd) == "癸巳";
+}
 function isIchiryuManbai(jd) {
     var kEtosForSetsugetsu = [
         "丑午", "酉寅", "子卯", "卯辰", "巳午", "酉午",
@@ -1070,6 +1076,15 @@ function testNijuShisekki() {
     checkStr("立夏", nijuShisekki(juliusDate(new Date(2014,4,5))));
     checkStr("", nijuShisekki(juliusDate(new Date(2014,4,6))));
 }
+function testJippouGure() {
+    checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 12))));
+    checkBool(true,  isJippouGureStart(juliusDate(new Date(2014, 4, 13))));
+    checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 14))));
+    
+    checkBool(false, isJippouGureEnd(juliusDate(new Date(2014, 4, 21))));
+    checkBool(true,  isJippouGureEnd(juliusDate(new Date(2014, 4, 22))));
+    checkBool(false, isJippouGureEnd(juliusDate(new Date(2014, 4, 23))));
+}
 function testIsIchiryuManbai() {
     // 2016/1/7 は一粒万倍日
     checkBool(false, isIchiryuManbai(juliusDate(new Date(2016,0,6))));
@@ -1125,6 +1140,7 @@ function runTests() {
     testShuku();
     testNattin();
     testNijuShisekki();
+    testJippouGure();
     testIsIchiryuManbai();
     testIsTensya();
     testIsFujoju();

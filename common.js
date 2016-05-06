@@ -16,6 +16,12 @@ function tagsForDate(date, moon) {
     if (newNijuShisekki) {
         tags.push(["nijuShisekki", newNijuShisekki]);
     }
+    if (isJippouGureStart(jd)) {
+        tags.push(["badDay", "十方暮入"]);
+    }
+    if (isJippouGureEnd(jd)) {
+        tags.push(["badDay", "十方暮終"]);
+    }
     if (isIchiryuManbai(jd)) {
         tags.push(["goodDay", "一粒万倍日"]);
     }
