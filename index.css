@@ -12,6 +12,7 @@
 }
 .box {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+    line-height: 1.0;
 }
 #koyomi a.box:nth-child(2n):hover {
     background-color:#333333;
@@ -20,20 +21,16 @@
     background-color: #666666;
     color: white;
     display: inline-block;
-    font-weight: bold;
     position: relative;
-    text-align: right;
-    vertical-align: bottom;
 }
 .box .title {
     color: #cccccc;
-    font-weight: normal;
-    margin: 0;
     text-align: left;
 }
 .box div:last-child {
+    font-weight: bold;
     position: absolute;
-    bottom: 0;
+    text-align: right;
 }
 .box:nth-child(2n+1) {
     background-color: #999999;
@@ -141,6 +138,7 @@
     }
     .box div:last-child {
         right: 0.1em;
+        bottom: 0.1em;
     }
     #tags {
         margin: 0.1em auto 1em auto;
@@ -177,6 +175,7 @@
     }
     .box div:last-child {
         right: 1vw;
+        bottom: 1vw;
     }
     #tags {
         margin: 1vw auto;
