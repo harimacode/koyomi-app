@@ -95,8 +95,6 @@
 }
 #explanation th {
     font-size: 1.5em;
-    line-height: 1.0;
-    padding: 0.15em;
     vertical-align: center;
     white-space: nowrap;
 }
@@ -107,6 +105,7 @@
 }
 #explanation .ruby {
     font-size: 0.5em;
+    margin-bottom: -0.5em;
 }
 .marked {
     background-color: yellow;
