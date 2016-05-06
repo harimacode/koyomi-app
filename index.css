@@ -106,8 +106,6 @@
 #explanation .ruby {
     font-size: 0.5em;
     margin-bottom: -0.5em;
-    position: relative;
-    z-index: 1;
 }
 .marked {
     background-color: yellow;
