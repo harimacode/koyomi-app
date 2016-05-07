@@ -16,6 +16,9 @@ function tagsForDate(date, moon) {
     if (newNijuShisekki) {
         tags.push(["nijuShisekki", newNijuShisekki]);
     }
+    if (isSetsubun(jd)) {
+        tags.push(["zassetsu", "節分"]);
+    }
     if (isJippouGureStart(jd)) {
         tags.push(["badDay", "十方暮入"]);
     }
