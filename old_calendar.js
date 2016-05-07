@@ -789,6 +789,10 @@ function isSyunsya(jd) {
 function isSyusya(jd) {
     return isSyanichi(jd, false);
 }
+function isNyubai(jd) {
+    var nyubai = Math.floor(findSekki(jd+1, 360, -80)[1]);
+    return jd == nyubai;
+}
 function isJippouGureStart(jd) {
     return eto(jd) == "甲申";
 }
@@ -1174,6 +1178,15 @@ function testSyanichi() {
     checkBool(true, isSyusya(juliusDate(new Date(2013,8,19))));
     checkBool(true, isSyusya(juliusDate(new Date(2014,8,24))));
 }
+function testIsNyubai() {
+    checkBool(false, isNyubai(juliusDate(new Date(2016,5,9))));
+    checkBool(true,  isNyubai(juliusDate(new Date(2016,5,10))));
+    checkBool(false, isNyubai(juliusDate(new Date(2016,5,11))));
+
+    checkBool(false, isNyubai(juliusDate(new Date(2014,5,10))));
+    checkBool(true,  isNyubai(juliusDate(new Date(2014,5,11))));
+    checkBool(false, isNyubai(juliusDate(new Date(2014,5,12))));
+}
 function testJippouGure() {
     checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 12))));
     checkBool(true,  isJippouGureStart(juliusDate(new Date(2014, 4, 13))));
@@ -1251,6 +1264,7 @@ function runTests() {
     testIsHachijuHachiya();
     testHigan();
     testSyanichi();
+    testIsNyubai();
     testJippouGure();
     testTenichiTenjo();
     testIsIchiryuManbai();
