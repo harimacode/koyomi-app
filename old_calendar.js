@@ -843,6 +843,9 @@ function isDoyoEnd(jd) {
     }
     return "春夏秋冬".charAt(found) + "土用明";
 }
+function isDaysFromRissyun(days, jd) {
+    return nijuShisekki(jd-days+1) == "立春";
+}
 function isJippouGureStart(jd) {
     return eto(jd) == "甲申";
 }
@@ -1280,6 +1283,25 @@ function testDoyo() {
     checkStr("夏土用明", isDoyoEnd(juliusDate(new Date(2014,7,6))));
     checkStr("秋土用明", isDoyoEnd(juliusDate(new Date(2014,10,6))));
 }
+function testIsDaysFromRissyun() {
+    // 二百十日
+    checkBool(false, isDaysFromRissyun(210, juliusDate(new Date(2016,7,30))));
+    checkBool(true,  isDaysFromRissyun(210, juliusDate(new Date(2016,7,31))));
+    checkBool(false, isDaysFromRissyun(210, juliusDate(new Date(2016,8,1))));
+    
+    checkBool(true,  isDaysFromRissyun(210, juliusDate(new Date(2017,8,1))));
+    checkBool(true,  isDaysFromRissyun(210, juliusDate(new Date(2018,8,1))));
+    checkBool(true,  isDaysFromRissyun(210, juliusDate(new Date(2019,8,1))));
+
+    // 二百二十日
+    checkBool(false, isDaysFromRissyun(220, juliusDate(new Date(2016,8,9))));
+    checkBool(true,  isDaysFromRissyun(220, juliusDate(new Date(2016,8,10))));
+    checkBool(false, isDaysFromRissyun(220, juliusDate(new Date(2016,8,11))));
+    
+    checkBool(true,  isDaysFromRissyun(220, juliusDate(new Date(2017,8,11))));
+    checkBool(true,  isDaysFromRissyun(220, juliusDate(new Date(2018,8,11))));
+    checkBool(true,  isDaysFromRissyun(220, juliusDate(new Date(2019,8,11))));
+}
 function testJippouGure() {
     checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 12))));
     checkBool(true,  isJippouGureStart(juliusDate(new Date(2014, 4, 13))));
@@ -1361,6 +1383,7 @@ function runTests() {
     testIsNyubai();
     testIsHangesyo();
     testDoyo();
+    testIsDaysFromRissyun();
     testJippouGure();
     testTenichiTenjo();
     testIsIchiryuManbai();
