@@ -46,6 +46,12 @@ function tagsForDate(date, moon) {
     if (isHiganEnd(jd)) {
         tags.push(["zassetsu", "彼岸明"]);
     }
+    if (isDaysFromRissyun(210, jd)) {
+        tags.push(["zassetsu", "二百十日"]);
+    }
+    if (isDaysFromRissyun(220, jd)) {
+        tags.push(["zassetsu", "二百二十日"]);
+    }
     if (isJippouGureStart(jd)) {
         tags.push(["badDay", "十方暮入"]);
     }
