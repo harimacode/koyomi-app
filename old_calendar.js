@@ -761,7 +761,7 @@ function isHiganStart(jd) {
 function isHiganEnd(jd) {
     return ["春分", "秋分"].indexOf(nijuShisekki(jd-3)) > -1;
 }
-function isSyanichi(jd, syunsya) {
+function isSyanichi(jd) {
     var theEto = eto(jd);
     if (theEto.charAt(0) != "戊") {
         return "";
