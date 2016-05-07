@@ -752,6 +752,9 @@ function nijuShisekki(jd) {
 function isSetsubun(jd) {
     return nijuShisekki(jd+1) == "立春";
 }
+function isHachijuHachiya(jd) {
+    return nijuShisekki(jd-87) == "立春";
+}
 function isHiganStart(jd) {
     return ["春分", "秋分"].indexOf(nijuShisekki(jd+3)) > -1;
 }
@@ -1128,6 +1131,15 @@ function testIsSetsubun() {
     checkBool(true,  isSetsubun(juliusDate(new Date(2025,1,2))));
     checkBool(false, isSetsubun(juliusDate(new Date(2025,1,3))));
 }
+function testIsHachijuHachiya() {
+    checkBool(false, isHachijuHachiya(juliusDate(new Date(2016,3,30))));
+    checkBool(true,  isHachijuHachiya(juliusDate(new Date(2016,4,1))));
+    checkBool(false, isHachijuHachiya(juliusDate(new Date(2016,4,2))));
+    
+    checkBool(true, isHachijuHachiya(juliusDate(new Date(2017,4,2))));
+    checkBool(true, isHachijuHachiya(juliusDate(new Date(2018,4,2))));
+    checkBool(true, isHachijuHachiya(juliusDate(new Date(2019,4,2))));
+}
 function testHigan() {
     checkBool(false, isHiganStart(juliusDate(new Date(2014,8,19))));
     checkBool(true,  isHiganStart(juliusDate(new Date(2014,8,20))));
@@ -1236,6 +1248,7 @@ function runTests() {
     testNattin();
     testNijuShisekki();
     testIsSetsubun();
+    testIsHachijuHachiya();
     testHigan();
     testSyanichi();
     testJippouGure();
