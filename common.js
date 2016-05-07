@@ -34,6 +34,14 @@ function tagsForDate(date, moon) {
     if (isSyusya(jd)) {
         tags.push(["zassetsu", "社日(秋)"]);
     }
+    var doyoStart = isDoyoStart(jd);
+    if (doyoStart) {
+        tags.push(["zassetsu", doyoStart]);
+    }
+    var doyoEnd = isDoyoEnd(jd);
+    if (doyoEnd) {
+        tags.push(["zassetsu", doyoEnd]);
+    }
     if (isHiganStart(jd)) {
         tags.push(["zassetsu", "彼岸入"]);
     }
