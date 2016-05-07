@@ -22,6 +22,9 @@ function tagsForDate(date, moon) {
     if (isHachijuHachiya(jd)) {
         tags.push(["zassetsu", "八十八夜"]);
     }
+    if (isNyubai(jd)) {
+        tags.push(["zassetsu", "入梅"]);
+    }
     if (isSyunsya(jd)) {
         tags.push(["zassetsu", "社日(春)"]);
     }
