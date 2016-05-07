@@ -28,11 +28,9 @@ function tagsForDate(date, moon) {
     if (isHangesyo(jd)) {
         tags.push(["zassetsu", "半夏生"]);
     }
-    if (isSyunsya(jd)) {
-        tags.push(["zassetsu", "社日(春)"]);
-    }
-    if (isSyusya(jd)) {
-        tags.push(["zassetsu", "社日(秋)"]);
+    var syanichi = isSyanichi(jd);
+    if (syanichi) {
+        tags.push(["zassetsu", syanichi]);
     }
     var doyoStart = isDoyoStart(jd);
     if (doyoStart) {

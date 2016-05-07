@@ -761,10 +761,16 @@ function isHiganStart(jd) {
 function isHiganEnd(jd) {
     return ["春分", "秋分"].indexOf(nijuShisekki(jd-3)) > -1;
 }
-function syanichi(jd, syunsya) {
-    var nibun = Math.floor(findSekki(jd+10, 360, syunsya ? 0 : 180)[1]);
+function isSyanichi(jd, syunsya) {
+    var theEto = eto(jd);
+    if (theEto.charAt(0) != "戊") {
+        return "";
+    }
+    var nibun = findSekki(jd+10, 180);
+    var syunsya = nibun[0] == 0;
+    nibun = Math.floor(nibun[1]);
     if (Math.abs(nibun - jd) > 10) {
-        return -1; // early return
+        return "";
     }
     var daysBefore = 0;
     while (eto(nibun - daysBefore).charAt(0) != "戊") {
@@ -774,20 +780,8 @@ function syanichi(jd, syunsya) {
     while (eto(nibun + daysAfter).charAt(0) != "戊") {
         ++daysAfter;
     }
-    return nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
-}
-function isSyanichi(jd, syunsya) {
-    var theEto = eto(jd);
-    if (theEto.charAt(0) != "戊") {
-        return false;
-    }
-    return syanichi(jd, syunsya) == jd;
-}
-function isSyunsya(jd) {
-    return isSyanichi(jd, true);
-}
-function isSyusya(jd) {
-    return isSyanichi(jd, false);
+    var syanichi = nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
+    return syanichi == jd ? ("社日(" + (syunsya ? "春" : "秋") + ")") : "";
 }
 function isNyubai(jd) {
     var nyubai = Math.floor(findSekki(jd+1, 360, -80)[1]);
@@ -1169,30 +1163,30 @@ function testHigan() {
     checkBool(true,  isHiganEnd(juliusDate(new Date(2014,8,26))));
     checkBool(false, isHiganEnd(juliusDate(new Date(2014,8,27))));
 }
-function testSyanichi() {
-    checkBool(false, isSyunsya(juliusDate(new Date(2007,2,24))));
-    checkBool(true,  isSyunsya(juliusDate(new Date(2007,2,25))));
-    checkBool(false, isSyunsya(juliusDate(new Date(2007,2,26))));
+function testIsSyanichi() {
+    checkStr("", isSyanichi(juliusDate(new Date(2007,2,24))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2007,2,25))));
+    checkStr("", isSyanichi(juliusDate(new Date(2007,2,26))));
 
-    checkBool(false, isSyusya(juliusDate(new Date(2007,8,20))));
-    checkBool(true,  isSyusya(juliusDate(new Date(2007,8,21))));
-    checkBool(false, isSyusya(juliusDate(new Date(2007,8,22))));
+    checkStr("", isSyanichi(juliusDate(new Date(2007,8,20))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2007,8,21))));
+    checkStr("", isSyanichi(juliusDate(new Date(2007,8,22))));
 
-    checkBool(true, isSyunsya(juliusDate(new Date(2008,2,19))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2009,2,24))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2010,2,19))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2011,2,24))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2012,2,18))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2013,2,23))));
-    checkBool(true, isSyunsya(juliusDate(new Date(2014,2,18))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2008,2,19))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2009,2,24))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2010,2,19))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2011,2,24))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2012,2,18))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2013,2,23))));
+    checkStr("社日(春)", isSyanichi(juliusDate(new Date(2014,2,18))));
 
-    checkBool(true, isSyusya(juliusDate(new Date(2008,8,25))));
-    checkBool(true, isSyusya(juliusDate(new Date(2009,8,20))));
-    checkBool(true, isSyusya(juliusDate(new Date(2010,8,25))));
-    checkBool(true, isSyusya(juliusDate(new Date(2011,8,20))));
-    checkBool(true, isSyusya(juliusDate(new Date(2012,8,24))));
-    checkBool(true, isSyusya(juliusDate(new Date(2013,8,19))));
-    checkBool(true, isSyusya(juliusDate(new Date(2014,8,24))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2008,8,25))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2009,8,20))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2010,8,25))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2011,8,20))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2012,8,24))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2013,8,19))));
+    checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2014,8,24))));
 }
 function testIsNyubai() {
     checkBool(false, isNyubai(juliusDate(new Date(2016,5,9))));
@@ -1305,7 +1299,7 @@ function runTests() {
     testIsSetsubun();
     testIsHachijuHachiya();
     testHigan();
-    testSyanichi();
+    testIsSyanichi();
     testIsNyubai();
     testIsHangesyo();
     testDoyo();
