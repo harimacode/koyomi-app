@@ -62,20 +62,20 @@ function tagsForDate(date, moon) {
     if (sanpuku) {
         tags.push(["badDay", sanpuku]);
     }
+    if (isSanrinbou(jd)) {
+        tags.push(["goodDay", "三輪宝"]);
+    }
+    if (isFujoju(oldCalendar(jd))) {
+        tags.push(["badDay", "不成就日"]);
+    }
     if (isIchiryuManbai(jd)) {
         tags.push(["goodDay", "一粒万倍日"]);
     }
     if (isTensya(jd)) {
         tags.push(["goodDay", "天赦日"]);
     }
-    if (isFujoju(oldCalendar(jd))) {
-        tags.push(["badDay", "不成就日"]);
-    }
     if (isHassen(jd)) {
         tags.push(["badDay", "八専"]);
-    }
-    if (isSanrinbou(jd)) {
-        tags.push(["goodDay", "三輪宝"]);
     }
     if (!moon) {
         moon = new Moon(date.getFullYear(), date.getMonth());
