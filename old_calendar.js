@@ -784,10 +784,10 @@ function isSyanichi(jd) {
     return syanichi == jd ? ("社日(" + (syunsya ? "春" : "秋") + ")") : "";
 }
 function findSanpuku(jd) {
-    // var theEto = eto(jd);
-    // if (theEto.charAt(0) != "庚") {
-    //     return "";
-    // }
+    var theEto = eto(jd);
+    if (theEto.charAt(0) != "庚") {
+        return "";
+    }
     var kSekkis = [
         [90, [2, 3]], // 夏至以降の3,4回目
         [135, [0]], // 立秋以降の最初

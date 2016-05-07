@@ -58,6 +58,10 @@ function tagsForDate(date, moon) {
     if (isTenichiTenjoEnd(jd)) {
         tags.push(["goodDay", "天天上終"]);
     }
+    var sanpuku = isSanpuku(jd);
+    if (sanpuku) {
+        tags.push(["badDay", sanpuku]);
+    }
     if (isIchiryuManbai(jd)) {
         tags.push(["goodDay", "一粒万倍日"]);
     }
