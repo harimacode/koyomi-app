@@ -797,6 +797,18 @@ function isHangesyo(jd) {
     var hangesyo = Math.floor(findSekki(jd+1, 360, -100)[1]);
     return jd == hangesyo;
 }
+function isDoyoStart(jd) {
+    var doyoStart = findSekki(jd+1, 90, -27);
+    return jd == Math.floor(doyoStart[1]) ? "春夏秋冬".charAt((doyoStart[0]-27)/90%4) + "土用入" : "";
+}
+function isDoyoEnd(jd) {
+    var kYonritsu = ["立夏", "立秋", "立冬", "立春"];
+    var found = kYonritsu.indexOf(nijuShisekki(jd+1));
+    if (found < 0) {
+        return "";
+    }
+    return "春夏秋冬".charAt(found) + "土用明";
+}
 function isJippouGureStart(jd) {
     return eto(jd) == "甲申";
 }
@@ -1200,6 +1212,23 @@ function testIsHangesyo() {
     checkBool(true,  isHangesyo(juliusDate(new Date(2016,6,1))));
     checkBool(false, isHangesyo(juliusDate(new Date(2016,6,2))));
 }
+function testDoyo() {
+    checkStr("", isDoyoStart(juliusDate(new Date(2014,0,16))));
+    checkStr("冬土用入", isDoyoStart(juliusDate(new Date(2014,0,17))));
+    checkStr("", isDoyoStart(juliusDate(new Date(2014,0,18))));
+
+    checkStr("", isDoyoEnd(juliusDate(new Date(2014,1,2))));
+    checkStr("冬土用明", isDoyoEnd(juliusDate(new Date(2014,1,3))));
+    checkStr("", isDoyoEnd(juliusDate(new Date(2014,1,4))));    
+    
+    checkStr("春土用入", isDoyoStart(juliusDate(new Date(2014,3,17))));
+    checkStr("夏土用入", isDoyoStart(juliusDate(new Date(2014,6,20))));
+    checkStr("秋土用入", isDoyoStart(juliusDate(new Date(2014,9,20))));
+
+    checkStr("春土用明", isDoyoEnd(juliusDate(new Date(2014,4,4))));
+    checkStr("夏土用明", isDoyoEnd(juliusDate(new Date(2014,7,6))));
+    checkStr("秋土用明", isDoyoEnd(juliusDate(new Date(2014,10,6))));
+}
 function testJippouGure() {
     checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 12))));
     checkBool(true,  isJippouGureStart(juliusDate(new Date(2014, 4, 13))));
@@ -1279,6 +1308,7 @@ function runTests() {
     testSyanichi();
     testIsNyubai();
     testIsHangesyo();
+    testDoyo();
     testJippouGure();
     testTenichiTenjo();
     testIsIchiryuManbai();
