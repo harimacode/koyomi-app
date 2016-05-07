@@ -19,6 +19,12 @@ function tagsForDate(date, moon) {
     if (isSetsubun(jd)) {
         tags.push(["zassetsu", "節分"]);
     }
+    if (isSyunsya(jd)) {
+        tags.push(["zassetsu", "社日(春)"]);
+    }
+    if (isSyusya(jd)) {
+        tags.push(["zassetsu", "社日(秋)"]);
+    }
     if (isHiganStart(jd)) {
         tags.push(["zassetsu", "彼岸入"]);
     }

@@ -760,6 +760,9 @@ function isHiganEnd(jd) {
 }
 function syanichi(jd, syunsya) {
     var nibun = Math.floor(findSekki(jd+10, 360, syunsya ? 0 : 180)[1]);
+    if (Math.abs(nibun - jd) > 10) {
+        return -1; // early return
+    }
     var daysBefore = 0;
     while (eto(nibun - daysBefore).charAt(0) != "戊") {
         ++daysBefore;
@@ -770,19 +773,18 @@ function syanichi(jd, syunsya) {
     }
     return nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
 }
+function isSyanichi(jd, syunsya) {
+    var theEto = eto(jd);
+    if (theEto.charAt(0) != "戊") {
+        return false;
+    }
+    return syanichi(jd, syunsya) == jd;
+}
 function isSyunsya(jd) {
-    // var theEto = eto(jd);
-    // if (theEto.charAt(0) != "戊") {
-    //     return false;
-    // }
-    return syanichi(jd, true) == jd;
+    return isSyanichi(jd, true);
 }
 function isSyusya(jd) {
-    // var theEto = eto(jd);
-    // if (theEto.charAt(0) != "戊") {
-    //     return false;
-    // }
-    return syanichi(jd, false) == jd;
+    return isSyanichi(jd, false);
 }
 function isJippouGureStart(jd) {
     return eto(jd) == "甲申";
