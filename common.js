@@ -25,6 +25,9 @@ function tagsForDate(date, moon) {
     if (isNyubai(jd)) {
         tags.push(["zassetsu", "入梅"]);
     }
+    if (isHangesyo(jd)) {
+        tags.push(["zassetsu", "半夏生"]);
+    }
     if (isSyunsya(jd)) {
         tags.push(["zassetsu", "社日(春)"]);
     }
