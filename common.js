@@ -19,6 +19,12 @@ function tagsForDate(date, moon) {
     if (isSetsubun(jd)) {
         tags.push(["zassetsu", "節分"]);
     }
+    if (isHiganStart(jd)) {
+        tags.push(["zassetsu", "彼岸入"]);
+    }
+    if (isHiganEnd(jd)) {
+        tags.push(["zassetsu", "彼岸明"]);
+    }
     if (isJippouGureStart(jd)) {
         tags.push(["badDay", "十方暮入"]);
     }
