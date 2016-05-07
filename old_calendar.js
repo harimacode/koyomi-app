@@ -758,6 +758,32 @@ function isHiganStart(jd) {
 function isHiganEnd(jd) {
     return ["春分", "秋分"].indexOf(nijuShisekki(jd-3)) > -1;
 }
+function syanichi(jd, syunsya) {
+    var nibun = Math.floor(findSekki(jd+10, 360, syunsya ? 0 : 180)[1]);
+    var daysBefore = 0;
+    while (eto(nibun - daysBefore).charAt(0) != "戊") {
+        ++daysBefore;
+    }
+    var daysAfter = 0;
+    while (eto(nibun + daysAfter).charAt(0) != "戊") {
+        ++daysAfter;
+    }
+    return nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
+}
+function isSyunsya(jd) {
+    // var theEto = eto(jd);
+    // if (theEto.charAt(0) != "戊") {
+    //     return false;
+    // }
+    return syanichi(jd, true) == jd;
+}
+function isSyusya(jd) {
+    // var theEto = eto(jd);
+    // if (theEto.charAt(0) != "戊") {
+    //     return false;
+    // }
+    return syanichi(jd, false) == jd;
+}
 function isJippouGureStart(jd) {
     return eto(jd) == "甲申";
 }
@@ -1109,6 +1135,31 @@ function testHigan() {
     checkBool(true,  isHiganEnd(juliusDate(new Date(2014,8,26))));
     checkBool(false, isHiganEnd(juliusDate(new Date(2014,8,27))));
 }
+function testSyanichi() {
+    checkBool(false, isSyunsya(juliusDate(new Date(2007,2,24))));
+    checkBool(true,  isSyunsya(juliusDate(new Date(2007,2,25))));
+    checkBool(false, isSyunsya(juliusDate(new Date(2007,2,26))));
+
+    checkBool(false, isSyusya(juliusDate(new Date(2007,8,20))));
+    checkBool(true,  isSyusya(juliusDate(new Date(2007,8,21))));
+    checkBool(false, isSyusya(juliusDate(new Date(2007,8,22))));
+
+    checkBool(true, isSyunsya(juliusDate(new Date(2008,2,19))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2009,2,24))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2010,2,19))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2011,2,24))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2012,2,18))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2013,2,23))));
+    checkBool(true, isSyunsya(juliusDate(new Date(2014,2,18))));
+
+    checkBool(true, isSyusya(juliusDate(new Date(2008,8,25))));
+    checkBool(true, isSyusya(juliusDate(new Date(2009,8,20))));
+    checkBool(true, isSyusya(juliusDate(new Date(2010,8,25))));
+    checkBool(true, isSyusya(juliusDate(new Date(2011,8,20))));
+    checkBool(true, isSyusya(juliusDate(new Date(2012,8,24))));
+    checkBool(true, isSyusya(juliusDate(new Date(2013,8,19))));
+    checkBool(true, isSyusya(juliusDate(new Date(2014,8,24))));
+}
 function testJippouGure() {
     checkBool(false, isJippouGureStart(juliusDate(new Date(2014, 4, 12))));
     checkBool(true,  isJippouGureStart(juliusDate(new Date(2014, 4, 13))));
@@ -1184,6 +1235,7 @@ function runTests() {
     testNijuShisekki();
     testIsSetsubun();
     testHigan();
+    testSyanichi();
     testJippouGure();
     testTenichiTenjo();
     testIsIchiryuManbai();
