@@ -783,6 +783,46 @@ function isSyanichi(jd) {
     var syanichi = nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
     return syanichi == jd ? ("社日(" + (syunsya ? "春" : "秋") + ")") : "";
 }
+function findSanpuku(jd) {
+    // var theEto = eto(jd);
+    // if (theEto.charAt(0) != "庚") {
+    //     return "";
+    // }
+    var kSekkis = [
+        [90, [2, 3]], // 夏至以降の3,4回目
+        [135, [0]], // 立秋以降の最初
+    ];
+    var results = [];
+    kSekkis.forEach(function (aPair) {
+        var indices = aPair[1];
+        var adjustment = 10 * (indices[indices.length - 1] + 1);
+        var sekki = findSekki(jd + adjustment, 360, -aPair[0]);
+        sekki = Math.floor(sekki[1]);
+        // alert(fromJuliusDate(sekki));
+        var index = 0;
+        var daysAfter = 0;
+        while (indices.length) {
+            if (eto(sekki).charAt(0) == "庚") {
+                if (indices[0] == index) {
+                    results.push(sekki);
+                    indices.shift();
+                }
+                ++index;
+            }
+            ++sekki;
+        }
+    });
+    return results;
+}
+function isSanpuku(jd) {
+    var sanpuku = findSanpuku(jd);
+    for (var i = 0; i < sanpuku.length; ++i) {
+        if (Math.floor(sanpuku[i]) == jd) {
+            return ["初伏", "中伏", "末伏"][i]
+        }
+    }
+    return "";
+}
 function isNyubai(jd) {
     var nyubai = Math.floor(findSekki(jd+1, 360, -80)[1]);
     return jd == nyubai;
@@ -1188,6 +1228,23 @@ function testIsSyanichi() {
     checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2013,8,19))));
     checkStr("社日(秋)", isSyanichi(juliusDate(new Date(2014,8,24))));
 }
+function testIsSanpuku() {
+    checkStr("", isSanpuku(juliusDate(new Date(2016,6,16))));
+    checkStr("初伏", isSanpuku(juliusDate(new Date(2016,6,17))));
+    checkStr("", isSanpuku(juliusDate(new Date(2016,6,18))));
+
+    checkStr("", isSanpuku(juliusDate(new Date(2016,6,26))));
+    checkStr("中伏", isSanpuku(juliusDate(new Date(2016,6,27))));
+    checkStr("", isSanpuku(juliusDate(new Date(2016,6,28))));
+
+    checkStr("", isSanpuku(juliusDate(new Date(2016,7,15))));
+    checkStr("末伏", isSanpuku(juliusDate(new Date(2016,7,16))));
+    checkStr("", isSanpuku(juliusDate(new Date(2016,7,17))));
+
+    checkStr("初伏", isSanpuku(juliusDate(new Date(2014,6,18))));
+    checkStr("中伏", isSanpuku(juliusDate(new Date(2014,6,28))));
+    checkStr("末伏", isSanpuku(juliusDate(new Date(2014,7,7))));
+}
 function testIsNyubai() {
     checkBool(false, isNyubai(juliusDate(new Date(2016,5,9))));
     checkBool(true,  isNyubai(juliusDate(new Date(2016,5,10))));
@@ -1300,6 +1357,7 @@ function runTests() {
     testIsHachijuHachiya();
     testHigan();
     testIsSyanichi();
+    testIsSanpuku();
     testIsNyubai();
     testIsHangesyo();
     testDoyo();
