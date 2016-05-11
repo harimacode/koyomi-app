@@ -926,6 +926,28 @@ function sekku(date) {
     return rv;
 }
 
+// monthly.js でしか使わないが、旧暦と関連するロジック
+function heiseiYear(y) {
+    return "平成" + (y - 1988) + "年";
+}
+function jaMonth(m) {
+    var kJaNames = [
+        "睦月",
+        "如月",
+        "弥生",
+        "卯月",
+        "皐月",
+        "水無月",
+        "文月",
+        "葉月",
+        "長月",
+        "神無月",
+        "霜月",
+        "師走",
+    ];
+    return kJaNames[m];
+}
+
 // precisely に比較する
 function checkP(a, b) {
     return checkFloat(a, b, 0.00000000001);
