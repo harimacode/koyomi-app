@@ -192,4 +192,16 @@
             gotoMonthOfHash();
         }
     });
+
+    var hammer = new Hammer(window);     
+    hammer.on("swipe", function (ev) {
+        switch (ev.direction) {
+        case Hammer.DIRECTION_LEFT:
+            next();
+            break;
+        case Hammer.DIRECTION_RIGHT:
+            prev();
+            break;
+        }
+    });
 })();
