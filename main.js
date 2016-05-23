@@ -307,6 +307,7 @@
             date = new Date();
         }
         update();
+        history.replaceState(null, null, window.location.href.split("#")[0]);
     } 
     function addClass(e, cls) {
         var a = e.getAttribute("class");
@@ -366,12 +367,15 @@
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
+        if (window.location.hash) {
+            return;
+        }
         switch (ev.direction) {
         case Hammer.DIRECTION_LEFT:
-            next();
+            next(ev);
             break;
         case Hammer.DIRECTION_RIGHT:
-            prev();
+            prev(ev);
             break;
         }
     });

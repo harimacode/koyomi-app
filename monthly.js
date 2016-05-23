@@ -197,10 +197,10 @@
     hammer.on("swipe", function (ev) {
         switch (ev.direction) {
         case Hammer.DIRECTION_LEFT:
-            next();
+            next(ev);
             break;
         case Hammer.DIRECTION_RIGHT:
-            prev();
+            prev(ev);
             break;
         }
     });
