@@ -195,3 +195,17 @@
         font-size: 5vw;
     }
 }
+
+#toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#toolbar .box {
+    padding: 0;
+    margin: 0;
+    display: block;
+    float: left;
+    width: 16.6vw;
+    height: 16.6vw;
+}
