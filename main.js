@@ -192,6 +192,11 @@
     function set(id, value) {
         document.getElementById(id).innerHTML = value;
     }
+    function sets(clazz, value) {
+        Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
+            e.innerHTML = value;
+        });
+    }
     function dayOfWeek(dow) {
         return "日月火水木金土".charAt(dow);
     }
@@ -211,17 +216,17 @@
         var old = oldCalendar(jd);
         set('oldDate', '旧暦 ' + old);
         var newRokki = rokki(old);
-        set('rokki', newRokki);
+        sets('rokki', newRokki);
         var newEto = eto(jd);
-        set('eto', newEto);
+        sets('eto', newEto);
         var newKyusei = kyusei(jd);
-        set('kyusei', newKyusei);
+        sets('kyusei', newKyusei);
         var newChoku = choku(jd);
-        set('choku', newChoku);
+        sets('choku', newChoku);
         var newShuku = shuku(old);
-        set('shuku', newShuku);
+        sets('shuku', newShuku);
         var newNattin = nattin(jd);
-        set('nattin', newNattin);
+        sets('nattin', newNattin);
         var tags = [];
         tagsForDate(date).forEach(function (tag) {
             var tagText = tag[1];
@@ -364,6 +369,13 @@
             }
         }
     }, false);
+    // window.addEventListener("scroll", function (e) {
+    //     var sy = window.pageYOffset;
+    //     if (sy > 200) {
+    //         var tb = document.getElementById("toolbar");
+    //         addClass(tb, "visible");
+    //     }
+    // });
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
