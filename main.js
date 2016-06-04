@@ -384,10 +384,9 @@
     window.addEventListener("scroll", function (e) {
         var tb = document.getElementById("toolbar");
         var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
+        removeClass(tb, "visible");
         if (tagsTop < 0) {
             addClass(tb, "visible");
-        } else {
-            removeClass(tb, "visible");
         }
     });
 

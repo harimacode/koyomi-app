@@ -26,10 +26,12 @@ h1 .current {
     color: white;
     display: inline-block;
 }
-#koyomi a:link {
+#koyomi a:link,
+.box:link {
     text-decoration: none;
 }
-#koyomi a:hover {
+#koyomi a:hover,
+.box:hover {
     background-color: #cccccc;
 }
 .old {
