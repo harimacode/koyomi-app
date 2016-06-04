@@ -198,8 +198,14 @@
 
 #toolbar {
     position: fixed;
-    top: 0;
+    top: -16.6vw;
     left: 0;
+    opacity: 0;
+    transition: all 0.25s;
+}
+#toolbar.visible {
+    top: 0;
+    opacity: 1;
 }
 #toolbar .box {
     padding: 0;

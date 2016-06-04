@@ -369,13 +369,15 @@
             }
         }
     }, false);
-    // window.addEventListener("scroll", function (e) {
-    //     var sy = window.pageYOffset;
-    //     if (sy > 200) {
-    //         var tb = document.getElementById("toolbar");
-    //         addClass(tb, "visible");
-    //     }
-    // });
+    window.addEventListener("scroll", function (e) {
+        var tb = document.getElementById("toolbar");
+        var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
+        if (tagsTop < 0) {
+            addClass(tb, "visible");
+        } else {
+            removeClass(tb, "visible");
+        }
+    });
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
