@@ -392,7 +392,8 @@
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
-        if (window.location.hash) {
+        var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;
+        if (dateBottom < 0) {
             return;
         }
         switch (ev.direction) {
