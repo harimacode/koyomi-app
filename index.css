@@ -61,12 +61,14 @@ a.box:nth-child(2n):hover {
     color: gray;
 }
 #toolbar {
+    background-color: #666666;
     position: fixed;
     top: -16.6vw;
     left: 0;
     opacity: 0;
     transition: all 0.25s;
     z-index: 2;
+    width: 100%;
 }
 #toolbar.visible {
     top: 0;
