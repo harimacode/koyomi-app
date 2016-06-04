@@ -366,6 +366,9 @@
                 if (newBox) {
                     addClass(newBox, "marked");
                 }
+                var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+                var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
+                window.scroll(0, newY - tbHeight * 1.25);
             }
         }
     }, false);
