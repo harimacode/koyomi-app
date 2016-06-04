@@ -192,6 +192,11 @@
     function set(id, value) {
         document.getElementById(id).innerHTML = value;
     }
+    function sets(clazz, value) {
+        Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
+            e.innerHTML = value;
+        });
+    }
     function dayOfWeek(dow) {
         return "日月火水木金土".charAt(dow);
     }
@@ -211,17 +216,17 @@
         var old = oldCalendar(jd);
         set('oldDate', '旧暦 ' + old);
         var newRokki = rokki(old);
-        set('rokki', newRokki);
+        sets('rokki', newRokki);
         var newEto = eto(jd);
-        set('eto', newEto);
+        sets('eto', newEto);
         var newKyusei = kyusei(jd);
-        set('kyusei', newKyusei);
+        sets('kyusei', newKyusei);
         var newChoku = choku(jd);
-        set('choku', newChoku);
+        sets('choku', newChoku);
         var newShuku = shuku(old);
-        set('shuku', newShuku);
+        sets('shuku', newShuku);
         var newNattin = nattin(jd);
-        set('nattin', newNattin);
+        sets('nattin', newNattin);
         var tags = [];
         tagsForDate(date).forEach(function (tag) {
             var tagText = tag[1];
@@ -326,6 +331,18 @@
         });
         e.setAttribute("class", newClasses.join(' '));
     }
+    function jumpToHash(aHash) {
+        Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
+            removeClass(aMarked, "marked");
+        });
+        var newBox = document.getElementById(aHash);
+        if (newBox) {
+            addClass(newBox, "marked");
+        }
+        var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+        var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
+        window.scroll(0, newY - tbHeight * 1.25);
+    }
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
         
@@ -340,34 +357,43 @@
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
         
+        Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
+            aBox.addEventListener("click", function (e) {
+                var hash = parseHash(aBox.getAttribute("href"));
+                if (hash) {
+                    e.preventDefault();
+                    jumpToHash(hash);
+                }
+            }, false);
+        });
+        
         // runTests();
     }, false);
     window.addEventListener("hashchange", function (e) {
-        var oldHash = parseHash(e.oldURL);
-        if (oldHash) {
-            var oldBox = document.getElementById(oldHash);
-            if (oldBox) {
-                removeClass(oldBox, "marked");
-            }
-        }
-        var newHash = parseHash(e.newURL);
-        if (newHash) {
-            if (newHash.indexOf("/") > -1) {
+        var hash = parseHash(e.newURL);
+        if (hash) {
+            if (hash.indexOf("/") > -1) {
                 // 日付指定
-                gotoDate(newHash);
+                gotoDate(hash);
             } else {
                 // マーク
-                var newBox = document.getElementById(newHash);
-                if (newBox) {
-                    addClass(newBox, "marked");
-                }
+                jumpToHash(hash);
             }
         }
     }, false);
+    window.addEventListener("scroll", function (e) {
+        var tb = document.getElementById("toolbar");
+        var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
+        removeClass(tb, "visible");
+        if (tagsTop < 0) {
+            addClass(tb, "visible");
+        }
+    });
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
-        if (window.location.hash) {
+        var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;
+        if (dateBottom < 0) {
             return;
         }
         switch (ev.direction) {
