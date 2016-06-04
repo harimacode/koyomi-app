@@ -331,6 +331,18 @@
         });
         e.setAttribute("class", newClasses.join(' '));
     }
+    function jumpToHash(aHash) {
+        Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
+            removeClass(aMarked, "marked");
+        });
+        var newBox = document.getElementById(aHash);
+        if (newBox) {
+            addClass(newBox, "marked");
+        }
+        var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+        var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
+        window.scroll(0, newY - tbHeight * 1.25);
+    }
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
         
@@ -345,30 +357,27 @@
         document.getElementById("next").addEventListener("click", next);
         document.getElementById("prev").addEventListener("click", prev);
         
+        Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
+            aBox.addEventListener("click", function (e) {
+                var hash = parseHash(aBox.getAttribute("href"));
+                if (hash) {
+                    e.preventDefault();
+                    jumpToHash(hash);
+                }
+            }, false);
+        });
+        
         // runTests();
     }, false);
     window.addEventListener("hashchange", function (e) {
-        var oldHash = parseHash(e.oldURL);
-        if (oldHash) {
-            var oldBox = document.getElementById(oldHash);
-            if (oldBox) {
-                removeClass(oldBox, "marked");
-            }
-        }
-        var newHash = parseHash(e.newURL);
-        if (newHash) {
-            if (newHash.indexOf("/") > -1) {
+        var hash = parseHash(e.newURL);
+        if (hash) {
+            if (hash.indexOf("/") > -1) {
                 // 日付指定
-                gotoDate(newHash);
+                gotoDate(hash);
             } else {
                 // マーク
-                var newBox = document.getElementById(newHash);
-                if (newBox) {
-                    addClass(newBox, "marked");
-                }
-                var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
-                var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
-                window.scroll(0, newY - tbHeight * 1.25);
+                jumpToHash(hash);
             }
         }
     }, false);
