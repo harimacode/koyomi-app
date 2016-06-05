@@ -353,7 +353,7 @@
                 t = 1;
             }
             var distance = this.mTo - this.mFrom;
-            var y = this.mFrom + distance * this.ease(t);
+            var y = this.mFrom + distance * this.easeInOutQuad(t);
             window.scroll(0, y);
             
             if (t < 1) {
@@ -363,9 +363,9 @@
                 }, 1000 / this.mFps);
             }
         },
-        ease: function (t) {
-            return t;
-        },
+        // https://gist.github.com/gre/1650294
+        // acceleration until halfway, then deceleration
+        easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
     };
     
     function jumpToHash(aHash) {
