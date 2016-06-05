@@ -437,7 +437,7 @@
     }, false);
 
     new Hammer(window).on("swipe", function (ev) {
-        if (ev.distance < 100) {
+        if (ev.distance < 50) {
             return;
         }
         var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;

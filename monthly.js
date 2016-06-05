@@ -202,7 +202,7 @@
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
-        if (ev.distance < 100) {
+        if (ev.distance < 50) {
             return;
         }
         switch (ev.direction) {
