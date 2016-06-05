@@ -332,9 +332,9 @@
         e.setAttribute("class", newClasses.join(' '));
     }
     
-    function ScrollAnimation(aDuration, aFrom, aTo) {
-        this.mDuration = aDuration;
-        this.mFrom = aFrom;
+    function ScrollAnimation(aSeconds, aTo) {
+        this.mDuration = 1000 * aSeconds;
+        this.mFrom = window.pageYOffset;
         this.mTo   = aTo;
         this.mFps = 60;
     }
@@ -354,7 +354,7 @@
             }
             var distance = this.mTo - this.mFrom;
             var y = this.mFrom + distance * this.easeInOutQuad(t);
-            window.scroll(0, y);
+            window.scroll(window.pageXOffset, y);
             
             if (t < 1) {
                 var that = this;
@@ -376,11 +376,10 @@
         if (newBox) {
             addClass(newBox, "marked");
         }
-        var sy = window.pageYOffset;
         var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
-        var newY = newBox.getBoundingClientRect().top + sy;
+        var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
         
-        new ScrollAnimation(250, sy, newY - tbHeight * 1.25).start();
+        new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
     }
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
@@ -407,8 +406,7 @@
         });
         document.getElementById("top").addEventListener("click", function () {
             e.preventDefault();
-            var sy = window.pageYOffset;
-            new ScrollAnimation(250, sy, 0).start();
+            new ScrollAnimation(0.25, 0).start();
         }, false);
         
         // runTests();
