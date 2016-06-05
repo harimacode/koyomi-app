@@ -202,6 +202,9 @@
 
     var hammer = new Hammer(window);     
     hammer.on("swipe", function (ev) {
+        if (ev.distance < 100) {
+            return;
+        }
         switch (ev.direction) {
         case Hammer.DIRECTION_LEFT:
             next(ev);
