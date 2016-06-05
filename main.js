@@ -340,14 +340,14 @@
     }
     ScrollAnimation.prototype = {
         start: function () {
-            this.mStart = (new Date()).getTime();
+            this.mStart = new Date().getTime();
             var that = this;
             setTimeout(function () {
                 that.update();
             }, 1000 / this.mFps);
         },
         update: function () {
-            var now = (new Date()).getTime();
+            var now = new Date().getTime();
             var t = (now - this.mStart) / this.mDuration;
             if (t > 1) {
                 t = 1;
@@ -380,7 +380,7 @@
         var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
         var newY = newBox.getBoundingClientRect().top + sy;
         
-        (new ScrollAnimation(250, sy, newY - tbHeight * 1.25)).start();
+        new ScrollAnimation(250, sy, newY - tbHeight * 1.25).start();
     }
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
@@ -392,9 +392,9 @@
             today();
         }
         
-        document.getElementById("today").addEventListener("click", today);
-        document.getElementById("next").addEventListener("click", next);
-        document.getElementById("prev").addEventListener("click", prev);
+        document.getElementById("today").addEventListener("click", today, false);
+        document.getElementById("next").addEventListener("click", next, false);
+        document.getElementById("prev").addEventListener("click", prev, false);
         
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
@@ -405,6 +405,11 @@
                 }
             }, false);
         });
+        document.getElementById("top").addEventListener("click", function () {
+            e.preventDefault();
+            var sy = window.pageYOffset;
+            new ScrollAnimation(250, sy, 0).start();
+        }, false);
         
         // runTests();
     }, false);
@@ -427,10 +432,9 @@
         if (tagsTop < 0) {
             addClass(tb, "visible");
         }
-    });
+    }, false);
 
-    var hammer = new Hammer(window);     
-    hammer.on("swipe", function (ev) {
+    new Hammer(window).on("swipe", function (ev) {
         var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;
         if (dateBottom < 0) {
             return;
