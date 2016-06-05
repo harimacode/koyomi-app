@@ -181,6 +181,13 @@
     window.addEventListener('load', function () {
         gotoMonthOfHash();
 
+        Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
+            aElt.addEventListener("click", function () {
+                month = MonthlyCalendar.forDate(new Date());
+                update();
+            }, false);
+        });
+        
         document.getElementById("next").addEventListener("click", next, false);
         document.getElementById("prev").addEventListener("click", prev, false);
         

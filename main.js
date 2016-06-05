@@ -391,10 +391,14 @@
             today();
         }
         
+        Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
+            aElt.addEventListener("click", today, false);
+        });
+        
         document.getElementById("today").addEventListener("click", today, false);
         document.getElementById("next").addEventListener("click", next, false);
         document.getElementById("prev").addEventListener("click", prev, false);
-        
+
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
                 var hash = parseHash(aBox.getAttribute("href"));
