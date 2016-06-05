@@ -331,6 +331,43 @@
         });
         e.setAttribute("class", newClasses.join(' '));
     }
+    
+    function ScrollAnimation(aDuration, aFrom, aTo) {
+        this.mDuration = aDuration;
+        this.mFrom = aFrom;
+        this.mTo   = aTo;
+        this.mFps = 60;
+    }
+    ScrollAnimation.prototype = {
+        start: function () {
+            this.mStart = (new Date()).getTime();
+            var that = this;
+            setTimeout(function () {
+                that.update();
+            }, 1000 / this.mFps);
+        },
+        update: function () {
+            var now = (new Date()).getTime();
+            var t = (now - this.mStart) / this.mDuration;
+            if (t > 1) {
+                t = 1;
+            }
+            var distance = this.mTo - this.mFrom;
+            var y = this.mFrom + distance * this.ease(t);
+            window.scroll(0, y);
+            
+            if (t < 1) {
+                var that = this;
+                setTimeout(function () {
+                    that.update();
+                }, 1000 / this.mFps);
+            }
+        },
+        ease: function (t) {
+            return t;
+        },
+    };
+    
     function jumpToHash(aHash) {
         Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
             removeClass(aMarked, "marked");
@@ -339,9 +376,11 @@
         if (newBox) {
             addClass(newBox, "marked");
         }
+        var sy = window.pageYOffset;
         var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
-        var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
-        window.scroll(0, newY - tbHeight * 1.25);
+        var newY = newBox.getBoundingClientRect().top + sy;
+        
+        (new ScrollAnimation(250, sy, newY - tbHeight * 1.25)).start();
     }
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
