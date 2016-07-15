@@ -203,12 +203,8 @@
     function update() {
         // 月表示の更新
         var month = date.getMonth() + 1;
-        var gotoMonth = document.getElementById("gotoMonth");
-        gotoMonth.innerHTML = '&lt; <span class="keyNumber">'+ month +'</span>月';
-        gotoMonth.addEventListener("click", function (e) {
-            var yearMonth = [date.getFullYear(), month].join("/");
-            window.location = "month.html#" + yearMonth;
-        }, false);
+        var yearMonth = [date.getFullYear(), month].join("/"); 
+        document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
         
         var month = date.getMonth() + 1; // 月は 0 始まり
         var dateString = "";
