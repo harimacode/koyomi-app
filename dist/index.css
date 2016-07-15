@@ -189,7 +189,8 @@ a.box:nth-child(2n):hover {
     white-space: nowrap;
     width: 4em;
 }
-.sekku, .zassetsu {
+#monthlyCalendar .sekku,
+#monthlyCalendar .zassetsu {
     color: #ff6633;
 }
 #monthlyCalendar .nijuShisekki {
