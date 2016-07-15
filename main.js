@@ -277,13 +277,13 @@ var common = require("./common.js");
     function markItems(toBeMarked) {
         if (marked) {
             marked.forEach(function (item) {
-                removeClass(item, "marked");
+                common.removeClass(item, "marked");
             });
         }
         marked = [];
         toBeMarked.forEach(function (item) {
             var e = document.getElementById(item.join("_"));
-            addClass(e, "marked");
+            common.addClass(e, "marked");
             marked.push(e);
         });
     }
@@ -316,23 +316,6 @@ var common = require("./common.js");
         }
         update();
         history.replaceState(null, null, window.location.href.split("#")[0]);
-    } 
-    function addClass(e, cls) {
-        var a = e.getAttribute("class");
-        var classes = a ? a.split(' ') : [];
-        classes.push(cls);
-        e.setAttribute("class", classes.join(' '));
-    }
-    function removeClass(e, cls) {
-        var newClasses = [];
-        var a = e.getAttribute("class");
-        var classes = a ? a.split(' ') : [];
-        classes.forEach(function (c) {
-            if (c != cls) {
-                newClasses.push(c);
-            }
-        });
-        e.setAttribute("class", newClasses.join(' '));
     }
     
     function ScrollAnimation(aSeconds, aTo) {
@@ -373,11 +356,11 @@ var common = require("./common.js");
     
     function jumpToHash(aHash) {
         Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
-            removeClass(aMarked, "marked");
+            common.removeClass(aMarked, "marked");
         });
         var newBox = document.getElementById(aHash);
         if (newBox) {
-            addClass(newBox, "marked");
+            common.addClass(newBox, "marked");
         }
         var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
         var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
@@ -385,6 +368,7 @@ var common = require("./common.js");
         new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
     }
     window.addEventListener("load", function (e) {
+        common.removeClass(document.getElementById("koyomi"), "month");
         document.getElementById("explanation").innerHTML = makeExplanations();
         
         var hash = common.parseHash(document.location.href);
@@ -433,9 +417,9 @@ var common = require("./common.js");
     window.addEventListener("scroll", function (e) {
         var tb = document.getElementById("toolbar");
         var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
-        removeClass(tb, "visible");
+        common.removeClass(tb, "visible");
         if (tagsTop < 0) {
-            addClass(tb, "visible");
+            common.addClass(tb, "visible");
         }
     }, false);
 

@@ -182,6 +182,7 @@ var common = require("./common.js");
         update();
     }
     window.addEventListener('load', function () {
+        common.addClass(document.getElementById("koyomi"), "month");
         gotoMonthOfHash();
 
         Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
