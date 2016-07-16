@@ -384,7 +384,7 @@ var common = require("./common.js");
         
         document.getElementById("today").addEventListener("click", today, false);
         document.getElementById("next").addEventListener("click", next, false);
-        document.getElementById("prev").addEventListener("click", prev, false);
+        document.querySelector(".prev").addEventListener("click", prev, false);
 
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
@@ -442,6 +442,13 @@ var common = require("./common.js");
     });
 })();
 
+var PrevButton = React.createClass({
+    render: function () {
+        return (
+            <a href="#" className="navi prev">&laquo;</a>
+        );
+    }
+});
 var TopButton = React.createClass({
     render: function () {
         return (
@@ -451,6 +458,10 @@ var TopButton = React.createClass({
         );
     }
 });
+ReactDOM.render(
+    <PrevButton />,
+    document.getElementById("prev")
+);
 ReactDOM.render(
     <TopButton />,
     document.getElementById("top-container")
