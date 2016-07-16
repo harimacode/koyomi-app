@@ -441,3 +441,17 @@ var common = require("./common.js");
         }
     });
 })();
+
+var TopButton = React.createClass({
+    render: function () {
+        return (
+            <div className="top-container">
+                <a href="#" className="navi" id="top">△</a>
+            </div>
+        );
+    }
+});
+ReactDOM.render(
+    <TopButton />,
+    document.getElementById("top-container")
+);
