@@ -395,7 +395,7 @@ var common = require("./common.js");
                 }
             }, false);
         });
-        document.getElementById("top").addEventListener("click", function () {
+        document.querySelector(".top a:link").addEventListener("click", function () {
             e.preventDefault();
             new ScrollAnimation(0.25, 0).start();
         }, false);
@@ -453,7 +453,7 @@ var TopButton = React.createClass({
     render: function () {
         return (
             <div className="top-container">
-                <a href="#" className="navi" id="top">△</a>
+                <a href="#" className="navi top">△</a>
             </div>
         );
     }
