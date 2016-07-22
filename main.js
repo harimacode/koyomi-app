@@ -445,7 +445,7 @@ var common = require("./common.js");
 var PrevButton = React.createClass({
     render: function () {
         return (
-            <a href="#" className="navi prev">&laquo;</a>
+            <a href="#" className="button__navi prev">&laquo;</a>
         );
     }
 });
@@ -453,7 +453,7 @@ var TopButton = React.createClass({
     render: function () {
         return (
             <div className="top-container">
-                <a href="#" className="navi top">△</a>
+                <a href="#" className="button__navi top">△</a>
             </div>
         );
     }
