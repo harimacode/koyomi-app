@@ -20,7 +20,7 @@ h1 .current {
 }
 .dayOfWeek0 { color: #ff6633; }
 .dayOfWeek6 { color: #3366ff; }
-.navi {
+.button__navi {
     background-color: #999999;
     box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
     color: white;
@@ -54,7 +54,7 @@ address {
     h1 .current {
         font-size: 2em;
     }
-    .navi {
+    .button__navi {
         border-radius: 1em;
         font-size: 1.5em;
         margin: -1em 0.5em;
@@ -83,7 +83,7 @@ address {
         font-size: 6vw;
         margin-bottom: 3vw;
     }
-    .navi {
+    .button__navi {
         border-radius: 8vw;
         font-size: 6vw;
         margin-top: 3vw;

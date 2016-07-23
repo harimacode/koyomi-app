@@ -40,35 +40,35 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var oc = __webpack_require__(1);
-	var common = __webpack_require__(2);
+	var oc = __webpack_require__(172);
+	var common = __webpack_require__(173);
 
 	(function () {
-	    function DefaultTagger() {
-	    }
+	    function DefaultTagger() {}
 	    DefaultTagger.prototype = {
 	        tagForDate: function (aDate, aMoon) {
 	            var topTag = "";
 	            var tags = oc.tagsForDate(aDate, aMoon);
 	            if (tags.length > 0) {
 	                topTag = tags[0];
-	                topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>'; 
+	                topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>';
 	            }
 	            return topTag;
-	        },
+	        }
 	    };
-	    
+
 	    function ModeTagger(aMode) {
 	        this.mode = aMode;
 	    }
 	    ModeTagger.prototype = {
 	        stringForDate: function (aDate, aMoon) {
 	            // 月表示の更新
-	            var jd  = oc.juliusDate(aDate);
+	            var jd = oc.juliusDate(aDate);
 	            switch (this.mode) {
 	                case "六輝":
 	                    return oc.rokki(oc.oldCalendar(jd));
@@ -87,12 +87,18 @@
 	        hueForString: function (aString) {
 	            var all = null;
 	            switch (this.mode) {
-	                case "六輝": all = oc.allRokkis(); break;
-	                case "干支": all = oc.allEtos(); break;
-	                case "九星": all = oc.allKyuseis(); break;
-	                case "直": all = oc.allChokus(); break;
-	                case "宿": all = oc.allShukus(); break;
-	                case "納音": all = oc.allNattins(); break;
+	                case "六輝":
+	                    all = oc.allRokkis();break;
+	                case "干支":
+	                    all = oc.allEtos();break;
+	                case "九星":
+	                    all = oc.allKyuseis();break;
+	                case "直":
+	                    all = oc.allChokus();break;
+	                case "宿":
+	                    all = oc.allShukus();break;
+	                case "納音":
+	                    all = oc.allNattins();break;
 	            }
 	            return 360 * all.indexOf(aString) / all.length;
 	        },
@@ -100,9 +106,9 @@
 	            var s = this.stringForDate(aDate, aMoon);
 	            var hue = this.hueForString(s);
 	            return '<span class="tag" style="background-color: hsl(' + hue + ', 100%, 93%);">' + s + '</span>';
-	        },
+	        }
 	    };
-	    
+
 	    function MonthlyCalendar(year, month) {
 	        this.year = year;
 	        this.month = month;
@@ -174,11 +180,11 @@
 	                    s += topTag;
 	                    s += '</a>';
 	                });
-	                s += '</div>'
+	                s += '</div>';
 	            });
 	            return s;
-	        },
-	    }
+	        }
+	    };
 
 	    function prev(e) {
 	        var y = month.year;
@@ -205,11 +211,11 @@
 	    }
 
 	    function update() {
-	        document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
+	        document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month + 1) + '</span>月';
 	        document.getElementById("jaYearMonth").innerHTML = oc.heiseiYear(month.year) + " " + oc.jaMonth(month.month);
-	        
+
 	        var newMode = document.getElementById("mode").value;
-	        var tagger = (newMode == "") ? new DefaultTagger() : new ModeTagger(newMode);
+	        var tagger = newMode == "" ? new DefaultTagger() : new ModeTagger(newMode);
 	        document.getElementById("monthlyCalendar").innerHTML = month.render(tagger);
 	    }
 
@@ -228,6 +234,7 @@
 	        update();
 	    }
 	    window.addEventListener('load', function () {
+	        common.addClass(document.getElementById("koyomi"), "month");
 	        gotoMonthOfHash();
 
 	        Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
@@ -236,10 +243,10 @@
 	                update();
 	            }, false);
 	        });
-	        
+
 	        document.getElementById("next").addEventListener("click", next, false);
 	        document.getElementById("prev").addEventListener("click", prev, false);
-	        
+
 	        document.getElementById("mode").addEventListener("change", update, false);
 	    }, false);
 	    window.addEventListener("hashchange", function (e) {
@@ -249,25 +256,25 @@
 	        }
 	    });
 
-	    var hammer = new Hammer(window);     
+	    var hammer = new Hammer(window);
 	    hammer.on("swipe", function (ev) {
 	        if (ev.distance < 75) {
 	            return;
 	        }
 	        switch (ev.direction) {
-	        case Hammer.DIRECTION_LEFT:
-	            next(ev);
-	            break;
-	        case Hammer.DIRECTION_RIGHT:
-	            prev(ev);
-	            break;
+	            case Hammer.DIRECTION_LEFT:
+	                next(ev);
+	                break;
+	            case Hammer.DIRECTION_RIGHT:
+	                prev(ev);
+	                break;
 	        }
 	    });
 	})();
 
-
 /***/ },
-/* 1 */
+
+/***/ 172:
 /***/ function(module, exports, __webpack_require__) {
 
 	function int(v) {
@@ -284,42 +291,36 @@
 	 */
 	function juliusDate(date) {
 	    // TODO 上記値域判定
-	    var year  = date.getFullYear();
+	    var year = date.getFullYear();
 	    var month = date.getMonth() + 1;
-	    var day   = date.getDate();
+	    var day = date.getDate();
 	    var hours = date.getHours();
 	    if (month < 3) {
 	        month += 12;
 	        --year;
 	    }
 	    // alert(year + "/" + month + "/" + day);
-	    return int(365.25 * year)
-	         + int(year / 400)
-	         - int(year / 100)
-	         + int(30.59 * (month - 2))
-	         + day
-	         + 1721088
-	         + hours / 24;
+	    return int(365.25 * year) + int(year / 400) - int(year / 100) + int(30.59 * (month - 2)) + day + 1721088 + hours / 24;
 	}
 	function fromJuliusDate(jd) {
 	    // http://mysteryart.web.fc2.com/library/calsmpl/cldttojd.html
-	    jd+=1; // JST
-	    
-	    var z  = int(jd);
-	    var f  = jd-z;
-	    var aa = int((z-1867216.25)/36524.25);
-	    var a  = int(z+1+aa-int(aa/4));
-	    var b  = a+1524;
-	    var c  = int((b-122.1)/365.25);
-	    var k  = int(365.25*c);
-	    var e  = int((b-k)/30.6001);
+	    jd += 1; // JST
 
-	    var day   = int(b-k-int(30.6001*e));
+	    var z = int(jd);
+	    var f = jd - z;
+	    var aa = int((z - 1867216.25) / 36524.25);
+	    var a = int(z + 1 + aa - int(aa / 4));
+	    var b = a + 1524;
+	    var c = int((b - 122.1) / 365.25);
+	    var k = int(365.25 * c);
+	    var e = int((b - k) / 30.6001);
+
+	    var day = int(b - k - int(30.6001 * e));
 	    var month = e - (e < 13.5 ? 1 : 13);
-	    var year  = c - (month > 2.5 ? 4716 : 4715);
-	    var hours   = int(f*24);
-	    var minutes = int((f*24-hours)*60); // おそらく分までの精度しかない…
-	    return new Date(year, month-1, day, hours, minutes);
+	    var year = c - (month > 2.5 ? 4716 : 4715);
+	    var hours = int(f * 24);
+	    var minutes = int((f * 24 - hours) * 60); // おそらく分までの精度しかない…
+	    return new Date(year, month - 1, day, hours, minutes);
 	}
 
 	/*!
@@ -329,7 +330,7 @@
 	    // 元とした文献と同様、協定世界時と力学時の誤差
 	    // ΔTについては無視しています。
 	    // 日本標準時からの時差-9時間を引いています。
-	    return juliusDateJST - (9/24);
+	    return juliusDateJST - 9 / 24;
 	}
 
 	/*!
@@ -344,29 +345,10 @@
 	    //           18
 	    //    λsun＝Σ Ａ*ｃｏｓ（ｋ*ｔ+θ0）
 	    //           n=1
-	    var table = [
-	        [0.0004,    31557.0,    161.0],
-	        [0.0004,    29930.0,    48.0],
-	        [0.0005,    2281.0,     221.0],
-	        [0.0005,    155.0,      118.0],
-	        [0.0006,    33718.0,    316.0],
-	        [0.0007,    9038.0,     64.0],
-	        [0.0007,    3035.0,     110.0],
-	        [0.0007,    65929.0,    45.0],
-	        [0.0013,    22519.0,    352.0],
-	        [0.0015,    45038.0,    254.0],
-	        [0.0018,    445267.0,   208.0],
-	        [0.0018,    19.0,       159.0],
-	        [0.0020,    32964.0,    158.0],
-	        [0.0200,    71998.1,    265.1],
-	        [-0.0048*t, 35999.05,   267.52],
-	        [1.9147,    35999.05,   267.52],
-	        [36000.7695*t,  0,  0],
-	        [280.4659,      0,  0],
-	    ];
+	    var table = [[0.0004, 31557.0, 161.0], [0.0004, 29930.0, 48.0], [0.0005, 2281.0, 221.0], [0.0005, 155.0, 118.0], [0.0006, 33718.0, 316.0], [0.0007, 9038.0, 64.0], [0.0007, 3035.0, 110.0], [0.0007, 65929.0, 45.0], [0.0013, 22519.0, 352.0], [0.0015, 45038.0, 254.0], [0.0018, 445267.0, 208.0], [0.0018, 19.0, 159.0], [0.0020, 32964.0, 158.0], [0.0200, 71998.1, 265.1], [-0.0048 * t, 35999.05, 267.52], [1.9147, 35999.05, 267.52], [36000.7695 * t, 0, 0], [280.4659, 0, 0]];
 	    return eclipticLongitude(table, t);
 	}
-	 
+
 	/*!
 	 * @brief 与えられた力学時に対応する月の黄経を計算します。
 	 * 
@@ -379,71 +361,7 @@
 	    //           63
 	    //    λsun＝Σ Ａ*ｃｏｓ（ｋ*ｔ+θ0）
 	    //           n=1
-	    var table = [
-	        [0.0003,    2322131.0,  191.0],
-	        [0.0003,    4067.0,     70.0],
-	        [0.0003,    549197.0,   220.0],
-	        [0.0003,    1808933.0,  58.0],
-	        [0.0003,    349472.0,   337.0],
-	        [0.0003,    381404.0,   354.0],
-	        [0.0003,    958465.0,   340.0],
-	        [0.0004,    12006.0,    187.0],
-	        [0.0004,    39871.0,    223.0],
-	        [0.0005,    509131.0,   242.0],
-	        [0.0005,    1745069.0,  24.0],
-	        [0.0005,    1908795.0,  90.0],
-	        [0.0006,    2258267.0,  156.0],
-	        [0.0006,    111869.0,   38.0],
-	        [0.0007,    27864.0,    127.0],
-	        [0.0007,    485333.0,   186.0],
-	        [0.0007,    405201.0,   50.0],
-	        [0.0007,    790672.0,   114.0],
-	        [0.0008,    1403732.0,  98.0],
-	        [0.0009,    858602.0,   129.0],
-	        [0.0011,    1920802.0,  186.0],
-	        [0.0012,    1267871.0,  249.0],
-	        [0.0016,    1856938.0,  152.0],
-	        [0.0018,    401329.0,   274.0],
-	        [0.0021,    341337.0,   16.0],
-	        [0.0021,    71998.0,    85.0],
-	        [0.0021,    990397.0,   357.0],
-	        [0.0022,    818536.0,   151.0],
-	        [0.0023,    922466.0,   163.0],
-	        [0.0024,    99863.0,    122.0],
-	        [0.0026,    1379739.0,  17.0],
-	        [0.0027,    918399.0,   182.0],
-	        [0.0028,    1934.0,     145.0],
-	        [0.0037,    541062.0,   259.0],
-	        [0.0038,    1781068.0,  21.0],
-	        [0.0040,    133.0,      29.0],
-	        [0.0040,    1844932.0,  56.0],
-	        [0.0040,    1331734.0,  283.0],
-	        [0.0050,    481266.0,   205.0],
-	        [0.0052,    31932.0,    107.0],
-	        [0.0068,    926533.0,   323.0],
-	        [0.0079,    449334.0,   188.0],
-	        [0.0085,    826671.0,   111.0],
-	        [0.0100,    1431597.0,  315.0],
-	        [0.0107,    1303870.0,  246.0],
-	        [0.0110,    489205.0,   142.0],
-	        [0.0125,    1443603.0,  52.0],
-	        [0.0154,    75870.0,    41.0],
-	        [0.0304,    513197.9,   222.5],
-	        [0.0347,    445267.1,   27.9],
-	        [0.0409,    441199.8,   47.4],
-	        [0.0458,    854535.2,   148.2],
-	        [0.0533,    1367733.1,  280.7],
-	        [0.0571,    377336.3,   13.2],
-	        [0.0588,    63863.5,    124.2],
-	        [0.1144,    966404.0,   276.5],
-	        [0.1851,    35999.0,    87.53],
-	        [0.2136,    954397.7,   179.93],
-	        [0.6583,    890534.2,   145.7],
-	        [1.2740,    413335.3,   10.74],
-	        [6.2888,    477198.86,  44.963],
-	        [218.3162,          0,  0],
-	        [481267.8809 * t,   0,  0],
-	    ];
+	    var table = [[0.0003, 2322131.0, 191.0], [0.0003, 4067.0, 70.0], [0.0003, 549197.0, 220.0], [0.0003, 1808933.0, 58.0], [0.0003, 349472.0, 337.0], [0.0003, 381404.0, 354.0], [0.0003, 958465.0, 340.0], [0.0004, 12006.0, 187.0], [0.0004, 39871.0, 223.0], [0.0005, 509131.0, 242.0], [0.0005, 1745069.0, 24.0], [0.0005, 1908795.0, 90.0], [0.0006, 2258267.0, 156.0], [0.0006, 111869.0, 38.0], [0.0007, 27864.0, 127.0], [0.0007, 485333.0, 186.0], [0.0007, 405201.0, 50.0], [0.0007, 790672.0, 114.0], [0.0008, 1403732.0, 98.0], [0.0009, 858602.0, 129.0], [0.0011, 1920802.0, 186.0], [0.0012, 1267871.0, 249.0], [0.0016, 1856938.0, 152.0], [0.0018, 401329.0, 274.0], [0.0021, 341337.0, 16.0], [0.0021, 71998.0, 85.0], [0.0021, 990397.0, 357.0], [0.0022, 818536.0, 151.0], [0.0023, 922466.0, 163.0], [0.0024, 99863.0, 122.0], [0.0026, 1379739.0, 17.0], [0.0027, 918399.0, 182.0], [0.0028, 1934.0, 145.0], [0.0037, 541062.0, 259.0], [0.0038, 1781068.0, 21.0], [0.0040, 133.0, 29.0], [0.0040, 1844932.0, 56.0], [0.0040, 1331734.0, 283.0], [0.0050, 481266.0, 205.0], [0.0052, 31932.0, 107.0], [0.0068, 926533.0, 323.0], [0.0079, 449334.0, 188.0], [0.0085, 826671.0, 111.0], [0.0100, 1431597.0, 315.0], [0.0107, 1303870.0, 246.0], [0.0110, 489205.0, 142.0], [0.0125, 1443603.0, 52.0], [0.0154, 75870.0, 41.0], [0.0304, 513197.9, 222.5], [0.0347, 445267.1, 27.9], [0.0409, 441199.8, 47.4], [0.0458, 854535.2, 148.2], [0.0533, 1367733.1, 280.7], [0.0571, 377336.3, 13.2], [0.0588, 63863.5, 124.2], [0.1144, 966404.0, 276.5], [0.1851, 35999.0, 87.53], [0.2136, 954397.7, 179.93], [0.6583, 890534.2, 145.7], [1.2740, 413335.3, 10.74], [6.2888, 477198.86, 44.963], [218.3162, 0, 0], [481267.8809 * t, 0, 0]];
 	    return eclipticLongitude(table, t);
 	}
 
@@ -487,8 +405,8 @@
 	 * 季節を求めます。春が0
 	 */
 	function findSeason(jd) {
-	    var sekki = findSekki(jd+1, 90, 45);
-	    angle = sekki[0];
+	    var sekki = findSekki(jd + 1, 90, 45);
+	    var angle = sekki[0];
 	    // alert(angle);
 	    angle += 45;
 	    while (angle >= 360) {
@@ -507,11 +425,11 @@
 	function Cache() {}
 	Cache.prototype = {
 	    get: function (key, missed) {
-	        if (typeof(this[key]) === 'undefined') {
-	            this[key] = missed(); 
+	        if (typeof this[key] === 'undefined') {
+	            this[key] = missed();
 	        }
 	        return this[key];
-	    },
+	    }
 	};
 
 	/**
@@ -527,7 +445,7 @@
 	            rv.push(chuki);
 	            t = chuki;
 	        }
-	        return rv; 
+	        return rv;
 	    });
 	}
 
@@ -558,10 +476,10 @@
 	        sel = solarEclipticLongitude(dt) + offset;
 	    }
 	    // t が期待する時刻
-	    var jst = dt + (9/24);
+	    var jst = dt + 9 / 24;
 	    return [normalizeAngle(angle - offset), jst];
 	}
-	 
+
 	/**
 	 * @param t 直前の二分二至の時刻
 	 */
@@ -573,7 +491,7 @@
 	}
 	function findSakuBou(t, diff) {
 	    var dt = dynamicalTime(t);
-	    for (var i = 0; ; ++i) {
+	    for (var i = 0;; ++i) {
 	        var sel = solarEclipticLongitude(dt);
 	        var lel = lunarEclipticLongitude(dt);
 	        var deltaLambda = lel - sel + diff;
@@ -587,18 +505,18 @@
 
 	        //             Δλ＝ 360.0 － Δλ
 	        else if (0 <= sel && sel <= 20 && lel >= 300) {
-	            deltaLambda = 360.0 - normalizeAngle(deltaLambda);
-	        }
-	        // TODO: 正規化の内容が不明だが必要
-	        //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
-	        //    Δλとする。
-	        else if (Math.abs(deltaLambda) > 40) {
-	            deltaLambda = normalizeAngle(deltaLambda);
-	        }
+	                deltaLambda = 360.0 - normalizeAngle(deltaLambda);
+	            }
+	            // TODO: 正規化の内容が不明だが必要
+	            //      また、Δλが引き込み範囲（±40°）を逸脱した場合には、正規化を行い
+	            //    Δλとする。
+	            else if (Math.abs(deltaLambda) > 40) {
+	                    deltaLambda = normalizeAngle(deltaLambda);
+	                }
 	        // alert("moon: " + lel + "\n" +
 	        //         "sun:  " + sel + "\n" +
 	        //         "deltaLambda: " + deltaLambda);
-	        
+
 	        // TODO: 結果が振動して収束しないとき用の処理
 	        var deltaT = deltaLambda * 29.530589 / 360;
 	        dt -= deltaT;
@@ -613,7 +531,7 @@
 	    //     alert('bug');
 	    // }
 	    // t が期待する時刻
-	    var jst = dt + (9/24);
+	    var jst = dt + 9 / 24;
 	    return jst;
 	}
 
@@ -624,7 +542,7 @@
 	function findSakus(t) {
 	    var key = int(t);
 	    return sakusCache.get(key, function () {
-	        return findSakuBous(t, 0); 
+	        return findSakuBous(t, 0);
 	    });
 	}
 	function findBous(t) {
@@ -648,11 +566,11 @@
 	        rv.push(saku);
 	        t = saku + 30;
 	    }
-	    
+
 	    if (diff) {
 	        return rv;
 	    }
-	    
+
 	    //   初期値の与え方によっては正規化を行っても目的にあった解を得る事ができず、
 	    //   朔日行列が正常に組み立てられない場合があります。 本スクリプトでは、以下の
 	    //   ２つのケースを想定して対策を施しておきました。
@@ -664,11 +582,11 @@
 	    }
 	    // TODO: 文献の以下のケースへの対応
 	    else if (int(rv[0]) >= int(nibunNishi)) {
-	        //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
-	        //    ［朔１の時刻］≧［直前の二分二至の時刻］
-	        rv.pop();
-	        rv.unshift(findSakuBou(rv[0] - 27, diff));
-	    }
+	            //     ii   二分二至の後の朔の時刻を求めてしまう場合。以下の図ように、
+	            //    ［朔１の時刻］≧［直前の二分二至の時刻］
+	            rv.pop();
+	            rv.unshift(findSakuBou(rv[0] - 27, diff));
+	        }
 
 	    return rv;
 	}
@@ -678,9 +596,7 @@
 	    if (a == null || b == null) {
 	        return false;
 	    }
-	    return a.getFullYear() == b.getFullYear() &&
-	        a.getMonth() == b.getMonth() &&
-	        a.getDate() == b.getDate();
+	    return a.getFullYear() == b.getFullYear() && a.getMonth() == b.getMonth() && a.getDate() == b.getDate();
 	}
 
 	// FIXME:
@@ -731,13 +647,10 @@
 	            }
 	        });
 	        return rv;
-	    },
+	    }
 	};
 
-
-	function calcMoons(y, m) {
-	    
-	}
+	function calcMoons(y, m) {}
 
 	function oldMonth(el) {
 	    var months = [2, 5, 8, 11];
@@ -748,9 +661,9 @@
 	 * OldDate クラス
 	 */
 	function OldDate(leap, month, day) {
-	    this.leap  = leap;
+	    this.leap = leap;
 	    this.month = month;
-	    this.day   = day;
+	    this.day = day;
 	}
 	OldDate.prototype = {
 	    toString: function () {
@@ -759,9 +672,9 @@
 	            s += "閏";
 	        }
 	        s += this.month + "月";
-	        s += this.day   + "日";
+	        s += this.day + "日";
 	        return s;
-	    },
+	    }
 	};
 
 	/**
@@ -771,7 +684,7 @@
 	function oldCalendar(jd) {
 	    jd = int(jd);
 	    var gd = fromJuliusDate(jd);
-	    
+
 	    var nibunNishi = findNibunNishi(jd);
 	    // alert(nibunNishi); // OK
 	    var chukis = findChukis(nibunNishi[1]);
@@ -781,7 +694,7 @@
 	    var oMonth = oldMonth(nibunNishi[0]);
 	    // alert(oMonth);
 	    // MEMO: sakus[0] == oldMonth
-	    
+
 	    var matrix = [];
 	    sakus.forEach(function (saku) {
 	        var jd = int(saku);
@@ -792,7 +705,7 @@
 	    chukis.push(nibunNishi[1]); // 二分二至も必ず中気なので中気判定に追加しています。
 	    for (var i = 0; i < matrix.length; ++i) {
 	        var start = matrix[i][2];
-	        var next  = 0;
+	        var next = 0;
 	        if (i + 1 < matrix.length) {
 	            next = matrix[i + 1][2];
 	        }
@@ -811,7 +724,7 @@
 	        matrix[i][1] = (oMonth - 1) % 12 + 1;
 	        ++oMonth;
 	    }
-	    
+
 	    var oldDate = new OldDate();
 	    for (var i = 0; i < matrix.length; ++i) {
 	        var nextDate = null;
@@ -821,13 +734,13 @@
 	        if (!nextDate || gd < nextDate) {
 	            oldDate.leap = matrix[i][0];
 	            oldDate.month = matrix[i][1];
-	            
+
 	            var oldDay = jd - matrix[i][2] + 1;
 	            oldDate.day = oldDay;
 	            break;
 	        }
 	    }
-	    if (typeof(oldDate.month) == "undefined") {
+	    if (typeof oldDate.month == "undefined") {
 	        // 2015/03/20,
 	        // 2017/09/20-22の旧暦が計算できていないよう
 	        bugAlerted.get(jd, function () {
@@ -841,9 +754,7 @@
 	}
 
 	function allRokkis() {
-	    return [
-	        "先勝", "友引", "先負", "空亡", "大安", "赤口"
-	    ];
+	    return ["先勝", "友引", "先負", "空亡", "大安", "赤口"];
 	}
 	function rokki(oldDate) {
 	    return allRokkis()[(oldDate.month + oldDate.day - 2) % 6];
@@ -866,14 +777,11 @@
 	    var kJunishi = "子丑寅卯辰巳午未申酉戌亥";
 	    // 1873年 1月12日 が甲子の基準日
 	    var days = int(jd) - int(juliusDate(new Date(1873, 0, 12)));
-	    return kJikkan[days % kJikkan.length] +
-	           kJunishi[days % kJunishi.length];
+	    return kJikkan[days % kJikkan.length] + kJunishi[days % kJunishi.length];
 	}
 
 	function allKyuseis() {
-	    return [
-	        "一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫",        
-	    ];
+	    return ["一白", "二黒", "三碧", "四緑", "五黄", "六白", "七赤", "八白", "九紫"];
 	}
 	function kyusei(jd) {
 	    // 本実装では、主に以下を参照しました。
@@ -882,12 +790,12 @@
 	    var kKyuseis = allKyuseis();
 	    jd = int(jd);
 	    // 対象の日を含む二至
-	    var nishi = findSekki(jd+1, 180, 90);
+	    var nishi = findSekki(jd + 1, 180, 90);
 	    // 次の二至
-	    var theOther = findSekki(nishi[1]+240, 180, 90);
+	    var theOther = findSekki(nishi[1] + 240, 180, 90);
 	    // alert(nishi);
 	    // alert(theOther);
-	    
+
 	    var days;
 	    var d1 = int(nishi[1]);
 	    while (eto(d1) != "甲子") {
@@ -897,7 +805,7 @@
 	    if (days > 29) {
 	        d1 += 60; // 基準日
 	    }
-	    
+
 	    var d2 = int(theOther[1]);
 	    while (eto(d2) != "甲子") {
 	        --d2;
@@ -906,7 +814,7 @@
 	    if (days > 29) {
 	        d2 += 60; // 基準日
 	    }
-	    
+
 	    var diff = d2 - d1;
 	    days = jd - d1;
 	    var targetNishi = nishi;
@@ -914,12 +822,11 @@
 	        days -= diff;
 	        targetNishi = theOther;
 	    }
-	    
+
 	    var isYouton = targetNishi[0] == 270;
 	    var i = isYouton ? 0 : 8;
 	    var dir = isYouton ? +1 : -1;
-	    if (diff == 180) {
-	    } else if (diff == 240) {
+	    if (diff == 180) {} else if (diff == 240) {
 	        // alert("特殊ケース:" + fromJuliusDate(d1+180+30));
 	        // 今回の陽遁・陰遁の長さが 240 日になる場合、
 	        // 最後の 60 日は閏となり
@@ -932,7 +839,7 @@
 	    } else {
 	        alert("想定外のエラー:" + fromJuliusDate(jd));
 	    }
-	    
+
 	    i += days * dir;
 	    while (i < 0) {
 	        i += kKyuseis.length;
@@ -947,7 +854,7 @@
 	    // FIXME: 元にしたスクリプトの仕様に引きずられている部分…
 	    jd = int(jd) + 1;
 	    var sekki = findSekki(jd, 30, 15);
-	    return [(normalizeAngle(sekki[0] + 15) / 30 + 1) % 12 + 1, sekki[1]]
+	    return [(normalizeAngle(sekki[0] + 15) / 30 + 1) % 12 + 1, sekki[1]];
 	}
 
 	function allChokus() {
@@ -960,7 +867,7 @@
 	    var kEto = "寅卯辰巳午未申酉戌亥子丑";
 	    var kChokus = "建除満平定執破危成納開閉";
 	    var s = findSetsugetsu(jd);
-	    var etoToFind = kEto[s[0]-1];
+	    var etoToFind = kEto[s[0] - 1];
 	    // alert(fromJuliusDate(s[1]));
 	    // alert(s[0] + "=>" + etoToFind);
 	    var first = int(s[1]);
@@ -993,14 +900,7 @@
 	}
 
 	function allNattins() {
-	    return [
-	        "海中金", "爐中火", "大林木", "路傍土", "剣鋒金",
-	        "山頭火", "澗下水", "城頭土", "白蝋金", "楊柳木",
-	        "井泉水", "屋上土", "霹靂火", "松柏木", "長流水",
-	        "沙中金", "山下火", "平地木", "壁上土", "金箔金",
-	        "覆燈火", "天河水", "大駅土", "剣釧金", "桑柘木",
-	        "大渓水", "沙中土", "天上火", "柘榴木", "大海水",        
-	    ];
+	    return ["海中金", "爐中火", "大林木", "路傍土", "剣鋒金", "山頭火", "澗下水", "城頭土", "白蝋金", "楊柳木", "井泉水", "屋上土", "霹靂火", "松柏木", "長流水", "沙中金", "山下火", "平地木", "壁上土", "金箔金", "覆燈火", "天河水", "大駅土", "剣釧金", "桑柘木", "大渓水", "沙中土", "天上火", "柘榴木", "大海水"];
 	}
 	function nattin(jd) {
 	    // FIXME: 甲子の日を求めるのが非効率なロジック…
@@ -1016,13 +916,8 @@
 	 */
 	function nijuShisekki(jd) {
 	    jd = int(jd);
-	    var kSekkis = [
-	        "春分", "清明", "穀雨", "立夏", "小満", "芒種",
-	        "夏至", "小暑", "大暑", "立秋", "処暑", "白露",
-	        "秋分", "寒露", "霜降", "立冬", "小雪", "大雪",
-	        "冬至", "小寒", "大寒", "立春", "雨水", "啓蟄",
-	    ];
-	    var sekki = findSekki(jd+1, 15);
+	    var kSekkis = ["春分", "清明", "穀雨", "立夏", "小満", "芒種", "夏至", "小暑", "大暑", "立秋", "処暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒", "立春", "雨水", "啓蟄"];
+	    var sekki = findSekki(jd + 1, 15);
 	    // alert(sekki);
 	    if (int(sekki[1]) == jd) {
 	        return kSekkis[sekki[0] / 15];
@@ -1031,23 +926,23 @@
 	}
 
 	function isSetsubun(jd) {
-	    return nijuShisekki(jd+1) == "立春";
+	    return nijuShisekki(jd + 1) == "立春";
 	}
 	function isHachijuHachiya(jd) {
-	    return nijuShisekki(jd-87) == "立春";
+	    return nijuShisekki(jd - 87) == "立春";
 	}
 	function isHiganStart(jd) {
-	    return ["春分", "秋分"].indexOf(nijuShisekki(jd+3)) > -1;
+	    return ["春分", "秋分"].indexOf(nijuShisekki(jd + 3)) > -1;
 	}
 	function isHiganEnd(jd) {
-	    return ["春分", "秋分"].indexOf(nijuShisekki(jd-3)) > -1;
+	    return ["春分", "秋分"].indexOf(nijuShisekki(jd - 3)) > -1;
 	}
 	function isSyanichi(jd) {
 	    var theEto = eto(jd);
 	    if (theEto.charAt(0) != "戊") {
 	        return "";
 	    }
-	    var nibun = findSekki(jd+10, 180);
+	    var nibun = findSekki(jd + 10, 180);
 	    var syunsya = nibun[0] == 0;
 	    nibun = int(nibun[1]);
 	    if (Math.abs(nibun - jd) > 10) {
@@ -1061,18 +956,16 @@
 	    while (eto(nibun + daysAfter).charAt(0) != "戊") {
 	        ++daysAfter;
 	    }
-	    var syanichi = nibun + ((daysBefore < daysAfter) ? -daysBefore : daysAfter);
-	    return syanichi == int(jd) ? ("社日(" + (syunsya ? "春" : "秋") + ")") : "";
+	    var syanichi = nibun + (daysBefore < daysAfter ? -daysBefore : daysAfter);
+	    return syanichi == int(jd) ? "社日(" + (syunsya ? "春" : "秋") + ")" : "";
 	}
 	function findSanpuku(jd) {
 	    var theEto = eto(jd);
 	    if (theEto.charAt(0) != "庚") {
 	        return "";
 	    }
-	    var kSekkis = [
-	        [90, [2, 3]], // 夏至以降の3,4回目
-	        [135, [0]], // 立秋以降の最初
-	    ];
+	    var kSekkis = [[90, [2, 3]], // 夏至以降の3,4回目
+	    [135, [0]]];
 	    var results = [];
 	    kSekkis.forEach(function (aPair) {
 	        var indices = aPair[1];
@@ -1099,33 +992,33 @@
 	    var sanpuku = findSanpuku(jd);
 	    for (var i = 0; i < sanpuku.length; ++i) {
 	        if (int(sanpuku[i]) == int(jd)) {
-	            return ["初伏", "中伏", "末伏"][i]
+	            return ["初伏", "中伏", "末伏"][i];
 	        }
 	    }
 	    return "";
 	}
 	function isNyubai(jd) {
-	    var nyubai = int(findSekki(jd+1, 360, -80)[1]);
+	    var nyubai = int(findSekki(jd + 1, 360, -80)[1]);
 	    return int(jd) == nyubai;
 	}
 	function isHangesyo(jd) {
-	    var hangesyo = int(findSekki(jd+1, 360, -100)[1]);
+	    var hangesyo = int(findSekki(jd + 1, 360, -100)[1]);
 	    return int(jd) == hangesyo;
 	}
 	function isDoyoStart(jd) {
-	    var doyoStart = findSekki(jd+1, 90, -27);
-	    return int(jd) == int(doyoStart[1]) ? "春夏秋冬".charAt((doyoStart[0]-27)/90%4) + "土用入" : "";
+	    var doyoStart = findSekki(jd + 1, 90, -27);
+	    return int(jd) == int(doyoStart[1]) ? "春夏秋冬".charAt((doyoStart[0] - 27) / 90 % 4) + "土用入" : "";
 	}
 	function isDoyoEnd(jd) {
 	    var kYonritsu = ["立夏", "立秋", "立冬", "立春"];
-	    var found = kYonritsu.indexOf(nijuShisekki(jd+1));
+	    var found = kYonritsu.indexOf(nijuShisekki(jd + 1));
 	    if (found < 0) {
 	        return "";
 	    }
 	    return "春夏秋冬".charAt(found) + "土用明";
 	}
 	function isDaysFromRissyun(days, jd) {
-	    return nijuShisekki(jd-days+1) == "立春";
+	    return nijuShisekki(jd - days + 1) == "立春";
 	}
 	function isJippouGureStart(jd) {
 	    return eto(jd) == "甲申";
@@ -1140,67 +1033,44 @@
 	    return eto(jd) == "戊申";
 	}
 	function isIchiryuManbai(jd) {
-	    var kEtosForSetsugetsu = [
-	        "丑午", "酉寅", "子卯", "卯辰", "巳午", "酉午",
-	        "子未", "卯申", "酉午", "酉戌", "亥子", "卯子",
-	    ];
+	    var kEtosForSetsugetsu = ["丑午", "酉寅", "子卯", "卯辰", "巳午", "酉午", "子未", "卯申", "酉午", "酉戌", "亥子", "卯子"];
 	    var s = findSetsugetsu(jd);
-	    var etos = kEtosForSetsugetsu[s[0]-1];
+	    var etos = kEtosForSetsugetsu[s[0] - 1];
 	    var todayJunishi = eto(jd)[1];
 	    return etos.indexOf(todayJunishi) > -1;
 	}
 	function isTensya(jd) {
-	    var kEtoForSeason = [
-	        "戊寅", "甲午", "戊申", "甲子"
-	    ];
+	    var kEtoForSeason = ["戊寅", "甲午", "戊申", "甲子"];
 	    var etoToFind = kEtoForSeason[findSeason(jd)];
 	    return eto(jd) == etoToFind;
 	}
 	function isFujoju(oldDate) {
-	    var kFujojus = [
-	        [3, 11, 19, 27],
-	        [2, 10, 18, 26],
-	        [1,  9, 17, 25],
-	        [4, 12, 20, 28],
-	        [5, 13, 21, 29],
-	        [6, 14, 22, 30],
-	    ];
+	    var kFujojus = [[3, 11, 19, 27], [2, 10, 18, 26], [1, 9, 17, 25], [4, 12, 20, 28], [5, 13, 21, 29], [6, 14, 22, 30]];
 	    var days = kFujojus[(oldDate.month - 1) % 6];
-	    if (typeof(days) === "undefined") {
+	    if (typeof days === "undefined") {
 	        // FIXME: 月表示が更新されないよりはマシな動作に調整中。
 	        return false;
 	    }
 	    return days.indexOf(oldDate.day) > -1;
 	}
 	function isHassen(jd) {
-	    var kHassens = [
-	        "壬子", "甲寅", "乙卯", "丁巳",
-	        "己未", "庚申", "辛酉", "癸亥",
-	    ];
+	    var kHassens = ["壬子", "甲寅", "乙卯", "丁巳", "己未", "庚申", "辛酉", "癸亥"];
 	    return kHassens.indexOf(eto(jd)) > -1;
 	}
 	function isSanrinbou(jd) {
 	    var kEtoForSetsugetsu = "亥寅午亥寅午亥寅午亥寅午";
 	    var s = findSetsugetsu(jd);
-	    var etoToFind = kEtoForSetsugetsu[s[0]-1];
+	    var etoToFind = kEtoForSetsugetsu[s[0] - 1];
 	    var todayJunishi = eto(jd)[1];
 	    return etoToFind === todayJunishi;
 	}
 
 	function sekku(date) {
-	    var kSekkus = [
-	        [[1, 7], "七草"],
-	        [[3, 3], "雛祭"],
-	        [[5, 5], "端午"],
-	        [[7, 7], "七夕"],
-	        [[9, 9], "重陽"],
-	    ];
+	    var kSekkus = [[[1, 7], "七草"], [[3, 3], "雛祭"], [[5, 5], "端午"], [[7, 7], "七夕"], [[9, 9], "重陽"]];
 	    var rv = "";
 	    kSekkus.forEach(function (aSekku) {
 	        var sekkuDate = aSekku[0];
-	        if (date.getMonth() + 1 == sekkuDate[0] &&
-	            date.getDate()      == sekkuDate[1])
-	        {
+	        if (date.getMonth() + 1 == sekkuDate[0] && date.getDate() == sekkuDate[1]) {
 	            rv = aSekku[1];
 	        }
 	    });
@@ -1212,20 +1082,7 @@
 	    return "平成" + (y - 1988) + "年";
 	}
 	function jaMonth(m) {
-	    var kJaNames = [
-	        "睦月",
-	        "如月",
-	        "弥生",
-	        "卯月",
-	        "皐月",
-	        "水無月",
-	        "文月",
-	        "葉月",
-	        "長月",
-	        "神無月",
-	        "霜月",
-	        "師走",
-	    ];
+	    var kJaNames = ["睦月", "如月", "弥生", "卯月", "皐月", "水無月", "文月", "葉月", "長月", "神無月", "霜月", "師走"];
 	    return kJaNames[m];
 	}
 
@@ -1311,7 +1168,7 @@
 	    if (!moon) {
 	        moon = new Moon(date.getFullYear(), date.getMonth());
 	    }
-	    var fullmoon = moon.fullmoonOf(date); 
+	    var fullmoon = moon.fullmoonOf(date);
 	    if (fullmoon) {
 	        tags.push(["fullmoon", "満月", fullmoon]);
 	    }
@@ -1330,7 +1187,7 @@
 	        fromJuliusDate: fromJuliusDate,
 	        dynamicalTime: dynamicalTime,
 	        solarEclipticLongitude: solarEclipticLongitude,
-	        lunarEclipticLongitude: lunarEclipticLongitude, 
+	        lunarEclipticLongitude: lunarEclipticLongitude,
 	        findNibunNishi: findNibunNishi,
 	        findSeason: findSeason,
 	        findChukis: findChukis,
@@ -1377,13 +1234,13 @@
 	        allShukus: allShukus,
 	        allNattins: allNattins,
 
-	        Moon: Moon, 
+	        Moon: Moon
 	    };
 	}
 
-
 /***/ },
-/* 2 */
+
+/***/ 173:
 /***/ function(module, exports) {
 
 	function parseHash(url) {
@@ -1393,11 +1250,30 @@
 	    }
 	    return decodeURIComponent(parts[1]);
 	}
+	function addClass(e, cls) {
+	    var a = e.getAttribute("class");
+	    var classes = a ? a.split(' ') : [];
+	    classes.push(cls);
+	    e.setAttribute("class", classes.join(' '));
+	}
+	function removeClass(e, cls) {
+	    var newClasses = [];
+	    var a = e.getAttribute("class");
+	    var classes = a ? a.split(' ') : [];
+	    classes.forEach(function (c) {
+	        if (c != cls) {
+	            newClasses.push(c);
+	        }
+	    });
+	    e.setAttribute("class", newClasses.join(' '));
+	}
 
 	module.exports = {
 	    parseHash: parseHash,
+	    addClass: addClass,
+	    removeClass: removeClass
 	};
 
-
 /***/ }
-/******/ ]);
+
+/******/ });
