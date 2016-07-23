@@ -135,7 +135,7 @@ a.box:nth-child(2n):hover {
 #top-container {
     position: fixed;
 }
-.top-button__link {
+.button__link {
     text-align: center;
     text-decoration: none;
 }
@@ -339,7 +339,7 @@ a.box:nth-child(2n):hover {
         left: 7vw;
         bottom: 7vw;
     }
-    .top-button__link {
+    #top-container .button__link {
         font-size: 5vw;
     }
 

@@ -384,7 +384,7 @@ var common = require("./common.js");
         
         document.getElementById("today").addEventListener("click", today, false);
         document.getElementById("next").addEventListener("click", next, false);
-        document.querySelector("#prev .prev-button__link").addEventListener("click", prev, false);
+        document.querySelector("#prev .button__link").addEventListener("click", prev, false);
 
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
@@ -395,7 +395,7 @@ var common = require("./common.js");
                 }
             }, false);
         });
-        document.querySelector("#top-container .top-button__link").addEventListener("click", function () {
+        document.querySelector("#top-container .button__link").addEventListener("click", function () {
             e.preventDefault();
             new ScrollAnimation(0.25, 0).start();
         }, false);
@@ -445,16 +445,14 @@ var common = require("./common.js");
 var PrevButton = React.createClass({
     render: function () {
         return (
-            <a href="#" className="button__navi prev-button__link">&laquo;</a>
+            <a href="#" className="button__navi button__link">&laquo;</a>
         );
     }
 });
 var TopButton = React.createClass({
     render: function () {
         return (
-            <div className="top-button">
-                <a href="#" className="button__navi top-button__link">△</a>
-            </div>
+            <a href="#" className="button__navi button__link">△</a>
         );
     }
 });
