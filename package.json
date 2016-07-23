@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack",
+    "deploy": "gh-pages --dist . --repo https://github.com/harimacode/harimacode.github.io",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/harimacode/koyomi-app#readme",
   "devDependencies": {
+    "gh-pages": "^0.11.0",
     "webpack": "^1.13.1"
   }
 }
