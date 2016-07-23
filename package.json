@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack",
-    "deploy": "npm run build && gh-pages --dist dist --repo https://github.com/harimacode/harimacode.github.io",
+    "deploy": "npm run build && gh-pages --dist dist --repo https://github.com/harimacode/harimacode.github.io --branch master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
