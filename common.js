@@ -5,3 +5,7 @@ function parseHash(url) {
     }
     return decodeURIComponent(parts[1]);
 }
+
+module.exports = {
+    parseHash: parseHash,
+};
