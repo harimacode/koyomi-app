@@ -132,10 +132,10 @@ a.box:nth-child(2n):hover {
 .marked {
     background-color: yellow;
 }
-.top-container {
+#top-container {
     position: fixed;
 }
-.top {
+.top-button__link {
     text-align: center;
     text-decoration: none;
 }
@@ -271,7 +271,7 @@ a.box:nth-child(2n):hover {
     #explanation hr {
         margin: 1em -1.5em;
     }
-    .top-container {
+    #top-container {
         right: 2em;
         bottom: 2em;
     }
@@ -335,11 +335,11 @@ a.box:nth-child(2n):hover {
     #explanation hr {
         margin: 1em 0;
     }
-    .top-container {
+    #top-container {
         left: 7vw;
         bottom: 7vw;
     }
-    .top {
+    .top-button__link {
         font-size: 5vw;
     }
 

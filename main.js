@@ -395,7 +395,7 @@ var common = require("./common.js");
                 }
             }, false);
         });
-        document.querySelector(".top a:link").addEventListener("click", function () {
+        document.querySelector("#top-container .top-button__link").addEventListener("click", function () {
             e.preventDefault();
             new ScrollAnimation(0.25, 0).start();
         }, false);
@@ -452,8 +452,8 @@ var PrevButton = React.createClass({
 var TopButton = React.createClass({
     render: function () {
         return (
-            <div className="top-container">
-                <a href="#" className="button__navi top">△</a>
+            <div className="top-button">
+                <a href="#" className="button__navi top-button__link">△</a>
             </div>
         );
     }
