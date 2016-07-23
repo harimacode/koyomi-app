@@ -1,3 +1,5 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 
