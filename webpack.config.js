@@ -4,7 +4,7 @@ module.exports = {
         monthly: './monthly.js'
     },
     output: {
-        path: __dirname,
+        path: __dirname + '/dist',
         filename: '[name].bundle.js'
     }
 };
