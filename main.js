@@ -1,3 +1,6 @@
+var oc = require("./harima-koyomi/old_calendar.js");
+var common = require("./common.js");
+
 (function () {
     var kExplanations = [
         {
@@ -212,23 +215,23 @@
         dateString += '<span class="keyNumber">' + date.getDate() + '</span>日';
         dateString += '<span class="dayOfWeek' + date.getDay() + '">(' + dayOfWeek(date.getDay()) + ')</span>';
         set("date", dateString);
-        var jd  = juliusDate(date);
-        var old = oldCalendar(jd);
+        var jd  = oc.juliusDate(date);
+        var old = oc.oldCalendar(jd);
         set('oldDate', '旧暦 ' + old);
-        var newRokki = rokki(old);
+        var newRokki = oc.rokki(old);
         sets('rokki', newRokki);
-        var newEto = eto(jd);
+        var newEto = oc.eto(jd);
         sets('eto', newEto);
-        var newKyusei = kyusei(jd);
+        var newKyusei = oc.kyusei(jd);
         sets('kyusei', newKyusei);
-        var newChoku = choku(jd);
+        var newChoku = oc.choku(jd);
         sets('choku', newChoku);
-        var newShuku = shuku(old);
+        var newShuku = oc.shuku(old);
         sets('shuku', newShuku);
-        var newNattin = nattin(jd);
+        var newNattin = oc.nattin(jd);
         sets('nattin', newNattin);
         var tags = [];
-        tagsForDate(date).forEach(function (tag) {
+        oc.tagsForDate(date).forEach(function (tag) {
             var tagText = tag[1];
             var isFullmoon = tag[0] === "fullmoon";
             var isNewmoon  = tag[0] === "newmoon";
@@ -384,7 +387,7 @@
     window.addEventListener("load", function (e) {
         document.getElementById("explanation").innerHTML = makeExplanations();
         
-        var hash = parseHash(document.location.href);
+        var hash = common.parseHash(document.location.href);
         if (hash) {
             gotoDate(hash);
         } else {
@@ -401,7 +404,7 @@
 
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
-                var hash = parseHash(aBox.getAttribute("href"));
+                var hash = common.parseHash(aBox.getAttribute("href"));
                 if (hash) {
                     e.preventDefault();
                     jumpToHash(hash);
@@ -416,7 +419,7 @@
         // runTests();
     }, false);
     window.addEventListener("hashchange", function (e) {
-        var hash = parseHash(e.newURL);
+        var hash = common.parseHash(e.newURL);
         if (hash) {
             if (hash.indexOf("/") > -1) {
                 // 日付指定

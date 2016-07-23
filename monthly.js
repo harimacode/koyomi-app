@@ -1,10 +1,13 @@
+var oc = require("./harima-koyomi/old_calendar.js");
+var common = require("./common.js");
+
 (function () {
     function DefaultTagger() {
     }
     DefaultTagger.prototype = {
         tagForDate: function (aDate, aMoon) {
             var topTag = "";
-            var tags = tagsForDate(aDate, aMoon);
+            var tags = oc.tagsForDate(aDate, aMoon);
             if (tags.length > 0) {
                 topTag = tags[0];
                 topTag = '<span class="tag ' + topTag[0] + '">' + topTag[1] + '</span>'; 
@@ -19,31 +22,31 @@
     ModeTagger.prototype = {
         stringForDate: function (aDate, aMoon) {
             // 月表示の更新
-            var jd  = juliusDate(aDate);
+            var jd  = oc.juliusDate(aDate);
             switch (this.mode) {
                 case "六輝":
-                    return rokki(oldCalendar(jd));
+                    return oc.rokki(oc.oldCalendar(jd));
                 case "干支":
-                    return eto(jd);
+                    return oc.eto(jd);
                 case "九星":
-                    return kyusei(jd);
+                    return oc.kyusei(jd);
                 case "直":
-                    return choku(jd);
+                    return oc.choku(jd);
                 case "宿":
-                    return shuku(oldCalendar(jd));
+                    return oc.shuku(oc.oldCalendar(jd));
                 case "納音":
-                    return nattin(jd);
+                    return oc.nattin(jd);
             }
         },
         hueForString: function (aString) {
             var all = null;
             switch (this.mode) {
-                case "六輝": all = allRokkis(); break;
-                case "干支": all = allEtos(); break;
-                case "九星": all = allKyuseis(); break;
-                case "直": all = allChokus(); break;
-                case "宿": all = allShukus(); break;
-                case "納音": all = allNattins(); break;
+                case "六輝": all = oc.allRokkis(); break;
+                case "干支": all = oc.allEtos(); break;
+                case "九星": all = oc.allKyuseis(); break;
+                case "直": all = oc.allChokus(); break;
+                case "宿": all = oc.allShukus(); break;
+                case "納音": all = oc.allNattins(); break;
             }
             return 360 * all.indexOf(aString) / all.length;
         },
@@ -57,7 +60,7 @@
     function MonthlyCalendar(year, month) {
         this.year = year;
         this.month = month;
-        this.moon = new Moon(year, month);
+        this.moon = new oc.Moon(year, month);
 
         var date = new Date(year, month);
         var weeks = [];
@@ -105,7 +108,7 @@
                     var link = "";
                     var topTag = "";
                     if (day) {
-                        if (isSameDay(day, today)) {
+                        if (oc.isSameDay(day, today)) {
                             clz += " today";
                         }
                         if (that.moon.fullmoonOf(day)) {
@@ -157,7 +160,7 @@
 
     function update() {
         document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
-        document.getElementById("jaYearMonth").innerHTML = heiseiYear(month.year) + " " + jaMonth(month.month);
+        document.getElementById("jaYearMonth").innerHTML = oc.heiseiYear(month.year) + " " + oc.jaMonth(month.month);
         
         var newMode = document.getElementById("mode").value;
         var tagger = (newMode == "") ? new DefaultTagger() : new ModeTagger(newMode);
@@ -167,7 +170,7 @@
     var month;
     function gotoMonthOfHash() {
         var date = new Date();
-        var hash = parseHash(document.location.href);
+        var hash = common.parseHash(document.location.href);
         if (hash) {
             var comps = hash.split("/");
             while (comps.length < 3) {
@@ -194,7 +197,7 @@
         document.getElementById("mode").addEventListener("change", update, false);
     }, false);
     window.addEventListener("hashchange", function (e) {
-        var hash = parseHash(e.newURL);
+        var hash = common.parseHash(e.newURL);
         if (hash) {
             gotoMonthOfHash();
         }
