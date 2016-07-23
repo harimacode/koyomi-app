@@ -90,7 +90,7 @@ address {
         width: 9vw;
         height: 9vw;
     }
-    .prev {
+    #prev {
         float: left;
         margin-left: 5vw;
     }

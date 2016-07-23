@@ -384,7 +384,7 @@ var common = require("./common.js");
         
         document.getElementById("today").addEventListener("click", today, false);
         document.getElementById("next").addEventListener("click", next, false);
-        document.querySelector(".prev").addEventListener("click", prev, false);
+        document.querySelector("#prev .prev-button__link").addEventListener("click", prev, false);
 
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
             aBox.addEventListener("click", function (e) {
@@ -445,7 +445,7 @@ var common = require("./common.js");
 var PrevButton = React.createClass({
     render: function () {
         return (
-            <a href="#" className="button__navi prev">&laquo;</a>
+            <a href="#" className="button__navi prev-button__link">&laquo;</a>
         );
     }
 });
