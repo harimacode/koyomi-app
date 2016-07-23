@@ -383,7 +383,7 @@ var common = require("./common.js");
         });
         
         document.getElementById("today").addEventListener("click", today, false);
-        document.getElementById("next").addEventListener("click", next, false);
+        document.querySelector("#next .button__link").addEventListener("click", next, false);
         document.querySelector("#prev .button__link").addEventListener("click", prev, false);
 
         Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
@@ -445,15 +445,19 @@ var common = require("./common.js");
 var Button = React.createClass({
     render: function () {
         return (
-            <a href="#" className="button__navi button__link">&laquo;</a>
+            <a href="#" className="button__navi button__link">{this.props.title}</a>
         );
     }
 });
 ReactDOM.render(
-    <Button />,
+    <Button title="&laquo;" />,
     document.getElementById("prev")
 );
 ReactDOM.render(
-    <Button />,
+    <Button title="△" />,
     document.getElementById("top-container")
+);
+ReactDOM.render(
+    <Button title="&raquo;" />,
+    document.getElementById("next")
 );
