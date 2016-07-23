@@ -442,25 +442,18 @@ var common = require("./common.js");
     });
 })();
 
-var PrevButton = React.createClass({
+var Button = React.createClass({
     render: function () {
         return (
             <a href="#" className="button__navi button__link">&laquo;</a>
         );
     }
 });
-var TopButton = React.createClass({
-    render: function () {
-        return (
-            <a href="#" className="button__navi button__link">△</a>
-        );
-    }
-});
 ReactDOM.render(
-    <PrevButton />,
+    <Button />,
     document.getElementById("prev")
 );
 ReactDOM.render(
-    <TopButton />,
+    <Button />,
     document.getElementById("top-container")
 );
