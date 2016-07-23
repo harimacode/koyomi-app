@@ -1,3 +1,4 @@
+var Hammer = require("./hammer.min.js");
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 
