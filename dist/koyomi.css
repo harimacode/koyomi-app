@@ -13,6 +13,9 @@ body {
 .box:hover {
     background-color: #cccccc;
 }
+.keyNumber {
+    font-size: 1.5em;
+}
 address {
     font-style: normal;
     color: #999999;
