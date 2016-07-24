@@ -4,6 +4,25 @@ var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 var Button = require("./Button.jsx");
+var OldDateMonth = require("./OldDateMonth.jsx");
+
+function renderOldDateMonth(props) {
+    if (!props.date) {
+        props.date = new Date();
+    }
+    if (!props.subtitle) {
+        props.subtitle = "旧暦 0月0日"; 
+    }
+    return ReactDOM.render(
+        <OldDateMonth type="date"
+                      date={props.date}
+                      subtitle={props.subtitle}
+                      onPrevClick={prev}
+                      onNextClick={next} />,
+        document.getElementById("old-date-month")
+    );
+}
+renderOldDateMonth({});
 
 var kExplanations = [
     {
@@ -203,9 +222,6 @@ function sets(clazz, value) {
         e.innerHTML = value;
     });
 }
-function dayOfWeek(dow) {
-    return "日月火水木金土".charAt(dow);
-}
 function update() {
     // 月表示の更新
     var month = date.getMonth() + 1;
@@ -213,14 +229,12 @@ function update() {
     document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
     
     var month = date.getMonth() + 1; // 月は 0 始まり
-    var dateString = "";
-    dateString += '<span class="keyNumber">' + month + '</span>月';
-    dateString += '<span class="keyNumber">' + date.getDate() + '</span>日';
-    dateString += '<span class="dayOfWeek' + date.getDay() + '">(' + dayOfWeek(date.getDay()) + ')</span>';
-    set("date", dateString);
     var jd  = oc.juliusDate(date);
     var old = oc.oldCalendar(jd);
-    set('oldDate', '旧暦 ' + old);
+    renderOldDateMonth({
+        date: date,
+        subtitle: '旧暦 ' + old
+    });
     var newRokki = oc.rokki(old);
     sets('rokki', newRokki);
     var newEto = oc.eto(jd);
@@ -442,14 +456,14 @@ new Hammer(window).on("swipe", function (ev) {
     }
 });
 
-ReactDOM.render(
-    <Button title="&laquo;" onClick={prev}/>,
-    document.getElementById("prev")
-);
-ReactDOM.render(
-    <Button title="&raquo;" onClick={next} />,
-    document.getElementById("next")
-);
+// ReactDOM.render(
+//     <Button title="&laquo;" onClick={prev}/>,
+//     document.getElementById("prev")
+// );
+// ReactDOM.render(
+//     <Button title="&raquo;" onClick={next} />,
+//     document.getElementById("next")
+// );
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")

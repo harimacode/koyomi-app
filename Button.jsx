@@ -5,9 +5,10 @@ module.exports = React.createClass({
         this.props.onClick(e);
     },
     render: function () {
+        var cls = this.props.className + " button";
         return (
             <a href="#"
-               className="button"
+               className={cls}
                onClick={this.handleClick}>
                 {this.props.title}
             </a>

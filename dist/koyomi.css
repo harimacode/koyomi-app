@@ -69,11 +69,11 @@ address {
         font-size: 6vw;
         margin-bottom: 3vw;
     }
-    #prev {
+    .old-date-month__prev {
         float: left;
         margin-left: 5vw;
     }
-    #next {
+    .old-date-month__next {
         float: right;
         margin-right: 5vw;
     }
