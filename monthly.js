@@ -2,6 +2,7 @@ var Hammer = require("./hammer.min.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
 var Button = require("./Button.jsx");
+var OldDateMonth = require("./OldDateMonth.jsx");
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 
@@ -161,9 +162,29 @@ function next(e) {
     e.preventDefault();
 }
 
+function renderOldDateMonth(props) {
+    if (!props.date) {
+        props.date = new Date();
+    }
+    if (!props.subtitle) {
+        props.subtitle = "";
+    }
+    ReactDOM.render(
+        <OldDateMonth type="month"
+                      date={props.date}
+                      subtitle={props.subtitle}
+                      onPrevClick={prev}
+                      onNextClick={next} />,
+        document.getElementById("old-date-month")
+    );
+}
+renderOldDateMonth({});
+
 function update() {
-    document.getElementById("current").innerHTML = '<span class="keyNumber">' + month.year + '</span>年<span class="keyNumber">' + (month.month+1) + '</span>月';
-    document.getElementById("jaYearMonth").innerHTML = oc.heiseiYear(month.year) + " " + oc.jaMonth(month.month);
+    renderOldDateMonth({
+        date: new Date(month.year, month.month),
+        subtitle: oc.heiseiYear(month.year) + " " + oc.jaMonth(month.month)
+    });
     
     var newMode = document.getElementById("mode").value;
     var tagger = (newMode == "") ? new DefaultTagger() : new ModeTagger(newMode);
@@ -218,12 +239,3 @@ hammer.on("swipe", function (ev) {
         break;
     }
 });
-
-ReactDOM.render(
-    <Button title="&laquo;" onClick={prev} />,
-    document.getElementById("prev")
-);
-ReactDOM.render(
-    <Button title="&raquo;" onClick={next} />,
-    document.getElementById("next")
-);
