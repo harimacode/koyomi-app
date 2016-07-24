@@ -20,12 +20,6 @@ h1 .current {
 }
 .dayOfWeek0 { color: #ff6633; }
 .dayOfWeek6 { color: #3366ff; }
-.button__navi {
-    background-color: #999999;
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
-    color: white;
-    display: inline-block;
-}
 #koyomi a:link,
 .box:link {
     text-decoration: none;
@@ -54,14 +48,6 @@ address {
     h1 .current {
         font-size: 2em;
     }
-    .button__navi {
-        border-radius: 1em;
-        font-size: 1.5em;
-        margin: -1em 0.5em;
-        padding: -1em;
-        width: 1.5em;
-        height: 1.5em;
-    }
     .old {
         font-size: 1.5em;
         margin-bottom: 1em;
@@ -82,13 +68,6 @@ address {
     .old {
         font-size: 6vw;
         margin-bottom: 3vw;
-    }
-    .button__navi {
-        border-radius: 8vw;
-        font-size: 6vw;
-        margin-top: 3vw;
-        width: 9vw;
-        height: 9vw;
     }
     #prev {
         float: left;

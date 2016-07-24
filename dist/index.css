@@ -135,10 +135,6 @@ a.box:nth-child(2n):hover {
 #top-container {
     position: fixed;
 }
-.button__link {
-    text-align: center;
-    text-decoration: none;
-}
 
 /* month */
 #monthlyCalendar {
