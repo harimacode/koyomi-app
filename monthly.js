@@ -1,4 +1,7 @@
 var Hammer = require("./hammer.min.js");
+var React = require("react");
+var ReactDOM = require("react-dom");
+var Button = require("./Button.jsx");
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 
@@ -192,9 +195,6 @@ window.addEventListener('load', function () {
         }, false);
     });
     
-    document.getElementById("next").addEventListener("click", next, false);
-    document.getElementById("prev").addEventListener("click", prev, false);
-    
     document.getElementById("mode").addEventListener("change", update, false);
 }, false);
 window.addEventListener("hashchange", function (e) {
@@ -218,3 +218,12 @@ hammer.on("swipe", function (ev) {
         break;
     }
 });
+
+ReactDOM.render(
+    <Button title="&laquo;" onClick={prev} />,
+    document.getElementById("prev")
+);
+ReactDOM.render(
+    <Button title="&raquo;" onClick={next} />,
+    document.getElementById("next")
+);
