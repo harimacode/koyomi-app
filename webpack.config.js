@@ -3,7 +3,8 @@ module.exports = {
         main:    './main.js',
         monthly: './monthly.js',
 
-        Button:  './test/Button.test.jsx'
+        Button:       './test/Button.test.jsx',
+        OldDateMonth: './test/OldDateMonth.test.jsx'
     },
     output: {
         path: __dirname + '/dist',

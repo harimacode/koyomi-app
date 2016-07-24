@@ -5,21 +5,6 @@ body {
 #koyomi {
     text-align: center;
 }
-h1 {
-    color: #333333;
-    font-size: 1em;
-    margin: 0;
-    margin-top: 0;
-}
-h1 .current {
-    margin: 0;
-    line-height: 1em;
-}
-.keyNumber {
-    font-size: 1.5em;
-}
-.dayOfWeek0 { color: #ff6633; }
-.dayOfWeek6 { color: #3366ff; }
 #koyomi a:link,
 .box:link {
     text-decoration: none;
@@ -27,9 +12,6 @@ h1 .current {
 #koyomi a:hover,
 .box:hover {
     background-color: #cccccc;
-}
-.old {
-    margin: 0;
 }
 address {
     font-style: normal;
@@ -42,16 +24,6 @@ address {
         margin: 1em;
         width: 6.5em;
     }
-    h1 {
-        font-size: 1em;
-    }
-    h1 .current {
-        font-size: 2em;
-    }
-    .old {
-        font-size: 1.5em;
-        margin-bottom: 1em;
-    }
     address {
         font-size: 1em;
     }
@@ -61,21 +33,6 @@ address {
     .header, .footer {
         margin: 5vw;
         width: 26vw;
-    }
-    h1 .current {
-        font-size: 8vw;
-    }
-    .old {
-        font-size: 6vw;
-        margin-bottom: 3vw;
-    }
-    .old-date-month__prev {
-        float: left;
-        margin-left: 5vw;
-    }
-    .old-date-month__next {
-        float: right;
-        margin-right: 5vw;
     }
     address {
         font-size: 4vw;
