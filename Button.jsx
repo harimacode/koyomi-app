@@ -1,8 +1,8 @@
 var React = require("react");
 
 module.exports = React.createClass({
-    handleClick: function () {
-        this.props.onClick();
+    handleClick: function (e) {
+        this.props.onClick(e);
     },
     render: function () {
         return (
