@@ -1,7 +1,9 @@
 module.exports = {
     entry: {
         main:    './main.js',
-        monthly: './monthly.js'
+        monthly: './monthly.js',
+
+        Button:  './test/Button.test.jsx'
     },
     output: {
         path: __dirname + '/dist',

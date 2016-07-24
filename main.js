@@ -370,6 +370,10 @@ function jumpToHash(aHash) {
     
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
 }
+function gotoTop(e) {
+    e.preventDefault();
+    new ScrollAnimation(0.25, 0).start();
+}
 window.addEventListener("load", function (e) {
     common.removeClass(document.getElementById("koyomi"), "month");
     document.getElementById("explanation").innerHTML = makeExplanations();
@@ -386,8 +390,6 @@ window.addEventListener("load", function (e) {
     });
     
     document.getElementById("today").addEventListener("click", today, false);
-    document.querySelector("#next .button__link").addEventListener("click", next, false);
-    document.querySelector("#prev .button__link").addEventListener("click", prev, false);
 
     Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
         aBox.addEventListener("click", function (e) {
@@ -398,10 +400,6 @@ window.addEventListener("load", function (e) {
             }
         }, false);
     });
-    document.querySelector("#top-container .button__link").addEventListener("click", function () {
-        e.preventDefault();
-        new ScrollAnimation(0.25, 0).start();
-    }, false);
     
     // runTests();
 }, false);
@@ -445,14 +443,14 @@ new Hammer(window).on("swipe", function (ev) {
 });
 
 ReactDOM.render(
-    <Button title="&laquo;" />,
+    <Button title="&laquo;" onClick={prev}/>,
     document.getElementById("prev")
 );
 ReactDOM.render(
-    <Button title="△" />,
-    document.getElementById("top-container")
+    <Button title="&raquo;" onClick={next} />,
+    document.getElementById("next")
 );
 ReactDOM.render(
-    <Button title="&raquo;" />,
-    document.getElementById("next")
+    <Button title="△" onClick={gotoTop} />,
+    document.getElementById("top-container")
 );
