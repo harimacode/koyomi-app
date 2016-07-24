@@ -18,6 +18,7 @@ function renderOldDateMonth(props) {
                       date={props.date}
                       subtitle={props.subtitle}
                       onPrevClick={prev}
+                      onCurrentClick={today}
                       onNextClick={next} />,
         document.getElementById("old-date-month")
     );
@@ -398,10 +399,6 @@ window.addEventListener("load", function (e) {
     } else {
         today();
     }
-    
-    Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
-        aElt.addEventListener("click", today, false);
-    });
     
     document.getElementById("today").addEventListener("click", today, false);
 

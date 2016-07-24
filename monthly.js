@@ -174,6 +174,7 @@ function renderOldDateMonth(props) {
                       date={props.date}
                       subtitle={props.subtitle}
                       onPrevClick={prev}
+                      onCurrentClick={thisMonth}
                       onNextClick={next} />,
         document.getElementById("old-date-month")
     );
@@ -205,16 +206,13 @@ function gotoMonthOfHash() {
     month = MonthlyCalendar.forDate(date);
     update();
 }
+function thisMonth() {
+    month = MonthlyCalendar.forDate(new Date());
+    update();
+}
 window.addEventListener('load', function () {
     common.addClass(document.getElementById("koyomi"), "month");
     gotoMonthOfHash();
-
-    Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
-        aElt.addEventListener("click", function () {
-            month = MonthlyCalendar.forDate(new Date());
-            update();
-        }, false);
-    });
     
     document.getElementById("mode").addEventListener("change", update, false);
 }, false);

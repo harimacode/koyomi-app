@@ -15,12 +15,12 @@ module.exports = React.createClass({
         var date  = this.props.date.getDate();
         var day   = this.props.date.getDay();
         var firstLine = this.isYearMonth() ? (
-            <span className="current gotoCurrent" id="date">
+            <span className="current" id="date" onClick={this.props.onCurrentClick}>
                 <span className="keyNumber">{year}</span>年
                 <span className="keyNumber">{month}</span>月
             </span>
         ) : (
-            <span className="current gotoCurrent" id="date">
+            <span className="current" id="date" onClick={this.props.onCurrentClick}>
                 <span className="keyNumber">{month}</span>月
                 <span className="keyNumber">{date}</span>日
                 <span className={"dayOfWeek" + day}>({this.dayOfWeek(day)})</span>
@@ -33,7 +33,7 @@ module.exports = React.createClass({
                     {firstLine}
                     <Button className="old-date-month__next" title="&raquo;" onClick={this.props.onNextClick} />
                 </h1>
-                <p className="old"><span className="gotoCurrent">{this.props.subtitle}</span></p>
+                <p className="old"><span onClick={this.props.onCurrentClick}>{this.props.subtitle}</span></p>
             </div>
         );
     }
