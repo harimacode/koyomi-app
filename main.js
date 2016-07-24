@@ -3,6 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
+var Button = require("./Button.jsx");
 
 var kExplanations = [
     {
@@ -443,13 +444,6 @@ new Hammer(window).on("swipe", function (ev) {
     }
 });
 
-var Button = React.createClass({
-    render: function () {
-        return (
-            <a href="#" className="button__navi button__link">{this.props.title}</a>
-        );
-    }
-});
 ReactDOM.render(
     <Button title="&laquo;" />,
     document.getElementById("prev")
