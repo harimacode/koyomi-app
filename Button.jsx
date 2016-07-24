@@ -7,7 +7,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <a href="#"
-               className="button__navi button__link"
+               className="button"
                onClick={this.handleClick}>
                 {this.props.title}
             </a>
