@@ -22972,7 +22972,8 @@
 	            if (index) {
 	                elts.push(React.createElement("hr", { key: "separator" + index, className: "explanations__separator" }));
 	            }
-	            elts.push(React.createElement(Explanation, { key: "explanation" + index, name: aItem.name,
+	            elts.push(React.createElement(Explanation, { key: "explanation" + index,
+	                name: aItem.name,
 	                description: aItem.description,
 	                items: aItem.items,
 	                items2: aItem.items2,
