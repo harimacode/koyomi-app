@@ -22968,10 +22968,11 @@
 	    render: function () {
 	        var elts = [];
 	        this.props.data.forEach(function (aItem) {
-	            if (elts.length) {
-	                elts.push(React.createElement("hr", null));
+	            var index = elts.length;
+	            if (index) {
+	                elts.push(React.createElement("hr", { key: "separator" + index, className: "explanations__separator" }));
 	            }
-	            elts.push(React.createElement(Explanation, { name: aItem.name,
+	            elts.push(React.createElement(Explanation, { key: "explanation" + index, name: aItem.name,
 	                description: aItem.description,
 	                items: aItem.items,
 	                items2: aItem.items2,
@@ -22979,7 +22980,7 @@
 	        });
 	        return React.createElement(
 	            "div",
-	            null,
+	            { className: "explanations" },
 	            elts
 	        );
 	    }
@@ -22998,10 +22999,7 @@
 
 	    render: function () {
 	        var name = this.props.name;
-	        var tables = [this.props.items];
-	        if (this.props.items2) {
-	            tables.push(this.props.items2);
-	        }
+	        var items2 = this.props.items2 ? React.createElement(ExplanationTable, { name: name, items: this.props.items2 }) : null;
 	        var cite = this.props.cite ? React.createElement(
 	            "p",
 	            null,
@@ -23012,13 +23010,13 @@
 	            null,
 	            React.createElement(
 	                "h2",
-	                { id: name },
+	                { className: "explanation__title", id: name },
 	                name
 	            ),
-	            React.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.description } }),
-	            tables.map(function (aTable) {
-	                return React.createElement(ExplanationTable, { items: aTable });
-	            }),
+	            React.createElement("p", { className: "explanation__description",
+	                dangerouslySetInnerHTML: { __html: this.props.description } }),
+	            React.createElement(ExplanationTable, { name: name, items: this.props.items }),
+	            items2,
 	            cite
 	        );
 	    }
@@ -23035,6 +23033,7 @@
 	    displayName: "exports",
 
 	    render: function () {
+	        var name = this.props.name;
 	        var rows = this.props.items.map(function (aItem) {
 	            var title = aItem[0];
 	            if (!Array.isArray(title)) {
@@ -23054,7 +23053,7 @@
 	                    null,
 	                    React.createElement(
 	                        "div",
-	                        { className: "ruby" },
+	                        { className: "explanation-table__title-ruby" },
 	                        reading
 	                    ),
 	                    titleHtml
@@ -23062,23 +23061,27 @@
 	            }
 	            return React.createElement(
 	                "tr",
-	                null,
+	                { key: id },
 	                React.createElement(
 	                    "th",
-	                    null,
+	                    { className: "explanation-table__title-cell" },
 	                    titleHtml
 	                ),
 	                React.createElement(
 	                    "td",
-	                    null,
+	                    { className: "explanation-table__text-cell" },
 	                    desc
 	                )
 	            );
 	        });
 	        return React.createElement(
 	            "table",
-	            null,
-	            rows
+	            { className: "explanation-table" },
+	            React.createElement(
+	                "tbody",
+	                null,
+	                rows
+	            )
 	        );
 	    }
 	});
