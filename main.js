@@ -5,6 +5,7 @@ var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 var Button = require("./Button.jsx");
 var OldDateMonth = require("./OldDateMonth.jsx");
+var Explanations = require("./Explanations.jsx");
 
 function renderOldDateMonth(props) {
     if (!props.date) {
@@ -176,44 +177,6 @@ var kExplanations = [
         ],
     },
 ];
-function makeExplanations() {
-    var sections = [];
-    kExplanations.forEach(function (aExplanation) {
-        var name = aExplanation.name;
-        var section = [
-            '<h2 id="' + name + '">' + name + '</h2>',
-            '<p>' + aExplanation.description + '</p>',
-        ];
-        var tables = [aExplanation.items];
-        if (aExplanation.items2) {
-            tables.push(aExplanation.items2);
-        }
-        tables.forEach(function (aTable) {
-            section.push('<table>');
-            aTable.forEach(function (aItem) {
-                var title = aItem[0];
-                if (!Array.isArray(title)) {
-                    title = [title, title];
-                }
-                var reading = aItem[1];
-                var desc = aItem[2];
-                var id = name + '_' + title[0];
-                var titleHtml = '<span id="' + id + '">' + title[1] + '</span>';
-                if (reading) {
-                    titleHtml = '<div class="ruby">' + reading + '</div>' + titleHtml;
-                }
-                section.push('<tr><th>' + titleHtml + '</th><td>' + desc + '</td></tr>');
-            });
-            section.push('</table>');
-        });
-        var cite = aExplanation.cite;
-        if (cite) {
-            section.push('<p><cite>' + cite + '</cite></p>');
-        }
-        sections.push(section.join('\n'));
-    });
-    return sections.join('\n<hr>\n');
-}
 
 function set(id, value) {
     document.getElementById(id).innerHTML = value;
@@ -391,7 +354,6 @@ function gotoTop(e) {
 }
 window.addEventListener("load", function (e) {
     common.removeClass(document.getElementById("koyomi"), "month");
-    document.getElementById("explanation").innerHTML = makeExplanations();
     
     var hash = common.parseHash(document.location.href);
     if (hash) {
@@ -461,6 +423,10 @@ new Hammer(window).on("swipe", function (ev) {
 //     <Button title="&raquo;" onClick={next} />,
 //     document.getElementById("next")
 // );
+ReactDOM.render(
+    <Explanations data={kExplanations} />,
+    document.getElementById("explanation")
+);
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")
