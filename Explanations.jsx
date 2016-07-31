@@ -11,11 +11,12 @@ module.exports = React.createClass({
                 elts.push(<hr key={"separator" + index} className="explanations__separator" />);
             }
             elts.push(
-                <Explanation key={"explanation" + index} name={aItem.name}
-                    description={aItem.description}
-                    items={aItem.items}
-                    items2={aItem.items2}
-                    cite={aItem.cite} />
+                <Explanation key={"explanation" + index}
+                             name={aItem.name}
+                             description={aItem.description}
+                             items={aItem.items}
+                             items2={aItem.items2}
+                             cite={aItem.cite} />
             );
         });
         return (
