@@ -3,6 +3,7 @@ var ReactDOM = require("react-dom");
 
 module.exports = React.createClass({
     render: function () {
+        var name = this.props.name;
         var rows = this.props.items.map(function (aItem) {
             var title = aItem[0];
             if (!Array.isArray(title)) {

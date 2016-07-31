@@ -18,7 +18,10 @@ module.exports = React.createClass({
                <p className="explanation__description"
                   dangerouslySetInnerHTML={{__html: this.props.description}} />
                {tables.map(function (aTable) {
-                   return <ExplanationTable items={aTable} />;
+                   return (
+                       <ExplanationTable name={name} 
+                                         items={aTable} />
+                   );
                })}
                {cite}
             </div>
