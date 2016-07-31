@@ -24,7 +24,7 @@ module.exports = React.createClass({
                 );
             }
             return (
-                <tr>
+                <tr key={id}>
                     <th className="explanation-table__title-cell">{titleHtml}</th>
                     <td className="explanation-table__text-cell">{desc}</td>
                 </tr>
@@ -32,7 +32,9 @@ module.exports = React.createClass({
         });
         return (
             <table className="explanation-table">
-                {rows}
+                <tbody>
+                    {rows}
+                </tbody>
             </table>
         );
     }

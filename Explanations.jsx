@@ -6,11 +6,12 @@ module.exports = React.createClass({
     render: function () {
         var elts = [];
         this.props.data.forEach(function (aItem) {
-            if (elts.length) {
-                elts.push(<hr className="explanations__separator" />);
+            var index = elts.length;
+            if (index) {
+                elts.push(<hr key={"separator" + index} className="explanations__separator" />);
             }
             elts.push(
-                <Explanation name={aItem.name}
+                <Explanation key={"explanation" + index} name={aItem.name}
                     description={aItem.description}
                     items={aItem.items}
                     items2={aItem.items2}
