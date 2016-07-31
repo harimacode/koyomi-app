@@ -7,7 +7,7 @@ module.exports = React.createClass({
         var elts = [];
         this.props.data.forEach(function (aItem) {
             if (elts.length) {
-                elts.push(<hr />);
+                elts.push(<hr className="explanations__separator" />);
             }
             elts.push(
                 <Explanation name={aItem.name}
@@ -18,7 +18,7 @@ module.exports = React.createClass({
             );
         });
         return (
-            <div>
+            <div className="explanations">
                 {elts}
             </div>
         );

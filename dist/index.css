@@ -82,19 +82,19 @@ a.box:nth-child(2n):hover {
     width: 16.6vw;
     height: 16.6vw;
 }
-#explanation {
+.explanations {
     background-color: #eeeeee;
     border: 1px solid #cccccc;
     padding: 1em;
 }
-#explanation h2 {
+.explanation__title {
     float: left;
     font-size: 2em;
     margin: 0 0.5em 0 0;
     text-align: right;
     vertical-align: top;
 }
-#explanation p {
+.explanation__description {
     margin: 0;
     padding: 0;
     vertical-align: bottom;
@@ -119,7 +119,7 @@ a.box:nth-child(2n):hover {
     vertical-align: center;
     white-space: nowrap;
 }
-#explanation hr {
+.explanations__separator {
     clear: both;
     border: none;
     border-bottom: 1px dotted #999999;
@@ -260,11 +260,13 @@ a.box:nth-child(2n):hover {
         height: 2em;
     }
     #explanation {
-        padding: 1em 3em;
         margin: 2em auto;
         width: 36em;
     }
-    #explanation hr {
+    .explanations {
+        padding: 1em 3em;
+    }
+    .explanations__separator {
         margin: 1em -1.5em;
     }
     #top-container {
@@ -328,7 +330,7 @@ a.box:nth-child(2n):hover {
         margin: 5vw;
         width: auto;
     }
-    #explanation hr {
+    .explanations__separator {
         margin: 1em 0;
     }
     #top-container {

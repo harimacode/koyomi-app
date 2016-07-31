@@ -14,8 +14,9 @@ module.exports = React.createClass({
         ) : null;
         return (
             <div>
-               <h2 id={name}>{name}</h2>
-               <p dangerouslySetInnerHTML={{__html: this.props.description}} />
+               <h2 className="explanation__title" id={name}>{name}</h2>
+               <p className="explanation__description"
+                  dangerouslySetInnerHTML={{__html: this.props.description}} />
                {tables.map(function (aTable) {
                    return <ExplanationTable items={aTable} />;
                })}
