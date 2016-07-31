@@ -44,347 +44,314 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var Hammer = __webpack_require__(174);
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var oc = __webpack_require__(172);
-	var common = __webpack_require__(173);
+	var oc = __webpack_require__(175);
+	var common = __webpack_require__(176);
+	var Button = __webpack_require__(172);
+	var OldDateMonth = __webpack_require__(173);
+	var Explanations = __webpack_require__(177);
 
-	(function () {
-	    var kExplanations = [{
-	        name: "六輝",
-	        description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)",
-	        items: [["先勝", "せんがち", "戦いは朝から昼までよし。午前中は吉。"], ["友引", "ともびき", "勝負のつかない日。朝晩、夕方は吉。"], ["先負", "せんまけ", "戦いは昼過ぎより日暮れまでよし。午後は吉。"], ["空亡", "くうぼう", "仏滅。全てがむなしくなる日。戦えば失うものが多い。"], ["大安", "たいあん", "大安吉日なり。何事によらずよし。"], ["赤口", "しゃっく", "赤口神が民を悩ます日。特に祝い事に凶事あり。午前11時から午後１時までの時間帯のみは吉で、それ以外は凶。"]]
-	    }, {
-	        name: "干支",
-	        description: "木の幹にあたる”十干”と枝にあたる”十二支”を合わせて<strong>状態</strong>を表すものです。",
-	        items: [["甲", "きのえ", "草木の芽生え、鱗芽のかいわれの象意"], ["乙", "きのと", "陽気のまだ伸びない、かがまっているところ"], ["丙", "ひのえ", "陽気の発揚"], ["丁", "ひのと", "陽気の充溢"], ["戊", "つちのえ", "“茂”に通じ、陽気による分化繁栄"], ["己", "つちのと", "紀に通じ、分散を防ぐ統制作用"], ["庚", "かのえ", "結実、形成、陰化の段階"], ["辛", "かのと", "陰による統制の強化"], ["壬", "みずのえ", "“妊”に通じ、陽気を下に姙む意"], ["癸", "みずのと", "“揆”に同じく生命のない残物を清算して地ならしを行い、新たな生長を行う待機の状態"]],
-	        items2: [["子", "ね", "“孳”で、陽気が色々に発現しようとする動き"], ["丑", "うし", "“紐”で、生命エネルギーの様々な結合"], ["寅", "とら", "“演”で、形をとっての発生"], ["卯", "う", "同音“冒”に通じ、開発の意"], ["辰", "たつ", "“震”、同音“申”に同じ、生の活動"], ["巳", "み", "“已”に通じ、陽盛の極、漸く陰に移ろうとする所"], ["午", "うま", "“忤(さからう)”に通じ、上昇する陰と下退する陽との抵触"], ["未", "ひつじ", "“昧”で、陰気の支配"], ["申", "さる", "陰気の支配"], ["酉", "とり", "酒熟して気の漏れる象。陰気の熟する所"], ["戌", "いぬ", "同音“恤”であり、“滅”である。統一退蔵。"], ["亥", "い", "“核”で、生命の完全な収蔵含蓄"]],
-	        cite: "(表は <a href='https://ja.wikipedia.org/wiki/%E5%B9%B2%E6%94%AF#.E5.8D.81.E5.B9.B2'>干支 - Wikipedia</a> より引用)"
-	    }, {
-	        name: "九星",
-	        description: "運命の流れの数学的な基本概念を表すガイドとして<strong>紫白</strong>九星(七色星)を採用。",
-	        items: [[["一白", "一白水星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["二黒", "二黒土星"], null, ""], [["三碧", "三碧木星"], null, ""], [["四緑", "四緑木星"], null, ""], [["五黄", "五黄土星"], null, ""], [["六白", "六白金星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["七赤", "七赤金星"], null, ""], [["八白", "八白土星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["九紫", "九紫火星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"]]
-	    }, {
-	        name: "直",
-	        description: "十二直。北斗七星信仰に由来するもので、<strong>吉凶</strong>がよくあたると重宝されています。",
-	        items: [["建", "たつ", "万物の立て生ずる日。土を動かし、大金を支払うは凶。"], ["除", "のぞく", "万物を祓う故、のぞくと言う。厄を祓うに吉。百凶を除き去る。婚礼・井戸掘りに向かず。"], ["満", "みつ", "天の宝を満る故、みつるという。神事に吉。土を動かすに凶。"], ["平", "たいら", "万物を平分する日。満れば、すなわち平となる。不足なく良き日なり。"], ["定", "さだん", "大忌みという。祈祷に吉。平なれば定まる。山あり谷ありは安定を欠く。"], ["執", "とる", "定まれば、すなわち取る。定まらぬものを取るに過ちあり。立てるに凶。壊すに吉。"], ["破", "やぶる", "築けば、すなわち破る。壊すに吉。邪気を祓い祟りを祈るに吉。この日、戦えば、必ず傷付くと言う。"], ["危", "あやぶ", "すでに破れば、すでに危うし。無分別の状態にあり。高き所の登るは凶。"], ["成", "なる", "よく危ぶ時は、すなわち成る。万事必ず成就する時。争い事には凶。木を切るに吉。"], ["納", "おさん", "すでに成らば、すなわち、納む。この神の来る日は、開くの神が来たりて、福を授ける。"], ["開", "ひらく", "納むれば、すなわち、開くを良しとす。蔵を開くに吉。道を開く日。"], ["閉", "とず", "開くこと、もっぱらであれば、あるものもなく、閉ずこともまた必要なる。陰気の気が閉じ塞がる日。"]]
-	    }, {
-	        name: "宿",
-	        description: "インド由来の古法二十七宿を採用。<strong>星々</strong>に対応し<strong>様々</strong>な吉凶判断にも用います。",
-	        items: [
-	        // 東方の蒼竜七宿
-	        ["角", "かく", "物事を始めるに吉。葬式・心の問題に凶事あり。"], ["亢", "こう", "婚礼、取引、交渉に吉。建築など土に凶事あり。"], ["氐", "てい", "転居・転職に吉。家の増改築などにに凶・水難あり。"], ["房", "ぼう", "神事に吉。隠し事に凶事あり。"], ["心", "しん", "神事、旅行に吉。葬儀・埋葬に凶事あり。盗難の相。"], ["尾", "び", "話し合い・薬に吉。衣類裁断・不注意の厄あり。"], ["箕", "き", "金運に吉。身内との間に凶事。婚礼大凶。"],
-	        // 北方の玄武六宿
-	        ["斗", "と", "種まきに吉。この日動けば凶事あり。"], ["女", "じょ", "武器作り・紙すき・神参りに吉。概ね凶事日なり。"], ["虚", "きょ", "智を得ることに吉。造作すれば厄あり。"], ["危", "き", "目上の者に従う時は吉。衣類裁断・移転に凶事あり。"], ["室", "しつ", "造作・近き方に吉あり。遠方に凶事あり。仏事に凶。"], ["壁", "へき", "子孫繁栄に吉。南方に凶事あり。"],
-	        // 西方の白虎七宿
-	        ["奎", "けい", "婚礼、棟上げに吉。交渉に凶事あり。"], ["婁", "ろう", "衣類裁断すれば寿命増す。博打に凶事あり。"], ["胃", "い", "婚礼・造作・公事に吉あり。衣類裁断・私事は凶事あり。"], ["昴", "ぼう", "祈願に吉。土を動かすに凶事あり。"], ["畢", "ひつ", "神事・祭礼に吉あり。特に婚礼に凶あり。"], ["觜", "し", "仕事始めに吉。造作に用いれば家財失う。"], ["参", "しん", "財宝・養子・遠出に吉。新しきことに凶事あり。"],
-	        // 南方の朱雀七宿
-	        ["井", "せい", "種まき・神事に吉。衣類裁断すれば離婚の相あり。"], ["鬼", "き", "万事に大吉。ただし婚礼は凶事あり。"], ["柳", "りゅう", "物事を断るに吉。葬儀に不幸あり。"], ["星", "せい", "治療に吉。婚礼・葬式・種まきに凶事あり。"], ["張", "ちょう", "養蚕に吉。木を切れば厄あり。"], ["翼", "よく", "旅立ちに吉。婚礼は離婚の相あり。"], ["軫", "しん", "万事に吉。ただし、衣類裁断すれば火難あり。"]]
-	    }, {
-	        name: "納音",
-	        description: "物事の吉凶(人の気の現出)が変動するときに出る音のことで、<strong>兆し</strong>を読みます。",
-	        items: [["海中金", "かいちゅうのこん", "表に出るべきものの、海中に閉ざされる兆し。"], ["爐中火", "ろちゅうのか", "燃え上がる炎のごとく、運気の上がる兆し。"], ["大林木", "たいりんのもく", "多くの木々は茂り、森を成す兆し。"], ["路傍土", "ろぼうのど", "今は路傍の土なれど、やがて日の目を見るの兆し。"], ["剣鋒金", "けんぼうのこん", "物事の極みにありて、最後の人手を探るものありとの兆し。"], ["山頭火", "さんとうのか", "はげ山に火事ありて、焼き尽くすべき勢いも、無き兆し。"], ["澗下水", "かんげのすい", "水の尽きること無く、溢れ出づる兆し。"], ["城頭土", "じょうとうのど", "運に勢い有るの兆し。"], ["白蝋金", "はくろうのこん", "水で鍛うれば、形、整うの兆し。"], ["楊柳木", "ようりゅうのもく", "今は勢いを失うの兆し。"], ["井泉水", "いせんのすい", "小さき井戸なれども、水の満ちる兆し。"], ["屋上土", "おくじょうのど", "土の気の塞がる兆し。"], ["霹靂火", "へきれきのか", "晴天の霹靂を見るも、変化せずの兆し。"], ["松柏木", "しょうはくのもく", "雲を突き、そびえ立つの兆し。春を待つに勢いあり。"], ["長流水", "ちょうりゅうのすい", "水の流れの絶えることなく、流るる川の兆し。"], ["沙中金", "さちゅうのこん", "砂の内に秘める金の兆し。目立つ時は光を放ち、動かぬ時は、砂にまぎれる。"], ["山下火", "さんげのか", "ただ燃えるがごとく、広がり伸べる兆し。"], ["平地木", "へいちのもく", "淋しくたたずむ、ひとつの木の兆し。"], ["壁上土", "へきじょうのど", "壁の上の土は、もはや、土にあらず。土の力を失う兆し。"], ["金箔金", "きんぱくのこん", "死滅の兆し。金も使い道を誤れば、かえってその力を失う。"], ["覆燈火", "ふくとうのか", "倒れたる灯籠の灯りは、夜を照らさずの兆し。"], ["天河水", "てんがのすい", "豊なる水の流れ。人に徳を施し、福をもたらすの兆し。"], ["大駅土", "だいえきのど", "大きなる 駅 に人馬の行き交うの兆し。"], ["剣釧金", "けんせんのこん", "万物の乱れの、防ぎありの兆し。"], ["桑柘木", "そうたくのもく", "絶えて春を待つの兆し。やがて、成長せし木々あり。"], ["大渓水", "たいけいのすい", "勢い盛んな水の気の兆し。"], ["沙中土", "さちゅうのど", "砂の中の土の兆し。役立たぬこと多し。"], ["天上火", "てんじょうのか", "天地に光りあるの兆し。"], ["柘榴木", "ざくりゅうのもく", "外に現れず、内に秘めたる兆し。"], ["大海水", "たいかいのすい", "天に連なる、大海の水の兆し。"]]
-	    }];
-	    function makeExplanations() {
-	        var sections = [];
-	        kExplanations.forEach(function (aExplanation) {
-	            var name = aExplanation.name;
-	            var section = ['<h2 id="' + name + '">' + name + '</h2>', '<p>' + aExplanation.description + '</p>'];
-	            var tables = [aExplanation.items];
-	            if (aExplanation.items2) {
-	                tables.push(aExplanation.items2);
+	function renderOldDateMonth(props) {
+	    if (!props.date) {
+	        props.date = new Date();
+	    }
+	    if (!props.subtitle) {
+	        props.subtitle = "旧暦 0月0日";
+	    }
+	    return ReactDOM.render(React.createElement(OldDateMonth, { type: 'date',
+	        date: props.date,
+	        subtitle: props.subtitle,
+	        onPrevClick: prev,
+	        onCurrentClick: today,
+	        onNextClick: next }), document.getElementById("old-date-month"));
+	}
+	renderOldDateMonth({});
+
+	var kExplanations = [{
+	    name: "六輝",
+	    description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)",
+	    items: [["先勝", "せんがち", "戦いは朝から昼までよし。午前中は吉。"], ["友引", "ともびき", "勝負のつかない日。朝晩、夕方は吉。"], ["先負", "せんまけ", "戦いは昼過ぎより日暮れまでよし。午後は吉。"], ["空亡", "くうぼう", "仏滅。全てがむなしくなる日。戦えば失うものが多い。"], ["大安", "たいあん", "大安吉日なり。何事によらずよし。"], ["赤口", "しゃっく", "赤口神が民を悩ます日。特に祝い事に凶事あり。午前11時から午後１時までの時間帯のみは吉で、それ以外は凶。"]]
+	}, {
+	    name: "干支",
+	    description: "木の幹にあたる”十干”と枝にあたる”十二支”を合わせて<strong>状態</strong>を表すものです。",
+	    items: [["甲", "きのえ", "草木の芽生え、鱗芽のかいわれの象意"], ["乙", "きのと", "陽気のまだ伸びない、かがまっているところ"], ["丙", "ひのえ", "陽気の発揚"], ["丁", "ひのと", "陽気の充溢"], ["戊", "つちのえ", "“茂”に通じ、陽気による分化繁栄"], ["己", "つちのと", "紀に通じ、分散を防ぐ統制作用"], ["庚", "かのえ", "結実、形成、陰化の段階"], ["辛", "かのと", "陰による統制の強化"], ["壬", "みずのえ", "“妊”に通じ、陽気を下に姙む意"], ["癸", "みずのと", "“揆”に同じく生命のない残物を清算して地ならしを行い、新たな生長を行う待機の状態"]],
+	    items2: [["子", "ね", "“孳”で、陽気が色々に発現しようとする動き"], ["丑", "うし", "“紐”で、生命エネルギーの様々な結合"], ["寅", "とら", "“演”で、形をとっての発生"], ["卯", "う", "同音“冒”に通じ、開発の意"], ["辰", "たつ", "“震”、同音“申”に同じ、生の活動"], ["巳", "み", "“已”に通じ、陽盛の極、漸く陰に移ろうとする所"], ["午", "うま", "“忤(さからう)”に通じ、上昇する陰と下退する陽との抵触"], ["未", "ひつじ", "“昧”で、陰気の支配"], ["申", "さる", "陰気の支配"], ["酉", "とり", "酒熟して気の漏れる象。陰気の熟する所"], ["戌", "いぬ", "同音“恤”であり、“滅”である。統一退蔵。"], ["亥", "い", "“核”で、生命の完全な収蔵含蓄"]],
+	    cite: "(表は <a href='https://ja.wikipedia.org/wiki/%E5%B9%B2%E6%94%AF#.E5.8D.81.E5.B9.B2'>干支 - Wikipedia</a> より引用)"
+	}, {
+	    name: "九星",
+	    description: "運命の流れの数学的な基本概念を表すガイドとして<strong>紫白</strong>九星(七色星)を採用。",
+	    items: [[["一白", "一白水星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["二黒", "二黒土星"], null, ""], [["三碧", "三碧木星"], null, ""], [["四緑", "四緑木星"], null, ""], [["五黄", "五黄土星"], null, ""], [["六白", "六白金星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["七赤", "七赤金星"], null, ""], [["八白", "八白土星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"], [["九紫", "九紫火星"], null, "祓いに強力に作用する吉日。凶神である大将軍や金神のもたらす厄を霊的に抑えることができる。"]]
+	}, {
+	    name: "直",
+	    description: "十二直。北斗七星信仰に由来するもので、<strong>吉凶</strong>がよくあたると重宝されています。",
+	    items: [["建", "たつ", "万物の立て生ずる日。土を動かし、大金を支払うは凶。"], ["除", "のぞく", "万物を祓う故、のぞくと言う。厄を祓うに吉。百凶を除き去る。婚礼・井戸掘りに向かず。"], ["満", "みつ", "天の宝を満る故、みつるという。神事に吉。土を動かすに凶。"], ["平", "たいら", "万物を平分する日。満れば、すなわち平となる。不足なく良き日なり。"], ["定", "さだん", "大忌みという。祈祷に吉。平なれば定まる。山あり谷ありは安定を欠く。"], ["執", "とる", "定まれば、すなわち取る。定まらぬものを取るに過ちあり。立てるに凶。壊すに吉。"], ["破", "やぶる", "築けば、すなわち破る。壊すに吉。邪気を祓い祟りを祈るに吉。この日、戦えば、必ず傷付くと言う。"], ["危", "あやぶ", "すでに破れば、すでに危うし。無分別の状態にあり。高き所の登るは凶。"], ["成", "なる", "よく危ぶ時は、すなわち成る。万事必ず成就する時。争い事には凶。木を切るに吉。"], ["納", "おさん", "すでに成らば、すなわち、納む。この神の来る日は、開くの神が来たりて、福を授ける。"], ["開", "ひらく", "納むれば、すなわち、開くを良しとす。蔵を開くに吉。道を開く日。"], ["閉", "とず", "開くこと、もっぱらであれば、あるものもなく、閉ずこともまた必要なる。陰気の気が閉じ塞がる日。"]]
+	}, {
+	    name: "宿",
+	    description: "インド由来の古法二十七宿を採用。<strong>星々</strong>に対応し<strong>様々</strong>な吉凶判断にも用います。",
+	    items: [
+	    // 東方の蒼竜七宿
+	    ["角", "かく", "物事を始めるに吉。葬式・心の問題に凶事あり。"], ["亢", "こう", "婚礼、取引、交渉に吉。建築など土に凶事あり。"], ["氐", "てい", "転居・転職に吉。家の増改築などにに凶・水難あり。"], ["房", "ぼう", "神事に吉。隠し事に凶事あり。"], ["心", "しん", "神事、旅行に吉。葬儀・埋葬に凶事あり。盗難の相。"], ["尾", "び", "話し合い・薬に吉。衣類裁断・不注意の厄あり。"], ["箕", "き", "金運に吉。身内との間に凶事。婚礼大凶。"],
+	    // 北方の玄武六宿
+	    ["斗", "と", "種まきに吉。この日動けば凶事あり。"], ["女", "じょ", "武器作り・紙すき・神参りに吉。概ね凶事日なり。"], ["虚", "きょ", "智を得ることに吉。造作すれば厄あり。"], ["危", "き", "目上の者に従う時は吉。衣類裁断・移転に凶事あり。"], ["室", "しつ", "造作・近き方に吉あり。遠方に凶事あり。仏事に凶。"], ["壁", "へき", "子孫繁栄に吉。南方に凶事あり。"],
+	    // 西方の白虎七宿
+	    ["奎", "けい", "婚礼、棟上げに吉。交渉に凶事あり。"], ["婁", "ろう", "衣類裁断すれば寿命増す。博打に凶事あり。"], ["胃", "い", "婚礼・造作・公事に吉あり。衣類裁断・私事は凶事あり。"], ["昴", "ぼう", "祈願に吉。土を動かすに凶事あり。"], ["畢", "ひつ", "神事・祭礼に吉あり。特に婚礼に凶あり。"], ["觜", "し", "仕事始めに吉。造作に用いれば家財失う。"], ["参", "しん", "財宝・養子・遠出に吉。新しきことに凶事あり。"],
+	    // 南方の朱雀七宿
+	    ["井", "せい", "種まき・神事に吉。衣類裁断すれば離婚の相あり。"], ["鬼", "き", "万事に大吉。ただし婚礼は凶事あり。"], ["柳", "りゅう", "物事を断るに吉。葬儀に不幸あり。"], ["星", "せい", "治療に吉。婚礼・葬式・種まきに凶事あり。"], ["張", "ちょう", "養蚕に吉。木を切れば厄あり。"], ["翼", "よく", "旅立ちに吉。婚礼は離婚の相あり。"], ["軫", "しん", "万事に吉。ただし、衣類裁断すれば火難あり。"]]
+	}, {
+	    name: "納音",
+	    description: "物事の吉凶(人の気の現出)が変動するときに出る音のことで、<strong>兆し</strong>を読みます。",
+	    items: [["海中金", "かいちゅうのこん", "表に出るべきものの、海中に閉ざされる兆し。"], ["爐中火", "ろちゅうのか", "燃え上がる炎のごとく、運気の上がる兆し。"], ["大林木", "たいりんのもく", "多くの木々は茂り、森を成す兆し。"], ["路傍土", "ろぼうのど", "今は路傍の土なれど、やがて日の目を見るの兆し。"], ["剣鋒金", "けんぼうのこん", "物事の極みにありて、最後の人手を探るものありとの兆し。"], ["山頭火", "さんとうのか", "はげ山に火事ありて、焼き尽くすべき勢いも、無き兆し。"], ["澗下水", "かんげのすい", "水の尽きること無く、溢れ出づる兆し。"], ["城頭土", "じょうとうのど", "運に勢い有るの兆し。"], ["白蝋金", "はくろうのこん", "水で鍛うれば、形、整うの兆し。"], ["楊柳木", "ようりゅうのもく", "今は勢いを失うの兆し。"], ["井泉水", "いせんのすい", "小さき井戸なれども、水の満ちる兆し。"], ["屋上土", "おくじょうのど", "土の気の塞がる兆し。"], ["霹靂火", "へきれきのか", "晴天の霹靂を見るも、変化せずの兆し。"], ["松柏木", "しょうはくのもく", "雲を突き、そびえ立つの兆し。春を待つに勢いあり。"], ["長流水", "ちょうりゅうのすい", "水の流れの絶えることなく、流るる川の兆し。"], ["沙中金", "さちゅうのこん", "砂の内に秘める金の兆し。目立つ時は光を放ち、動かぬ時は、砂にまぎれる。"], ["山下火", "さんげのか", "ただ燃えるがごとく、広がり伸べる兆し。"], ["平地木", "へいちのもく", "淋しくたたずむ、ひとつの木の兆し。"], ["壁上土", "へきじょうのど", "壁の上の土は、もはや、土にあらず。土の力を失う兆し。"], ["金箔金", "きんぱくのこん", "死滅の兆し。金も使い道を誤れば、かえってその力を失う。"], ["覆燈火", "ふくとうのか", "倒れたる灯籠の灯りは、夜を照らさずの兆し。"], ["天河水", "てんがのすい", "豊なる水の流れ。人に徳を施し、福をもたらすの兆し。"], ["大駅土", "だいえきのど", "大きなる 駅 に人馬の行き交うの兆し。"], ["剣釧金", "けんせんのこん", "万物の乱れの、防ぎありの兆し。"], ["桑柘木", "そうたくのもく", "絶えて春を待つの兆し。やがて、成長せし木々あり。"], ["大渓水", "たいけいのすい", "勢い盛んな水の気の兆し。"], ["沙中土", "さちゅうのど", "砂の中の土の兆し。役立たぬこと多し。"], ["天上火", "てんじょうのか", "天地に光りあるの兆し。"], ["柘榴木", "ざくりゅうのもく", "外に現れず、内に秘めたる兆し。"], ["大海水", "たいかいのすい", "天に連なる、大海の水の兆し。"]]
+	}];
+
+	function set(id, value) {
+	    document.getElementById(id).innerHTML = value;
+	}
+	function sets(clazz, value) {
+	    Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
+	        e.innerHTML = value;
+	    });
+	}
+	function update() {
+	    // 月表示の更新
+	    var month = date.getMonth() + 1;
+	    var yearMonth = [date.getFullYear(), month].join("/");
+	    document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">' + month + '</span>月</a>';
+
+	    var month = date.getMonth() + 1; // 月は 0 始まり
+	    var jd = oc.juliusDate(date);
+	    var old = oc.oldCalendar(jd);
+	    renderOldDateMonth({
+	        date: date,
+	        subtitle: '旧暦 ' + old
+	    });
+	    var newRokki = oc.rokki(old);
+	    sets('rokki', newRokki);
+	    var newEto = oc.eto(jd);
+	    sets('eto', newEto);
+	    var newKyusei = oc.kyusei(jd);
+	    sets('kyusei', newKyusei);
+	    var newChoku = oc.choku(jd);
+	    sets('choku', newChoku);
+	    var newShuku = oc.shuku(old);
+	    sets('shuku', newShuku);
+	    var newNattin = oc.nattin(jd);
+	    sets('nattin', newNattin);
+	    var tags = [];
+	    oc.tagsForDate(date).forEach(function (tag) {
+	        var tagText = tag[1];
+	        var isFullmoon = tag[0] === "fullmoon";
+	        var isNewmoon = tag[0] === "newmoon";
+	        if (isFullmoon || isNewmoon) {
+	            var time = tag[2];
+	            var mark = isFullmoon ? "○" : "●";
+	            var h = time.getHours();
+	            // XXX どうも正確な計算と2分だけずれているようなので、ここで2分足しています。
+	            // FIXME ずれている原因が分かったらこのごまかしを消す。
+	            //
+	            // dynamicalTime にする/戻す時に閏秒が考慮されていないことが原因のよう
+	            // ただ、旧暦計算の参考にしたアルゴリズム全体がそれを無視する前提に
+	            // 立っていたため、そこだけ調整すると期待値が総崩れになる。
+	            // 後ほど、より高精度な天体計算ライブラリを連れてくるつもりがあり、
+	            // その際にきちんと修正することにする。
+	            var workaround = time.getMinutes() - 2;
+	            if (workaround < 0) {
+	                workaround += 60;
+	                h += 24 - 1;
+	                h %= 24;
 	            }
-	            tables.forEach(function (aTable) {
-	                section.push('<table>');
-	                aTable.forEach(function (aItem) {
-	                    var title = aItem[0];
-	                    if (!Array.isArray(title)) {
-	                        title = [title, title];
-	                    }
-	                    var reading = aItem[1];
-	                    var desc = aItem[2];
-	                    var id = name + '_' + title[0];
-	                    var titleHtml = '<span id="' + id + '">' + title[1] + '</span>';
-	                    if (reading) {
-	                        titleHtml = '<div class="ruby">' + reading + '</div>' + titleHtml;
-	                    }
-	                    section.push('<tr><th>' + titleHtml + '</th><td>' + desc + '</td></tr>');
-	                });
-	                section.push('</table>');
-	            });
-	            var cite = aExplanation.cite;
-	            if (cite) {
-	                section.push('<p><cite>' + cite + '</cite></p>');
-	            }
-	            sections.push(section.join('\n'));
-	        });
-	        return sections.join('\n<hr>\n');
-	    }
-
-	    function set(id, value) {
-	        document.getElementById(id).innerHTML = value;
-	    }
-	    function sets(clazz, value) {
-	        Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
-	            e.innerHTML = value;
-	        });
-	    }
-	    function dayOfWeek(dow) {
-	        return "日月火水木金土".charAt(dow);
-	    }
-	    function update() {
-	        // 月表示の更新
-	        var month = date.getMonth() + 1;
-	        var yearMonth = [date.getFullYear(), month].join("/");
-	        document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">' + month + '</span>月</a>';
-
-	        var month = date.getMonth() + 1; // 月は 0 始まり
-	        var dateString = "";
-	        dateString += '<span class="keyNumber">' + month + '</span>月';
-	        dateString += '<span class="keyNumber">' + date.getDate() + '</span>日';
-	        dateString += '<span class="dayOfWeek' + date.getDay() + '">(' + dayOfWeek(date.getDay()) + ')</span>';
-	        set("date", dateString);
-	        var jd = oc.juliusDate(date);
-	        var old = oc.oldCalendar(jd);
-	        set('oldDate', '旧暦 ' + old);
-	        var newRokki = oc.rokki(old);
-	        sets('rokki', newRokki);
-	        var newEto = oc.eto(jd);
-	        sets('eto', newEto);
-	        var newKyusei = oc.kyusei(jd);
-	        sets('kyusei', newKyusei);
-	        var newChoku = oc.choku(jd);
-	        sets('choku', newChoku);
-	        var newShuku = oc.shuku(old);
-	        sets('shuku', newShuku);
-	        var newNattin = oc.nattin(jd);
-	        sets('nattin', newNattin);
-	        var tags = [];
-	        oc.tagsForDate(date).forEach(function (tag) {
-	            var tagText = tag[1];
-	            var isFullmoon = tag[0] === "fullmoon";
-	            var isNewmoon = tag[0] === "newmoon";
-	            if (isFullmoon || isNewmoon) {
-	                var time = tag[2];
-	                var mark = isFullmoon ? "○" : "●";
-	                var h = time.getHours();
-	                // XXX どうも正確な計算と2分だけずれているようなので、ここで2分足しています。
-	                // FIXME ずれている原因が分かったらこのごまかしを消す。
-	                //
-	                // dynamicalTime にする/戻す時に閏秒が考慮されていないことが原因のよう
-	                // ただ、旧暦計算の参考にしたアルゴリズム全体がそれを無視する前提に
-	                // 立っていたため、そこだけ調整すると期待値が総崩れになる。
-	                // 後ほど、より高精度な天体計算ライブラリを連れてくるつもりがあり、
-	                // その際にきちんと修正することにする。
-	                var workaround = time.getMinutes() - 2;
-	                if (workaround < 0) {
-	                    workaround += 60;
-	                    h += 24 - 1;
-	                    h %= 24;
-	                }
-	                var m = ("0" + workaround).substr(-2);
-	                tagText += mark + h + ":" + m;
-	            } else if (tag[0] == "sekku" && !(tag[1] == "雛祭" || tag[1] == "七夕")) {
-	                tagText += "の節句";
-	            } else if (tag[1].indexOf("天天上") == 0) {
-	                tagText = tag[1].substr(0, 1) + "一" + tag[1].substr(1);
-	            }
-	            tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>');
-	        });
-	        set('tags', tags.join(" ･ "));
-
-	        // 今解説に表がある項目について、マーカー表示します。
-	        markItems([["六輝", newRokki], // 六輝
-	        ["干支", newEto.charAt(0)], ["干支", newEto.charAt(1)], // 十干、十二支
-	        ["九星", newKyusei], // 九星
-	        ["直", newChoku], ["宿", newShuku], ["納音", newNattin]]); // 直、宿、納音
-	    }
-
-	    var marked;
-	    function markItems(toBeMarked) {
-	        if (marked) {
-	            marked.forEach(function (item) {
-	                common.removeClass(item, "marked");
-	            });
+	            var m = ("0" + workaround).substr(-2);
+	            tagText += mark + h + ":" + m;
+	        } else if (tag[0] == "sekku" && !(tag[1] == "雛祭" || tag[1] == "七夕")) {
+	            tagText += "の節句";
+	        } else if (tag[1].indexOf("天天上") == 0) {
+	            tagText = tag[1].substr(0, 1) + "一" + tag[1].substr(1);
 	        }
-	        marked = [];
-	        toBeMarked.forEach(function (item) {
-	            var e = document.getElementById(item.join("_"));
-	            common.addClass(e, "marked");
-	            marked.push(e);
+	        tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>');
+	    });
+	    set('tags', tags.join(" ･ "));
+
+	    // 今解説に表がある項目について、マーカー表示します。
+	    markItems([["六輝", newRokki], // 六輝
+	    ["干支", newEto.charAt(0)], ["干支", newEto.charAt(1)], // 十干、十二支
+	    ["九星", newKyusei], // 九星
+	    ["直", newChoku], ["宿", newShuku], ["納音", newNattin]]); // 直、宿、納音
+	}
+
+	var marked;
+	function markItems(toBeMarked) {
+	    if (marked) {
+	        marked.forEach(function (item) {
+	            common.removeClass(item, "marked");
 	        });
 	    }
+	    marked = [];
+	    toBeMarked.forEach(function (item) {
+	        var e = document.getElementById(item.join("_"));
+	        common.addClass(e, "marked");
+	        marked.push(e);
+	    });
+	}
 
-	    var date;
-	    function today() {
+	var date;
+	function today() {
+	    date = new Date();
+	    update();
+	}
+	function next(e) {
+	    gotoDaysAfter(1);
+	    e.preventDefault();
+	}
+	function prev(e) {
+	    gotoDaysAfter(-1);
+	    e.preventDefault();
+	}
+	function gotoDaysAfter(n) {
+	    var ms = date.getTime();
+	    ms += n * 24 * 60 * 60 * 1000;
+	    date.setTime(ms);
+	    update();
+	}
+	function gotoDate(s) {
+	    date = new Date(s);
+	    if (s.indexOf("/") < 0) {
+	        // 有効な Date String でない場合ハングするので
+	        // ここで today に差し替えています。
 	        date = new Date();
-	        update();
 	    }
-	    function next(e) {
-	        gotoDaysAfter(1);
-	        e.preventDefault();
-	    }
-	    function prev(e) {
-	        gotoDaysAfter(-1);
-	        e.preventDefault();
-	    }
-	    function gotoDaysAfter(n) {
-	        var ms = date.getTime();
-	        ms += n * 24 * 60 * 60 * 1000;
-	        date.setTime(ms);
-	        update();
-	    }
-	    function gotoDate(s) {
-	        date = new Date(s);
-	        if (s.indexOf("/") < 0) {
-	            // 有効な Date String でない場合ハングするので
-	            // ここで today に差し替えています。
-	            date = new Date();
-	        }
-	        update();
-	        history.replaceState(null, null, window.location.href.split("#")[0]);
-	    }
+	    update();
+	    history.replaceState(null, null, window.location.href.split("#")[0]);
+	}
 
-	    function ScrollAnimation(aSeconds, aTo) {
-	        this.mDuration = 1000 * aSeconds;
-	        this.mFrom = window.pageYOffset;
-	        this.mTo = aTo;
-	        this.mFps = 60;
-	    }
-	    ScrollAnimation.prototype = {
-	        start: function () {
-	            this.mStart = new Date().getTime();
+	function ScrollAnimation(aSeconds, aTo) {
+	    this.mDuration = 1000 * aSeconds;
+	    this.mFrom = window.pageYOffset;
+	    this.mTo = aTo;
+	    this.mFps = 60;
+	}
+	ScrollAnimation.prototype = {
+	    start: function () {
+	        this.mStart = new Date().getTime();
+	        var that = this;
+	        setTimeout(function () {
+	            that.update();
+	        }, 1000 / this.mFps);
+	    },
+	    update: function () {
+	        var now = new Date().getTime();
+	        var t = (now - this.mStart) / this.mDuration;
+	        if (t > 1) {
+	            t = 1;
+	        }
+	        var distance = this.mTo - this.mFrom;
+	        var y = this.mFrom + distance * this.easeInOutQuad(t);
+	        window.scroll(window.pageXOffset, y);
+
+	        if (t < 1) {
 	            var that = this;
 	            setTimeout(function () {
 	                that.update();
 	            }, 1000 / this.mFps);
-	        },
-	        update: function () {
-	            var now = new Date().getTime();
-	            var t = (now - this.mStart) / this.mDuration;
-	            if (t > 1) {
-	                t = 1;
-	            }
-	            var distance = this.mTo - this.mFrom;
-	            var y = this.mFrom + distance * this.easeInOutQuad(t);
-	            window.scroll(window.pageXOffset, y);
-
-	            if (t < 1) {
-	                var that = this;
-	                setTimeout(function () {
-	                    that.update();
-	                }, 1000 / this.mFps);
-	            }
-	        },
-	        // https://gist.github.com/gre/1650294
-	        // acceleration until halfway, then deceleration
-	        easeInOutQuad: function (t) {
-	            return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 	        }
-	    };
-
-	    function jumpToHash(aHash) {
-	        Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
-	            common.removeClass(aMarked, "marked");
-	        });
-	        var newBox = document.getElementById(aHash);
-	        if (newBox) {
-	            common.addClass(newBox, "marked");
-	        }
-	        var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
-	        var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
-
-	        new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
+	    },
+	    // https://gist.github.com/gre/1650294
+	    // acceleration until halfway, then deceleration
+	    easeInOutQuad: function (t) {
+	        return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 	    }
-	    window.addEventListener("load", function (e) {
-	        common.removeClass(document.getElementById("koyomi"), "month");
-	        document.getElementById("explanation").innerHTML = makeExplanations();
+	};
 
-	        var hash = common.parseHash(document.location.href);
-	        if (hash) {
-	            gotoDate(hash);
-	        } else {
-	            today();
-	        }
+	function jumpToHash(aHash) {
+	    Array.prototype.forEach.call(document.querySelectorAll("h2.marked"), function (aMarked) {
+	        common.removeClass(aMarked, "marked");
+	    });
+	    var newBox = document.getElementById(aHash);
+	    if (newBox) {
+	        common.addClass(newBox, "marked");
+	    }
+	    var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+	    var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
 
-	        Array.prototype.forEach.call(document.querySelectorAll(".gotoCurrent"), function (aElt) {
-	            aElt.addEventListener("click", today, false);
-	        });
+	    new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
+	}
+	function gotoTop(e) {
+	    e.preventDefault();
+	    new ScrollAnimation(0.25, 0).start();
+	}
+	window.addEventListener("load", function (e) {
+	    common.removeClass(document.getElementById("koyomi"), "month");
 
-	        document.getElementById("today").addEventListener("click", today, false);
-	        document.querySelector("#next .button__link").addEventListener("click", next, false);
-	        document.querySelector("#prev .button__link").addEventListener("click", prev, false);
+	    var hash = common.parseHash(document.location.href);
+	    if (hash) {
+	        gotoDate(hash);
+	    } else {
+	        today();
+	    }
 
-	        Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
-	            aBox.addEventListener("click", function (e) {
-	                var hash = common.parseHash(aBox.getAttribute("href"));
-	                if (hash) {
-	                    e.preventDefault();
-	                    jumpToHash(hash);
-	                }
-	            }, false);
-	        });
-	        document.querySelector("#top-container .button__link").addEventListener("click", function () {
-	            e.preventDefault();
-	            new ScrollAnimation(0.25, 0).start();
-	        }, false);
+	    document.getElementById("today").addEventListener("click", today, false);
 
-	        // runTests();
-	    }, false);
-	    window.addEventListener("hashchange", function (e) {
-	        var hash = common.parseHash(e.newURL);
-	        if (hash) {
-	            if (hash.indexOf("/") > -1) {
-	                // 日付指定
-	                gotoDate(hash);
-	            } else {
-	                // マーク
+	    Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
+	        aBox.addEventListener("click", function (e) {
+	            var hash = common.parseHash(aBox.getAttribute("href"));
+	            if (hash) {
+	                e.preventDefault();
 	                jumpToHash(hash);
 	            }
-	        }
-	    }, false);
-	    window.addEventListener("scroll", function (e) {
-	        var tb = document.getElementById("toolbar");
-	        var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
-	        common.removeClass(tb, "visible");
-	        if (tagsTop < 0) {
-	            common.addClass(tb, "visible");
-	        }
-	    }, false);
-
-	    new Hammer(window).on("swipe", function (ev) {
-	        if (ev.distance < 75) {
-	            return;
-	        }
-	        var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;
-	        if (dateBottom < 0) {
-	            return;
-	        }
-	        switch (ev.direction) {
-	            case Hammer.DIRECTION_LEFT:
-	                next(ev);
-	                break;
-	            case Hammer.DIRECTION_RIGHT:
-	                prev(ev);
-	                break;
-	        }
+	        }, false);
 	    });
-	})();
 
-	var Button = React.createClass({
-	    displayName: 'Button',
+	    // runTests();
+	}, false);
+	window.addEventListener("hashchange", function (e) {
+	    var hash = common.parseHash(e.newURL);
+	    if (hash) {
+	        if (hash.indexOf("/") > -1) {
+	            // 日付指定
+	            gotoDate(hash);
+	        } else {
+	            // マーク
+	            jumpToHash(hash);
+	        }
+	    }
+	}, false);
+	window.addEventListener("scroll", function (e) {
+	    var tb = document.getElementById("toolbar");
+	    var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
+	    common.removeClass(tb, "visible");
+	    if (tagsTop < 0) {
+	        common.addClass(tb, "visible");
+	    }
+	}, false);
 
-	    render: function () {
-	        return React.createElement(
-	            'a',
-	            { href: '#', className: 'button__navi button__link' },
-	            this.props.title
-	        );
+	new Hammer(window).on("swipe", function (ev) {
+	    if (ev.distance < 75) {
+	        return;
+	    }
+	    var dateBottom = document.getElementById("date").getBoundingClientRect().bottom;
+	    if (dateBottom < 0) {
+	        return;
+	    }
+	    switch (ev.direction) {
+	        case Hammer.DIRECTION_LEFT:
+	            next(ev);
+	            break;
+	        case Hammer.DIRECTION_RIGHT:
+	            prev(ev);
+	            break;
 	    }
 	});
-	ReactDOM.render(React.createElement(Button, { title: '«' }), document.getElementById("prev"));
-	ReactDOM.render(React.createElement(Button, { title: '△' }), document.getElementById("top-container"));
-	ReactDOM.render(React.createElement(Button, { title: '»' }), document.getElementById("next"));
+
+	// ReactDOM.render(
+	//     <Button title="&laquo;" onClick={prev}/>,
+	//     document.getElementById("prev")
+	// );
+	// ReactDOM.render(
+	//     <Button title="&raquo;" onClick={next} />,
+	//     document.getElementById("next")
+	// );
+	ReactDOM.render(React.createElement(Explanations, { data: kExplanations }), document.getElementById("explanation"));
+	ReactDOM.render(React.createElement(Button, { title: '△', onClick: gotoTop }), document.getElementById("top-container"));
 
 /***/ },
 /* 1 */
@@ -21422,6 +21389,575 @@
 /* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    handleClick: function (e) {
+	        this.props.onClick(e);
+	    },
+	    render: function () {
+	        var cls = this.props.className + " button";
+	        return React.createElement(
+	            "a",
+	            { href: "#",
+	                className: cls,
+	                onClick: this.handleClick },
+	            this.props.title
+	        );
+	    }
+	});
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var Button = __webpack_require__(172);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    isYearMonth: function () {
+	        return this.props.type === "month";
+	    },
+	    dayOfWeek: function dayOfWeek(dow) {
+	        return "日月火水木金土".charAt(dow);
+	    },
+	    render: function () {
+	        var year = this.props.date.getFullYear();
+	        var month = this.props.date.getMonth() + 1;
+	        var date = this.props.date.getDate();
+	        var day = this.props.date.getDay();
+	        var firstLine = this.isYearMonth() ? React.createElement(
+	            "span",
+	            { className: "old-date-month__current", id: "date", onClick: this.props.onCurrentClick },
+	            React.createElement(
+	                "span",
+	                { className: "old-date-month__keyNumber" },
+	                year
+	            ),
+	            "年",
+	            React.createElement(
+	                "span",
+	                { className: "old-date-month__keyNumber" },
+	                month
+	            ),
+	            "月"
+	        ) : React.createElement(
+	            "span",
+	            { className: "old-date-month__current", id: "date", onClick: this.props.onCurrentClick },
+	            React.createElement(
+	                "span",
+	                { className: "old-date-month__keyNumber" },
+	                month
+	            ),
+	            "月",
+	            React.createElement(
+	                "span",
+	                { className: "old-date-month__keyNumber" },
+	                date
+	            ),
+	            "日",
+	            React.createElement(
+	                "span",
+	                { className: "old-date-month--dayOfWeek" + day },
+	                "(",
+	                this.dayOfWeek(day),
+	                ")"
+	            )
+	        );
+	        return React.createElement(
+	            "div",
+	            { className: "old-date-month" },
+	            React.createElement(
+	                "div",
+	                { className: "old-date-month__caption" },
+	                React.createElement(Button, { className: "old-date-month__prev", title: "«", onClick: this.props.onPrevClick }),
+	                firstLine,
+	                React.createElement(Button, { className: "old-date-month__next", title: "»", onClick: this.props.onNextClick })
+	            ),
+	            React.createElement(
+	                "p",
+	                { className: "old-date-month__old" },
+	                React.createElement(
+	                    "span",
+	                    { onClick: this.props.onCurrentClick },
+	                    this.props.subtitle
+	                )
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.8 - 2016-04-23
+	 * http://hammerjs.github.io/
+	 *
+	 * Copyright (c) 2016 Jorik Tangelder;
+	 * Licensed under the MIT license */
+	!function (a, b, c, d) {
+	  "use strict";
+	  function e(a, b, c) {
+	    return setTimeout(j(a, c), b);
+	  }function f(a, b, c) {
+	    return Array.isArray(a) ? (g(a, c[b], c), !0) : !1;
+	  }function g(a, b, c) {
+	    var e;if (a) if (a.forEach) a.forEach(b, c);else if (a.length !== d) for (e = 0; e < a.length;) b.call(c, a[e], e, a), e++;else for (e in a) a.hasOwnProperty(e) && b.call(c, a[e], e, a);
+	  }function h(b, c, d) {
+	    var e = "DEPRECATED METHOD: " + c + "\n" + d + " AT \n";return function () {
+	      var c = new Error("get-stack-trace"),
+	          d = c && c.stack ? c.stack.replace(/^[^\(]+?[\n$]/gm, "").replace(/^\s+at\s+/gm, "").replace(/^Object.<anonymous>\s*\(/gm, "{anonymous}()@") : "Unknown Stack Trace",
+	          f = a.console && (a.console.warn || a.console.log);return f && f.call(a.console, e, d), b.apply(this, arguments);
+	    };
+	  }function i(a, b, c) {
+	    var d,
+	        e = b.prototype;d = a.prototype = Object.create(e), d.constructor = a, d._super = e, c && la(d, c);
+	  }function j(a, b) {
+	    return function () {
+	      return a.apply(b, arguments);
+	    };
+	  }function k(a, b) {
+	    return typeof a == oa ? a.apply(b ? b[0] || d : d, b) : a;
+	  }function l(a, b) {
+	    return a === d ? b : a;
+	  }function m(a, b, c) {
+	    g(q(b), function (b) {
+	      a.addEventListener(b, c, !1);
+	    });
+	  }function n(a, b, c) {
+	    g(q(b), function (b) {
+	      a.removeEventListener(b, c, !1);
+	    });
+	  }function o(a, b) {
+	    for (; a;) {
+	      if (a == b) return !0;a = a.parentNode;
+	    }return !1;
+	  }function p(a, b) {
+	    return a.indexOf(b) > -1;
+	  }function q(a) {
+	    return a.trim().split(/\s+/g);
+	  }function r(a, b, c) {
+	    if (a.indexOf && !c) return a.indexOf(b);for (var d = 0; d < a.length;) {
+	      if (c && a[d][c] == b || !c && a[d] === b) return d;d++;
+	    }return -1;
+	  }function s(a) {
+	    return Array.prototype.slice.call(a, 0);
+	  }function t(a, b, c) {
+	    for (var d = [], e = [], f = 0; f < a.length;) {
+	      var g = b ? a[f][b] : a[f];r(e, g) < 0 && d.push(a[f]), e[f] = g, f++;
+	    }return c && (d = b ? d.sort(function (a, c) {
+	      return a[b] > c[b];
+	    }) : d.sort()), d;
+	  }function u(a, b) {
+	    for (var c, e, f = b[0].toUpperCase() + b.slice(1), g = 0; g < ma.length;) {
+	      if (c = ma[g], e = c ? c + f : b, e in a) return e;g++;
+	    }return d;
+	  }function v() {
+	    return ua++;
+	  }function w(b) {
+	    var c = b.ownerDocument || b;return c.defaultView || c.parentWindow || a;
+	  }function x(a, b) {
+	    var c = this;this.manager = a, this.callback = b, this.element = a.element, this.target = a.options.inputTarget, this.domHandler = function (b) {
+	      k(a.options.enable, [a]) && c.handler(b);
+	    }, this.init();
+	  }function y(a) {
+	    var b,
+	        c = a.options.inputClass;return new (b = c ? c : xa ? M : ya ? P : wa ? R : L)(a, z);
+	  }function z(a, b, c) {
+	    var d = c.pointers.length,
+	        e = c.changedPointers.length,
+	        f = b & Ea && d - e === 0,
+	        g = b & (Ga | Ha) && d - e === 0;c.isFirst = !!f, c.isFinal = !!g, f && (a.session = {}), c.eventType = b, A(a, c), a.emit("hammer.input", c), a.recognize(c), a.session.prevInput = c;
+	  }function A(a, b) {
+	    var c = a.session,
+	        d = b.pointers,
+	        e = d.length;c.firstInput || (c.firstInput = D(b)), e > 1 && !c.firstMultiple ? c.firstMultiple = D(b) : 1 === e && (c.firstMultiple = !1);var f = c.firstInput,
+	        g = c.firstMultiple,
+	        h = g ? g.center : f.center,
+	        i = b.center = E(d);b.timeStamp = ra(), b.deltaTime = b.timeStamp - f.timeStamp, b.angle = I(h, i), b.distance = H(h, i), B(c, b), b.offsetDirection = G(b.deltaX, b.deltaY);var j = F(b.deltaTime, b.deltaX, b.deltaY);b.overallVelocityX = j.x, b.overallVelocityY = j.y, b.overallVelocity = qa(j.x) > qa(j.y) ? j.x : j.y, b.scale = g ? K(g.pointers, d) : 1, b.rotation = g ? J(g.pointers, d) : 0, b.maxPointers = c.prevInput ? b.pointers.length > c.prevInput.maxPointers ? b.pointers.length : c.prevInput.maxPointers : b.pointers.length, C(c, b);var k = a.element;o(b.srcEvent.target, k) && (k = b.srcEvent.target), b.target = k;
+	  }function B(a, b) {
+	    var c = b.center,
+	        d = a.offsetDelta || {},
+	        e = a.prevDelta || {},
+	        f = a.prevInput || {};b.eventType !== Ea && f.eventType !== Ga || (e = a.prevDelta = { x: f.deltaX || 0, y: f.deltaY || 0 }, d = a.offsetDelta = { x: c.x, y: c.y }), b.deltaX = e.x + (c.x - d.x), b.deltaY = e.y + (c.y - d.y);
+	  }function C(a, b) {
+	    var c,
+	        e,
+	        f,
+	        g,
+	        h = a.lastInterval || b,
+	        i = b.timeStamp - h.timeStamp;if (b.eventType != Ha && (i > Da || h.velocity === d)) {
+	      var j = b.deltaX - h.deltaX,
+	          k = b.deltaY - h.deltaY,
+	          l = F(i, j, k);e = l.x, f = l.y, c = qa(l.x) > qa(l.y) ? l.x : l.y, g = G(j, k), a.lastInterval = b;
+	    } else c = h.velocity, e = h.velocityX, f = h.velocityY, g = h.direction;b.velocity = c, b.velocityX = e, b.velocityY = f, b.direction = g;
+	  }function D(a) {
+	    for (var b = [], c = 0; c < a.pointers.length;) b[c] = { clientX: pa(a.pointers[c].clientX), clientY: pa(a.pointers[c].clientY) }, c++;return { timeStamp: ra(), pointers: b, center: E(b), deltaX: a.deltaX, deltaY: a.deltaY };
+	  }function E(a) {
+	    var b = a.length;if (1 === b) return { x: pa(a[0].clientX), y: pa(a[0].clientY) };for (var c = 0, d = 0, e = 0; b > e;) c += a[e].clientX, d += a[e].clientY, e++;return { x: pa(c / b), y: pa(d / b) };
+	  }function F(a, b, c) {
+	    return { x: b / a || 0, y: c / a || 0 };
+	  }function G(a, b) {
+	    return a === b ? Ia : qa(a) >= qa(b) ? 0 > a ? Ja : Ka : 0 > b ? La : Ma;
+	  }function H(a, b, c) {
+	    c || (c = Qa);var d = b[c[0]] - a[c[0]],
+	        e = b[c[1]] - a[c[1]];return Math.sqrt(d * d + e * e);
+	  }function I(a, b, c) {
+	    c || (c = Qa);var d = b[c[0]] - a[c[0]],
+	        e = b[c[1]] - a[c[1]];return 180 * Math.atan2(e, d) / Math.PI;
+	  }function J(a, b) {
+	    return I(b[1], b[0], Ra) + I(a[1], a[0], Ra);
+	  }function K(a, b) {
+	    return H(b[0], b[1], Ra) / H(a[0], a[1], Ra);
+	  }function L() {
+	    this.evEl = Ta, this.evWin = Ua, this.pressed = !1, x.apply(this, arguments);
+	  }function M() {
+	    this.evEl = Xa, this.evWin = Ya, x.apply(this, arguments), this.store = this.manager.session.pointerEvents = [];
+	  }function N() {
+	    this.evTarget = $a, this.evWin = _a, this.started = !1, x.apply(this, arguments);
+	  }function O(a, b) {
+	    var c = s(a.touches),
+	        d = s(a.changedTouches);return b & (Ga | Ha) && (c = t(c.concat(d), "identifier", !0)), [c, d];
+	  }function P() {
+	    this.evTarget = bb, this.targetIds = {}, x.apply(this, arguments);
+	  }function Q(a, b) {
+	    var c = s(a.touches),
+	        d = this.targetIds;if (b & (Ea | Fa) && 1 === c.length) return d[c[0].identifier] = !0, [c, c];var e,
+	        f,
+	        g = s(a.changedTouches),
+	        h = [],
+	        i = this.target;if (f = c.filter(function (a) {
+	      return o(a.target, i);
+	    }), b === Ea) for (e = 0; e < f.length;) d[f[e].identifier] = !0, e++;for (e = 0; e < g.length;) d[g[e].identifier] && h.push(g[e]), b & (Ga | Ha) && delete d[g[e].identifier], e++;return h.length ? [t(f.concat(h), "identifier", !0), h] : void 0;
+	  }function R() {
+	    x.apply(this, arguments);var a = j(this.handler, this);this.touch = new P(this.manager, a), this.mouse = new L(this.manager, a), this.primaryTouch = null, this.lastTouches = [];
+	  }function S(a, b) {
+	    a & Ea ? (this.primaryTouch = b.changedPointers[0].identifier, T.call(this, b)) : a & (Ga | Ha) && T.call(this, b);
+	  }function T(a) {
+	    var b = a.changedPointers[0];if (b.identifier === this.primaryTouch) {
+	      var c = { x: b.clientX, y: b.clientY };this.lastTouches.push(c);var d = this.lastTouches,
+	          e = function () {
+	        var a = d.indexOf(c);a > -1 && d.splice(a, 1);
+	      };setTimeout(e, cb);
+	    }
+	  }function U(a) {
+	    for (var b = a.srcEvent.clientX, c = a.srcEvent.clientY, d = 0; d < this.lastTouches.length; d++) {
+	      var e = this.lastTouches[d],
+	          f = Math.abs(b - e.x),
+	          g = Math.abs(c - e.y);if (db >= f && db >= g) return !0;
+	    }return !1;
+	  }function V(a, b) {
+	    this.manager = a, this.set(b);
+	  }function W(a) {
+	    if (p(a, jb)) return jb;var b = p(a, kb),
+	        c = p(a, lb);return b && c ? jb : b || c ? b ? kb : lb : p(a, ib) ? ib : hb;
+	  }function X() {
+	    if (!fb) return !1;var b = {},
+	        c = a.CSS && a.CSS.supports;return ["auto", "manipulation", "pan-y", "pan-x", "pan-x pan-y", "none"].forEach(function (d) {
+	      b[d] = c ? a.CSS.supports("touch-action", d) : !0;
+	    }), b;
+	  }function Y(a) {
+	    this.options = la({}, this.defaults, a || {}), this.id = v(), this.manager = null, this.options.enable = l(this.options.enable, !0), this.state = nb, this.simultaneous = {}, this.requireFail = [];
+	  }function Z(a) {
+	    return a & sb ? "cancel" : a & qb ? "end" : a & pb ? "move" : a & ob ? "start" : "";
+	  }function $(a) {
+	    return a == Ma ? "down" : a == La ? "up" : a == Ja ? "left" : a == Ka ? "right" : "";
+	  }function _(a, b) {
+	    var c = b.manager;return c ? c.get(a) : a;
+	  }function aa() {
+	    Y.apply(this, arguments);
+	  }function ba() {
+	    aa.apply(this, arguments), this.pX = null, this.pY = null;
+	  }function ca() {
+	    aa.apply(this, arguments);
+	  }function da() {
+	    Y.apply(this, arguments), this._timer = null, this._input = null;
+	  }function ea() {
+	    aa.apply(this, arguments);
+	  }function fa() {
+	    aa.apply(this, arguments);
+	  }function ga() {
+	    Y.apply(this, arguments), this.pTime = !1, this.pCenter = !1, this._timer = null, this._input = null, this.count = 0;
+	  }function ha(a, b) {
+	    return b = b || {}, b.recognizers = l(b.recognizers, ha.defaults.preset), new ia(a, b);
+	  }function ia(a, b) {
+	    this.options = la({}, ha.defaults, b || {}), this.options.inputTarget = this.options.inputTarget || a, this.handlers = {}, this.session = {}, this.recognizers = [], this.oldCssProps = {}, this.element = a, this.input = y(this), this.touchAction = new V(this, this.options.touchAction), ja(this, !0), g(this.options.recognizers, function (a) {
+	      var b = this.add(new a[0](a[1]));a[2] && b.recognizeWith(a[2]), a[3] && b.requireFailure(a[3]);
+	    }, this);
+	  }function ja(a, b) {
+	    var c = a.element;if (c.style) {
+	      var d;g(a.options.cssProps, function (e, f) {
+	        d = u(c.style, f), b ? (a.oldCssProps[d] = c.style[d], c.style[d] = e) : c.style[d] = a.oldCssProps[d] || "";
+	      }), b || (a.oldCssProps = {});
+	    }
+	  }function ka(a, c) {
+	    var d = b.createEvent("Event");d.initEvent(a, !0, !0), d.gesture = c, c.target.dispatchEvent(d);
+	  }var la,
+	      ma = ["", "webkit", "Moz", "MS", "ms", "o"],
+	      na = b.createElement("div"),
+	      oa = "function",
+	      pa = Math.round,
+	      qa = Math.abs,
+	      ra = Date.now;la = "function" != typeof Object.assign ? function (a) {
+	    if (a === d || null === a) throw new TypeError("Cannot convert undefined or null to object");for (var b = Object(a), c = 1; c < arguments.length; c++) {
+	      var e = arguments[c];if (e !== d && null !== e) for (var f in e) e.hasOwnProperty(f) && (b[f] = e[f]);
+	    }return b;
+	  } : Object.assign;var sa = h(function (a, b, c) {
+	    for (var e = Object.keys(b), f = 0; f < e.length;) (!c || c && a[e[f]] === d) && (a[e[f]] = b[e[f]]), f++;return a;
+	  }, "extend", "Use `assign`."),
+	      ta = h(function (a, b) {
+	    return sa(a, b, !0);
+	  }, "merge", "Use `assign`."),
+	      ua = 1,
+	      va = /mobile|tablet|ip(ad|hone|od)|android/i,
+	      wa = "ontouchstart" in a,
+	      xa = u(a, "PointerEvent") !== d,
+	      ya = wa && va.test(navigator.userAgent),
+	      za = "touch",
+	      Aa = "pen",
+	      Ba = "mouse",
+	      Ca = "kinect",
+	      Da = 25,
+	      Ea = 1,
+	      Fa = 2,
+	      Ga = 4,
+	      Ha = 8,
+	      Ia = 1,
+	      Ja = 2,
+	      Ka = 4,
+	      La = 8,
+	      Ma = 16,
+	      Na = Ja | Ka,
+	      Oa = La | Ma,
+	      Pa = Na | Oa,
+	      Qa = ["x", "y"],
+	      Ra = ["clientX", "clientY"];x.prototype = { handler: function () {}, init: function () {
+	      this.evEl && m(this.element, this.evEl, this.domHandler), this.evTarget && m(this.target, this.evTarget, this.domHandler), this.evWin && m(w(this.element), this.evWin, this.domHandler);
+	    }, destroy: function () {
+	      this.evEl && n(this.element, this.evEl, this.domHandler), this.evTarget && n(this.target, this.evTarget, this.domHandler), this.evWin && n(w(this.element), this.evWin, this.domHandler);
+	    } };var Sa = { mousedown: Ea, mousemove: Fa, mouseup: Ga },
+	      Ta = "mousedown",
+	      Ua = "mousemove mouseup";i(L, x, { handler: function (a) {
+	      var b = Sa[a.type];b & Ea && 0 === a.button && (this.pressed = !0), b & Fa && 1 !== a.which && (b = Ga), this.pressed && (b & Ga && (this.pressed = !1), this.callback(this.manager, b, { pointers: [a], changedPointers: [a], pointerType: Ba, srcEvent: a }));
+	    } });var Va = { pointerdown: Ea, pointermove: Fa, pointerup: Ga, pointercancel: Ha, pointerout: Ha },
+	      Wa = { 2: za, 3: Aa, 4: Ba, 5: Ca },
+	      Xa = "pointerdown",
+	      Ya = "pointermove pointerup pointercancel";a.MSPointerEvent && !a.PointerEvent && (Xa = "MSPointerDown", Ya = "MSPointerMove MSPointerUp MSPointerCancel"), i(M, x, { handler: function (a) {
+	      var b = this.store,
+	          c = !1,
+	          d = a.type.toLowerCase().replace("ms", ""),
+	          e = Va[d],
+	          f = Wa[a.pointerType] || a.pointerType,
+	          g = f == za,
+	          h = r(b, a.pointerId, "pointerId");e & Ea && (0 === a.button || g) ? 0 > h && (b.push(a), h = b.length - 1) : e & (Ga | Ha) && (c = !0), 0 > h || (b[h] = a, this.callback(this.manager, e, { pointers: b, changedPointers: [a], pointerType: f, srcEvent: a }), c && b.splice(h, 1));
+	    } });var Za = { touchstart: Ea, touchmove: Fa, touchend: Ga, touchcancel: Ha },
+	      $a = "touchstart",
+	      _a = "touchstart touchmove touchend touchcancel";i(N, x, { handler: function (a) {
+	      var b = Za[a.type];if (b === Ea && (this.started = !0), this.started) {
+	        var c = O.call(this, a, b);b & (Ga | Ha) && c[0].length - c[1].length === 0 && (this.started = !1), this.callback(this.manager, b, { pointers: c[0], changedPointers: c[1], pointerType: za, srcEvent: a });
+	      }
+	    } });var ab = { touchstart: Ea, touchmove: Fa, touchend: Ga, touchcancel: Ha },
+	      bb = "touchstart touchmove touchend touchcancel";i(P, x, { handler: function (a) {
+	      var b = ab[a.type],
+	          c = Q.call(this, a, b);c && this.callback(this.manager, b, { pointers: c[0], changedPointers: c[1], pointerType: za, srcEvent: a });
+	    } });var cb = 2500,
+	      db = 25;i(R, x, { handler: function (a, b, c) {
+	      var d = c.pointerType == za,
+	          e = c.pointerType == Ba;if (!(e && c.sourceCapabilities && c.sourceCapabilities.firesTouchEvents)) {
+	        if (d) S.call(this, b, c);else if (e && U.call(this, c)) return;this.callback(a, b, c);
+	      }
+	    }, destroy: function () {
+	      this.touch.destroy(), this.mouse.destroy();
+	    } });var eb = u(na.style, "touchAction"),
+	      fb = eb !== d,
+	      gb = "compute",
+	      hb = "auto",
+	      ib = "manipulation",
+	      jb = "none",
+	      kb = "pan-x",
+	      lb = "pan-y",
+	      mb = X();V.prototype = { set: function (a) {
+	      a == gb && (a = this.compute()), fb && this.manager.element.style && mb[a] && (this.manager.element.style[eb] = a), this.actions = a.toLowerCase().trim();
+	    }, update: function () {
+	      this.set(this.manager.options.touchAction);
+	    }, compute: function () {
+	      var a = [];return g(this.manager.recognizers, function (b) {
+	        k(b.options.enable, [b]) && (a = a.concat(b.getTouchAction()));
+	      }), W(a.join(" "));
+	    }, preventDefaults: function (a) {
+	      var b = a.srcEvent,
+	          c = a.offsetDirection;if (this.manager.session.prevented) return void b.preventDefault();var d = this.actions,
+	          e = p(d, jb) && !mb[jb],
+	          f = p(d, lb) && !mb[lb],
+	          g = p(d, kb) && !mb[kb];if (e) {
+	        var h = 1 === a.pointers.length,
+	            i = a.distance < 2,
+	            j = a.deltaTime < 250;if (h && i && j) return;
+	      }return g && f ? void 0 : e || f && c & Na || g && c & Oa ? this.preventSrc(b) : void 0;
+	    }, preventSrc: function (a) {
+	      this.manager.session.prevented = !0, a.preventDefault();
+	    } };var nb = 1,
+	      ob = 2,
+	      pb = 4,
+	      qb = 8,
+	      rb = qb,
+	      sb = 16,
+	      tb = 32;Y.prototype = { defaults: {}, set: function (a) {
+	      return la(this.options, a), this.manager && this.manager.touchAction.update(), this;
+	    }, recognizeWith: function (a) {
+	      if (f(a, "recognizeWith", this)) return this;var b = this.simultaneous;return a = _(a, this), b[a.id] || (b[a.id] = a, a.recognizeWith(this)), this;
+	    }, dropRecognizeWith: function (a) {
+	      return f(a, "dropRecognizeWith", this) ? this : (a = _(a, this), delete this.simultaneous[a.id], this);
+	    }, requireFailure: function (a) {
+	      if (f(a, "requireFailure", this)) return this;var b = this.requireFail;return a = _(a, this), -1 === r(b, a) && (b.push(a), a.requireFailure(this)), this;
+	    }, dropRequireFailure: function (a) {
+	      if (f(a, "dropRequireFailure", this)) return this;a = _(a, this);var b = r(this.requireFail, a);return b > -1 && this.requireFail.splice(b, 1), this;
+	    }, hasRequireFailures: function () {
+	      return this.requireFail.length > 0;
+	    }, canRecognizeWith: function (a) {
+	      return !!this.simultaneous[a.id];
+	    }, emit: function (a) {
+	      function b(b) {
+	        c.manager.emit(b, a);
+	      }var c = this,
+	          d = this.state;qb > d && b(c.options.event + Z(d)), b(c.options.event), a.additionalEvent && b(a.additionalEvent), d >= qb && b(c.options.event + Z(d));
+	    }, tryEmit: function (a) {
+	      return this.canEmit() ? this.emit(a) : void (this.state = tb);
+	    }, canEmit: function () {
+	      for (var a = 0; a < this.requireFail.length;) {
+	        if (!(this.requireFail[a].state & (tb | nb))) return !1;a++;
+	      }return !0;
+	    }, recognize: function (a) {
+	      var b = la({}, a);return k(this.options.enable, [this, b]) ? (this.state & (rb | sb | tb) && (this.state = nb), this.state = this.process(b), void (this.state & (ob | pb | qb | sb) && this.tryEmit(b))) : (this.reset(), void (this.state = tb));
+	    }, process: function (a) {}, getTouchAction: function () {}, reset: function () {} }, i(aa, Y, { defaults: { pointers: 1 }, attrTest: function (a) {
+	      var b = this.options.pointers;return 0 === b || a.pointers.length === b;
+	    }, process: function (a) {
+	      var b = this.state,
+	          c = a.eventType,
+	          d = b & (ob | pb),
+	          e = this.attrTest(a);return d && (c & Ha || !e) ? b | sb : d || e ? c & Ga ? b | qb : b & ob ? b | pb : ob : tb;
+	    } }), i(ba, aa, { defaults: { event: "pan", threshold: 10, pointers: 1, direction: Pa }, getTouchAction: function () {
+	      var a = this.options.direction,
+	          b = [];return a & Na && b.push(lb), a & Oa && b.push(kb), b;
+	    }, directionTest: function (a) {
+	      var b = this.options,
+	          c = !0,
+	          d = a.distance,
+	          e = a.direction,
+	          f = a.deltaX,
+	          g = a.deltaY;return e & b.direction || (b.direction & Na ? (e = 0 === f ? Ia : 0 > f ? Ja : Ka, c = f != this.pX, d = Math.abs(a.deltaX)) : (e = 0 === g ? Ia : 0 > g ? La : Ma, c = g != this.pY, d = Math.abs(a.deltaY))), a.direction = e, c && d > b.threshold && e & b.direction;
+	    }, attrTest: function (a) {
+	      return aa.prototype.attrTest.call(this, a) && (this.state & ob || !(this.state & ob) && this.directionTest(a));
+	    }, emit: function (a) {
+	      this.pX = a.deltaX, this.pY = a.deltaY;var b = $(a.direction);b && (a.additionalEvent = this.options.event + b), this._super.emit.call(this, a);
+	    } }), i(ca, aa, { defaults: { event: "pinch", threshold: 0, pointers: 2 }, getTouchAction: function () {
+	      return [jb];
+	    }, attrTest: function (a) {
+	      return this._super.attrTest.call(this, a) && (Math.abs(a.scale - 1) > this.options.threshold || this.state & ob);
+	    }, emit: function (a) {
+	      if (1 !== a.scale) {
+	        var b = a.scale < 1 ? "in" : "out";a.additionalEvent = this.options.event + b;
+	      }this._super.emit.call(this, a);
+	    } }), i(da, Y, { defaults: { event: "press", pointers: 1, time: 251, threshold: 9 }, getTouchAction: function () {
+	      return [hb];
+	    }, process: function (a) {
+	      var b = this.options,
+	          c = a.pointers.length === b.pointers,
+	          d = a.distance < b.threshold,
+	          f = a.deltaTime > b.time;if (this._input = a, !d || !c || a.eventType & (Ga | Ha) && !f) this.reset();else if (a.eventType & Ea) this.reset(), this._timer = e(function () {
+	        this.state = rb, this.tryEmit();
+	      }, b.time, this);else if (a.eventType & Ga) return rb;return tb;
+	    }, reset: function () {
+	      clearTimeout(this._timer);
+	    }, emit: function (a) {
+	      this.state === rb && (a && a.eventType & Ga ? this.manager.emit(this.options.event + "up", a) : (this._input.timeStamp = ra(), this.manager.emit(this.options.event, this._input)));
+	    } }), i(ea, aa, { defaults: { event: "rotate", threshold: 0, pointers: 2 }, getTouchAction: function () {
+	      return [jb];
+	    }, attrTest: function (a) {
+	      return this._super.attrTest.call(this, a) && (Math.abs(a.rotation) > this.options.threshold || this.state & ob);
+	    } }), i(fa, aa, { defaults: { event: "swipe", threshold: 10, velocity: .3, direction: Na | Oa, pointers: 1 }, getTouchAction: function () {
+	      return ba.prototype.getTouchAction.call(this);
+	    }, attrTest: function (a) {
+	      var b,
+	          c = this.options.direction;return c & (Na | Oa) ? b = a.overallVelocity : c & Na ? b = a.overallVelocityX : c & Oa && (b = a.overallVelocityY), this._super.attrTest.call(this, a) && c & a.offsetDirection && a.distance > this.options.threshold && a.maxPointers == this.options.pointers && qa(b) > this.options.velocity && a.eventType & Ga;
+	    }, emit: function (a) {
+	      var b = $(a.offsetDirection);b && this.manager.emit(this.options.event + b, a), this.manager.emit(this.options.event, a);
+	    } }), i(ga, Y, { defaults: { event: "tap", pointers: 1, taps: 1, interval: 300, time: 250, threshold: 9, posThreshold: 10 }, getTouchAction: function () {
+	      return [ib];
+	    }, process: function (a) {
+	      var b = this.options,
+	          c = a.pointers.length === b.pointers,
+	          d = a.distance < b.threshold,
+	          f = a.deltaTime < b.time;if (this.reset(), a.eventType & Ea && 0 === this.count) return this.failTimeout();if (d && f && c) {
+	        if (a.eventType != Ga) return this.failTimeout();var g = this.pTime ? a.timeStamp - this.pTime < b.interval : !0,
+	            h = !this.pCenter || H(this.pCenter, a.center) < b.posThreshold;this.pTime = a.timeStamp, this.pCenter = a.center, h && g ? this.count += 1 : this.count = 1, this._input = a;var i = this.count % b.taps;if (0 === i) return this.hasRequireFailures() ? (this._timer = e(function () {
+	          this.state = rb, this.tryEmit();
+	        }, b.interval, this), ob) : rb;
+	      }return tb;
+	    }, failTimeout: function () {
+	      return this._timer = e(function () {
+	        this.state = tb;
+	      }, this.options.interval, this), tb;
+	    }, reset: function () {
+	      clearTimeout(this._timer);
+	    }, emit: function () {
+	      this.state == rb && (this._input.tapCount = this.count, this.manager.emit(this.options.event, this._input));
+	    } }), ha.VERSION = "2.0.8", ha.defaults = { domEvents: !1, touchAction: gb, enable: !0, inputTarget: null, inputClass: null, preset: [[ea, { enable: !1 }], [ca, { enable: !1 }, ["rotate"]], [fa, { direction: Na }], [ba, { direction: Na }, ["swipe"]], [ga], [ga, { event: "doubletap", taps: 2 }, ["tap"]], [da]], cssProps: { userSelect: "none", touchSelect: "none", touchCallout: "none", contentZooming: "none", userDrag: "none", tapHighlightColor: "rgba(0,0,0,0)" } };var ub = 1,
+	      vb = 2;ia.prototype = { set: function (a) {
+	      return la(this.options, a), a.touchAction && this.touchAction.update(), a.inputTarget && (this.input.destroy(), this.input.target = a.inputTarget, this.input.init()), this;
+	    }, stop: function (a) {
+	      this.session.stopped = a ? vb : ub;
+	    }, recognize: function (a) {
+	      var b = this.session;if (!b.stopped) {
+	        this.touchAction.preventDefaults(a);var c,
+	            d = this.recognizers,
+	            e = b.curRecognizer;(!e || e && e.state & rb) && (e = b.curRecognizer = null);for (var f = 0; f < d.length;) c = d[f], b.stopped === vb || e && c != e && !c.canRecognizeWith(e) ? c.reset() : c.recognize(a), !e && c.state & (ob | pb | qb) && (e = b.curRecognizer = c), f++;
+	      }
+	    }, get: function (a) {
+	      if (a instanceof Y) return a;for (var b = this.recognizers, c = 0; c < b.length; c++) if (b[c].options.event == a) return b[c];return null;
+	    }, add: function (a) {
+	      if (f(a, "add", this)) return this;var b = this.get(a.options.event);return b && this.remove(b), this.recognizers.push(a), a.manager = this, this.touchAction.update(), a;
+	    }, remove: function (a) {
+	      if (f(a, "remove", this)) return this;if (a = this.get(a)) {
+	        var b = this.recognizers,
+	            c = r(b, a);-1 !== c && (b.splice(c, 1), this.touchAction.update());
+	      }return this;
+	    }, on: function (a, b) {
+	      if (a !== d && b !== d) {
+	        var c = this.handlers;return g(q(a), function (a) {
+	          c[a] = c[a] || [], c[a].push(b);
+	        }), this;
+	      }
+	    }, off: function (a, b) {
+	      if (a !== d) {
+	        var c = this.handlers;return g(q(a), function (a) {
+	          b ? c[a] && c[a].splice(r(c[a], b), 1) : delete c[a];
+	        }), this;
+	      }
+	    }, emit: function (a, b) {
+	      this.options.domEvents && ka(a, b);var c = this.handlers[a] && this.handlers[a].slice();if (c && c.length) {
+	        b.type = a, b.preventDefault = function () {
+	          b.srcEvent.preventDefault();
+	        };for (var d = 0; d < c.length;) c[d](b), d++;
+	      }
+	    }, destroy: function () {
+	      this.element && ja(this, !1), this.handlers = {}, this.session = {}, this.input.destroy(), this.element = null;
+	    } }, la(ha, { INPUT_START: Ea, INPUT_MOVE: Fa, INPUT_END: Ga, INPUT_CANCEL: Ha, STATE_POSSIBLE: nb, STATE_BEGAN: ob, STATE_CHANGED: pb, STATE_ENDED: qb, STATE_RECOGNIZED: rb, STATE_CANCELLED: sb, STATE_FAILED: tb, DIRECTION_NONE: Ia, DIRECTION_LEFT: Ja, DIRECTION_RIGHT: Ka, DIRECTION_UP: La, DIRECTION_DOWN: Ma, DIRECTION_HORIZONTAL: Na, DIRECTION_VERTICAL: Oa, DIRECTION_ALL: Pa, Manager: ia, Input: x, TouchAction: V, TouchInput: P, MouseInput: L, PointerEventInput: M, TouchMouseInput: R, SingleTouchInput: N, Recognizer: Y, AttrRecognizer: aa, Tap: ga, Pan: ba, Swipe: fa, Pinch: ca, Rotate: ea, Press: da, on: m, off: n, each: g, merge: ta, extend: sa, assign: la, inherit: i, bindFn: j, prefixed: u });var wb = "undefined" != typeof a ? a : "undefined" != typeof self ? self : {};wb.Hammer = ha,  true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    return ha;
+	  }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "undefined" != typeof module && module.exports ? module.exports = ha : a[c] = ha;
+	}(window, document, "Hammer");
+	//# sourceMappingURL=hammer.min.js.map
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
 	function int(v) {
 	    return v | 0;
 	}
@@ -22384,7 +22920,7 @@
 	}
 
 /***/ },
-/* 173 */
+/* 176 */
 /***/ function(module, exports) {
 
 	function parseHash(url) {
@@ -22417,6 +22953,135 @@
 	    addClass: addClass,
 	    removeClass: removeClass
 	};
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var Explanation = __webpack_require__(178);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function () {
+	        var elts = [];
+	        this.props.data.forEach(function (aItem) {
+	            if (elts.length) {
+	                elts.push(React.createElement("hr", null));
+	            }
+	            elts.push(React.createElement(Explanation, { name: aItem.name,
+	                description: aItem.description,
+	                items: aItem.items,
+	                items2: aItem.items2,
+	                cite: aItem.cite }));
+	        });
+	        return React.createElement(
+	            "div",
+	            null,
+	            elts
+	        );
+	    }
+	});
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var ExplanationTable = __webpack_require__(179);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function () {
+	        var name = this.props.name;
+	        var tables = [this.props.items];
+	        if (this.props.items2) {
+	            tables.push(this.props.items2);
+	        }
+	        var cite = this.props.cite ? React.createElement(
+	            "p",
+	            null,
+	            React.createElement("cite", { dangerouslySetInnerHTML: { __html: this.props.cite } })
+	        ) : null;
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "h2",
+	                { id: name },
+	                name
+	            ),
+	            React.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.description } }),
+	            tables.map(function (aTable) {
+	                return React.createElement(ExplanationTable, { items: aTable });
+	            }),
+	            cite
+	        );
+	    }
+	});
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function () {
+	        var rows = this.props.items.map(function (aItem) {
+	            var title = aItem[0];
+	            if (!Array.isArray(title)) {
+	                title = [title, title];
+	            }
+	            var reading = aItem[1];
+	            var desc = aItem[2];
+	            var id = name + '_' + title[0];
+	            var titleHtml = React.createElement(
+	                "span",
+	                { id: id },
+	                title[1]
+	            );
+	            if (reading) {
+	                titleHtml = React.createElement(
+	                    "div",
+	                    null,
+	                    React.createElement(
+	                        "div",
+	                        { className: "ruby" },
+	                        reading
+	                    ),
+	                    titleHtml
+	                );
+	            }
+	            return React.createElement(
+	                "tr",
+	                null,
+	                React.createElement(
+	                    "th",
+	                    null,
+	                    titleHtml
+	                ),
+	                React.createElement(
+	                    "td",
+	                    null,
+	                    desc
+	                )
+	            );
+	        });
+	        return React.createElement(
+	            "table",
+	            null,
+	            rows
+	        );
+	    }
+	});
 
 /***/ }
 /******/ ]);

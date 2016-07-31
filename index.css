@@ -135,10 +135,6 @@ a.box:nth-child(2n):hover {
 #top-container {
     position: fixed;
 }
-.button__link {
-    text-align: center;
-    text-decoration: none;
-}
 
 /* month */
 #monthlyCalendar {
@@ -277,7 +273,7 @@ a.box:nth-child(2n):hover {
     }
 
     /* month */
-    .month h1 {
+    .month #old-date-month {
         margin-top: 1.5em;
     }
     #koyomi {
@@ -344,7 +340,7 @@ a.box:nth-child(2n):hover {
     }
 
     /* month */
-    .month h1 {
+    .month #old-date-month {
         margin-top: 8vw;
     }
     .week .dateContainer {
