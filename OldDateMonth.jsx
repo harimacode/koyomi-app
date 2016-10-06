@@ -2,14 +2,14 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var Button = require("./Button.jsx");
 
-module.exports = React.createClass({
-    isYearMonth: function () {
+export class OldDateMonth extends React.Component {
+    isYearMonth() {
         return this.props.type === "month";
-    },
-    dayOfWeek: function dayOfWeek(dow) {
+    }
+    dayOfWeek(dow) {
         return "日月火水木金土".charAt(dow);
-    },
-    render: function () {
+    }
+    render() {
         var year = this.props.date.getFullYear();
         var month = this.props.date.getMonth() + 1;
         var date  = this.props.date.getDate();
@@ -37,4 +37,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

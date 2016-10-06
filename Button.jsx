@@ -1,10 +1,10 @@
 var React = require("react");
 
-module.exports = React.createClass({
-    handleClick: function (e) {
+export class Button extends React.Component {
+    handleClick(e) {
         this.props.onClick(e);
-    },
-    render: function () {
+    }
+    render() {
         var cls = this.props.className + " button";
         return (
             <a href="#"
@@ -14,4 +14,4 @@ module.exports = React.createClass({
             </a>
         );
     }
-});
+}
