@@ -1,4 +1,4 @@
-var React = require("react");
+import {React} from "react";
 
 export class Button extends React.Component {
     handleClick(e) {

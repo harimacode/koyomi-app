@@ -1,6 +1,6 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var Button = require("./Button.jsx");
+import {React} from "react";
+import {ReactDOM} from "react-dom";
+import {Button} from "./Button.jsx";
 
 export class OldDateMonth extends React.Component {
     isYearMonth() {
