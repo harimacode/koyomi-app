@@ -1,5 +1,5 @@
-import {React} from "react";
-import {ReactDOM} from "react-dom";
+var React = require("react");
+var ReactDOM = require("react-dom");
 
 export class ExplanationTable extends React.Component {
     render() {
