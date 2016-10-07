@@ -1,8 +1,8 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 
-export class ExplanationTable extends React.Component {
-    render() {
+module.exports = React.createClass({
+    render: function () {
         var name = this.props.name;
         var rows = this.props.items.map(function (aItem) {
             var title = aItem[0];
@@ -38,4 +38,4 @@ export class ExplanationTable extends React.Component {
             </table>
         );
     }
-}
+});

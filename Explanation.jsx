@@ -2,8 +2,8 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var ExplanationTable = require("./ExplanationTable.jsx");
 
-export class Explanation extends React.Component {
-    render() {
+module.exports = React.createClass({
+    render: function () {
         var name = this.props.name;
         var items2 = this.props.items2 ? (
             <ExplanationTable name={name} items={this.props.items2} />
@@ -21,5 +21,5 @@ export class Explanation extends React.Component {
                 {cite}
             </div>
         );
-    }
-}
+    },
+});
