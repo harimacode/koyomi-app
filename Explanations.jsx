@@ -2,8 +2,8 @@ import {React} from "react";
 import {ReactDOM} from "react-dom";
 import {Explanation} from "./Explanation.jsx";
 
-export class Explanations extends React.Component {
-    render() {
+module.exports = React.createClass({
+    render: function () {
         var elts = [];
         this.props.data.forEach(function (aItem) {
             var index = elts.length;
@@ -24,5 +24,5 @@ export class Explanations extends React.Component {
                 {elts}
             </div>
         );
-    }
-}
+    },
+});

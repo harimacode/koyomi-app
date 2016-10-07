@@ -2,8 +2,8 @@ import {React} from "react";
 import {ReactDOM} from "react-dom";
 import {ExplanationTable} from "./ExplanationTable.jsx";
 
-export class Explanation extends React.Component {
-    render() {
+module.exports = React.createClass({
+    render: function () {
         var name = this.props.name;
         var items2 = this.props.items2 ? (
             <ExplanationTable name={name} items={this.props.items2} />
@@ -21,5 +21,5 @@ export class Explanation extends React.Component {
                 {cite}
             </div>
         );
-    }
-}
+    },
+});

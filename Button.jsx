@@ -1,10 +1,10 @@
 import {React} from "react";
 
-export class Button extends React.Component {
-    handleClick(e) {
+module.exports = React.createClass({
+    handleClick: function (e) {
         this.props.onClick(e);
-    }
-    render() {
+    },
+    render: function () {
         var cls = this.props.className + " button";
         return (
             <a href="#"
@@ -14,4 +14,4 @@ export class Button extends React.Component {
             </a>
         );
     }
-}
+});
