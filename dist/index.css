@@ -60,7 +60,7 @@ a.box:nth-child(2n):hover {
     border-color: darkgray;
     color: gray;
 }
-#toolbar {
+.toolbar {
     background-color: #666666;
     position: fixed;
     top: -16.6vw;
@@ -70,11 +70,11 @@ a.box:nth-child(2n):hover {
     z-index: 2;
     width: 100%;
 }
-#toolbar.visible {
+.toolbar.visible {
     top: 0;
     opacity: 1;
 }
-#toolbar .box {
+.toolbar .box {
     padding: 0;
     margin: 0;
     display: block;
@@ -202,13 +202,13 @@ a.box:nth-child(2n):hover {
     #tags {
         margin: 0.1em auto 1em auto;
     }
-    #toolbar {
+    .toolbar {
         width: 42em;
         margin-left: calc((100% - 42em) / 2);
         margin-left: -webkit-calc((100% - 42em) / 2);
         margin-right: auto;
     }
-    #toolbar .box {
+    .toolbar .box {
         width: 16.66%;
         height: 2em;
     }
@@ -268,7 +268,7 @@ a.box:nth-child(2n):hover {
     #tags {
         margin: 1vw auto;
     }
-    #toolbar .nattin {
+    .toolbar .nattin {
         white-space: nowrap;
         width: 2em;
         overflow: hidden;

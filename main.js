@@ -3,6 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
+import Toolbar from "./Toolbar.jsx";
 import Button from "./Button.jsx";
 import OldDateMonth from "./OldDateMonth.jsx";
 import Explanations from "./Explanations.jsx";
@@ -343,7 +344,7 @@ function jumpToHash(aHash) {
     if (newBox) {
         common.addClass(newBox, "marked");
     }
-    var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+    var tbHeight = document.querySelector(".toolbar").getBoundingClientRect().height;
     var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
     
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
@@ -389,7 +390,7 @@ window.addEventListener("hashchange", function (e) {
     }
 }, false);
 window.addEventListener("scroll", function (e) {
-    var tb = document.getElementById("toolbar");
+    var tb = document.querySelector(".toolbar");
     var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
     common.removeClass(tb, "visible");
     if (tagsTop < 0) {
@@ -423,6 +424,10 @@ new Hammer(window).on("swipe", function (ev) {
 //     <Button title="&raquo;" onClick={next} />,
 //     document.getElementById("next")
 // );
+ReactDOM.render(
+    <Toolbar />,
+    document.getElementById("toolbar")
+);
 ReactDOM.render(
     <Explanations data={kExplanations} />,
     document.getElementById("explanation")
