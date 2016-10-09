@@ -4,7 +4,6 @@ import RekichuItem from "./RekichuItem.jsx";
 export default class Rekichu extends React.Component {
     render() {
         var elts = [];
-        var modifier = (this.props.type && this.props.type === 'toolbar') ? 'rekichu--toolbar' : '';
         for (var item of this.props.data) {
             elts.push(
                 <RekichuItem name={item[0]}
@@ -13,8 +12,13 @@ export default class Rekichu extends React.Component {
             );
         }
         return (
-            <div className={"rekichu " + modifier}>
-                {elts}
+            <div className="rekichu">
+                <div className="rekichu--toolbar">
+                    {elts}
+                </div>
+                <div>
+                    {elts}
+                </div>
             </div>
         );
     }

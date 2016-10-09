@@ -218,12 +218,8 @@ function update() {
         jumpToHash(decodeURIComponent(name));
     };
     ReactDOM.render(
-        <Rekichu data={items} onClick={onClick} type="toolbar" />,
-        document.getElementById("toolbar")
-    );
-    ReactDOM.render(
         <Rekichu data={items} onClick={onClick} />,
-        document.getElementById("grid")
+        document.getElementById("rekichu")
     );
     ReactDOM.render(
         <Explanations data={kExplanations} marks={items} />,
