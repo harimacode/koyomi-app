@@ -1,9 +1,9 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var ExplanationTable = require("./ExplanationTable.jsx");
+import React from "react";
+import ReactDOM from "react-dom";
+import ExplanationTable from "./ExplanationTable.jsx";
 
-module.exports = React.createClass({
-    render: function () {
+export default class Explanation extends React.Component {
+    render() {
         var name = this.props.name;
         var items2 = this.props.items2 ? (
             <ExplanationTable name={name} items={this.props.items2} />
@@ -21,5 +21,5 @@ module.exports = React.createClass({
                 {cite}
             </div>
         );
-    },
-});
+    }
+}

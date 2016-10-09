@@ -1,8 +1,7 @@
 var Hammer = require("./hammer.min.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
-var Button = require("./Button.jsx");
-var OldDateMonth = require("./OldDateMonth.jsx");
+import OldDateMonth from "./OldDateMonth.jsx";
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 

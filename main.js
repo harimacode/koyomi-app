@@ -3,9 +3,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
-var Button = require("./Button.jsx");
-var OldDateMonth = require("./OldDateMonth.jsx");
-var Explanations = require("./Explanations.jsx");
+import Button from "./Button.jsx";
+import OldDateMonth from "./OldDateMonth.jsx";
+import Explanations from "./Explanations.jsx";
 
 function renderOldDateMonth(props) {
     if (!props.date) {
