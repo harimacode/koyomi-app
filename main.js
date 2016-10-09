@@ -8,6 +8,7 @@ import Button from "./Button.jsx";
 import GridBox from "./GridBox.jsx";
 import OldDateMonth from "./OldDateMonth.jsx";
 import Explanations from "./Explanations.jsx";
+import CopyrightBox from "./CopyrightBox.jsx";
 
 function renderOldDateMonth(props) {
     if (!props.date) {
@@ -449,4 +450,8 @@ ReactDOM.render(
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")
+);
+ReactDOM.render(
+    <CopyrightBox />,
+    document.getElementById("copyright-box")
 );
