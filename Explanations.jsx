@@ -5,20 +5,20 @@ import Explanation from "./Explanation.jsx";
 export default class Explanations extends React.Component {
     render() {
         var elts = [];
-        this.props.data.forEach(function (aItem) {
+        for (var item of this.props.data) {
             var index = elts.length;
             if (index) {
                 elts.push(<hr key={"separator" + index} className="explanations__separator" />);
             }
             elts.push(
                 <Explanation key={"explanation" + index}
-                             name={aItem.name}
-                             description={aItem.description}
-                             items={aItem.items}
-                             items2={aItem.items2}
-                             cite={aItem.cite} />
+                             name={item.name}
+                             description={item.description}
+                             items={item.items}
+                             items2={item.items2}
+                             cite={item.cite} />
             );
-        });
+        }
         return (
             <div className="explanations">
                 {elts}
