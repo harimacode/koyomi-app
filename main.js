@@ -372,14 +372,6 @@ window.addEventListener("hashchange", function (e) {
         }
     }
 }, false);
-window.addEventListener("scroll", function (e) {
-    var tb = document.querySelector(".rekichu--toolbar");
-    var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
-    common.removeClass(tb, "visible");
-    if (tagsTop < 0) {
-        common.addClass(tb, "visible");
-    }
-}, false);
 
 new Hammer(window).on("swipe", function (ev) {
     if (ev.distance < 75) {

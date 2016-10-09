@@ -1,43 +1,37 @@
-/* koyomi */
-.rekichu__item:link {
-    text-decoration: none;
-}
-.rekichu__item:hover {
-    background-color: #cccccc;
-}
-
-/* index */
 .rekichu__item {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
     line-height: 1.0;
-}
-a.rekichu__item:nth-child(2n):hover {
-    background-color:#333333;
-}
-.rekichu__item {
     background-color: #666666;
     color: white;
     display: inline-block;
     position: relative;
 }
+.rekichu__item:hover {
+    background-color:#333333;
+}
+.rekichu__item:nth-child(2n) {
+    background-color: #999999;
+}
+.rekichu__item:nth-child(2n):hover {
+    background-color: #cccccc;
+}
+
 .rekichu__title {
     color: #cccccc;
     text-align: left;
 }
+.rekichu__item:nth-child(2n) .rekichu__title {
+    color: white;
+}
+
 .rekichu__content {
     font-weight: bold;
     position: absolute;
     text-align: right;
 }
-.rekichu__item:nth-child(2n+1) {
-    background-color: #999999;
-}
-.rekichu__item:nth-child(2n+1) .rekichu__title {
-    color: white;
-}
 
 .rekichu--toolbar {
-    background-color: #666666;
+    background-color: #999999;
     position: fixed;
     top: -16.6vw;
     left: 0;
@@ -46,7 +40,7 @@ a.rekichu__item:nth-child(2n):hover {
     z-index: 2;
     width: 100%;
 }
-.rekichu--toolbar.visible {
+.rekichu--visible {
     top: 0;
     opacity: 1;
 }
@@ -61,7 +55,6 @@ a.rekichu__item:nth-child(2n):hover {
 
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
-    /* index */
     .rekichu__item {
         font-size: 1.8em;
         margin: 0.3em;
@@ -90,7 +83,6 @@ a.rekichu__item:nth-child(2n):hover {
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
-    /* index */
     .rekichu__item {
         font-size: 7vw;
         margin: 2vw;
