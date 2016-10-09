@@ -5,6 +5,7 @@ var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 import Toolbar from "./Toolbar.jsx";
 import Button from "./Button.jsx";
+import GridBox from "./GridBox.jsx";
 import OldDateMonth from "./OldDateMonth.jsx";
 import Explanations from "./Explanations.jsx";
 
@@ -434,12 +435,16 @@ new Hammer(window).on("swipe", function (ev) {
 //     document.getElementById("next")
 // );
 ReactDOM.render(
-    <Toolbar data={kToolbarItems}/>,
+    <Toolbar data={kToolbarItems} />,
     document.getElementById("toolbar")
 );
 ReactDOM.render(
     <Explanations data={kExplanations} />,
     document.getElementById("explanation")
+);
+ReactDOM.render(
+    <GridBox data={kToolbarItems} />,
+    document.getElementById("gridbox")
 );
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
