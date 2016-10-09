@@ -15,7 +15,10 @@ export default class Explanations extends React.Component {
                              name={item.name}
                              description={item.description}
                              items={item.items}
+                             matcherForItems={item.matcherForItems}
                              items2={item.items2}
+                             matcherForItems2={item.matcherForItems2}
+                             marks={this.props.marks}
                              cite={item.cite} />
             );
         }

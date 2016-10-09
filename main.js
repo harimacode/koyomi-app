@@ -57,6 +57,7 @@ var kExplanations = [
             ["壬", "みずのえ", "“妊”に通じ、陽気を下に姙む意"],
             ["癸", "みずのと", "“揆”に同じく生命のない残物を清算して地ならしを行い、新たな生長を行う待機の状態"],
         ],
+        matcherForItems: (s) => s.charAt(0),
         items2: [
             ["子", "ね", "“孳”で、陽気が色々に発現しようとする動き"],
             ["丑", "うし", "“紐”で、生命エネルギーの様々な結合"],
@@ -71,6 +72,7 @@ var kExplanations = [
             ["戌", "いぬ", "同音“恤”であり、“滅”である。統一退蔵。"],
             ["亥", "い", "“核”で、生命の完全な収蔵含蓄"],
         ],
+        matcherForItems2: (s) => s.charAt(1),
         cite: "(表は <a href='https://ja.wikipedia.org/wiki/%E5%B9%B2%E6%94%AF#.E5.8D.81.E5.B9.B2'>干支 - Wikipedia</a> より引用)",
     },
     {
@@ -220,6 +222,10 @@ function update() {
         <GridBox data={items} />,
         document.getElementById("gridbox")
     );
+    ReactDOM.render(
+        <Explanations data={kExplanations} marks={items} />,
+        document.getElementById("explanation")
+    );
 
     var tags = [];
     oc.tagsForDate(date).forEach(function (tag) {
@@ -256,27 +262,6 @@ function update() {
         tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
     });
     set('tags', tags.join(" ･ "));
-    
-    // 今解説に表がある項目について、マーカー表示します。
-    markItems([["六輝", newRokki], // 六輝
-        ["干支", newEto.charAt(0)], ["干支", newEto.charAt(1)], // 十干、十二支
-        ["九星", newKyusei], // 九星
-        ["直", newChoku], ["宿", newShuku], ["納音", newNattin]]); // 直、宿、納音
-}
-
-var marked;
-function markItems(toBeMarked) {
-    if (marked) {
-        marked.forEach(function (item) {
-            common.removeClass(item, "marked");
-        });
-    }
-    marked = [];
-    toBeMarked.forEach(function (item) {
-        var e = document.getElementById(item.join("_"));
-        common.addClass(e, "marked");
-        marked.push(e);
-    });
 }
 
 var date;
@@ -433,10 +418,6 @@ new Hammer(window).on("swipe", function (ev) {
 //     <Button title="&raquo;" onClick={next} />,
 //     document.getElementById("next")
 // );
-ReactDOM.render(
-    <Explanations data={kExplanations} />,
-    document.getElementById("explanation")
-);
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")
