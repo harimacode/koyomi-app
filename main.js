@@ -213,12 +213,16 @@ function update() {
         ['宿', newShuku],
         ['納音', newNattin],
     ];
+    var onClick = function (e, name) {
+        e.preventDefault();
+        jumpToHash(decodeURIComponent(name));
+    };
     ReactDOM.render(
-        <Rekichu data={items} type="toolbar" />,
+        <Rekichu data={items} onClick={onClick} type="toolbar" />,
         document.getElementById("toolbar")
     );
     ReactDOM.render(
-        <Rekichu data={items} />,
+        <Rekichu data={items} onClick={onClick} />,
         document.getElementById("grid")
     );
     ReactDOM.render(
@@ -357,16 +361,6 @@ window.addEventListener("load", function (e) {
     }
     
     document.getElementById("today").addEventListener("click", today, false);
-
-    Array.prototype.forEach.call(document.querySelectorAll("a.rekichu__item"), function (aItem) {
-        aItem.addEventListener("click", function (e) {
-            var hash = common.parseHash(aItem.getAttribute("href"));
-            if (hash) {
-                e.preventDefault();
-                jumpToHash(hash);
-            }
-        }, false);
-    });
     
     // runTests();
 }, false);

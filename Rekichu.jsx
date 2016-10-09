@@ -7,7 +7,9 @@ export default class Rekichu extends React.Component {
         var modifier = (this.props.type && this.props.type === 'toolbar') ? 'rekichu--toolbar' : '';
         for (var item of this.props.data) {
             elts.push(
-                <RekichuItem name={item[0]} value={item[1]} />
+                <RekichuItem name={item[0]}
+                             value={item[1]}
+                             onClick={this.props.onClick} />
             );
         }
         return (
