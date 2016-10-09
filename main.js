@@ -29,15 +29,6 @@ function renderOldDateMonth(props) {
 }
 renderOldDateMonth({});
 
-var kToolbarItems = [
-    ['六輝', 'rokki'],
-    ['干支', 'eto'],
-    ['九星', 'kyusei'],
-    ['直', 'choku'],
-    ['宿', 'shuku'],
-    ['納音', 'nattin'],
-];
-
 var kExplanations = [
     {
         name: "六輝",
@@ -193,11 +184,6 @@ var kExplanations = [
 function set(id, value) {
     document.getElementById(id).innerHTML = value;
 }
-function sets(clazz, value) {
-    Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
-        e.innerHTML = value;
-    });
-}
 function update() {
     // 月表示の更新
     var month = date.getMonth() + 1;
@@ -211,18 +197,30 @@ function update() {
         date: date,
         subtitle: '旧暦 ' + old
     });
+
     var newRokki = oc.rokki(old);
-    sets('rokki', newRokki);
     var newEto = oc.eto(jd);
-    sets('eto', newEto);
     var newKyusei = oc.kyusei(jd);
-    sets('kyusei', newKyusei);
     var newChoku = oc.choku(jd);
-    sets('choku', newChoku);
     var newShuku = oc.shuku(old);
-    sets('shuku', newShuku);
     var newNattin = oc.nattin(jd);
-    sets('nattin', newNattin);
+    var items = [
+        ['六輝', newRokki],
+        ['干支', newEto],
+        ['九星', newKyusei],
+        ['直', newChoku],
+        ['宿', newShuku],
+        ['納音', newNattin],
+    ];
+    ReactDOM.render(
+        <Toolbar data={items} />,
+        document.getElementById("toolbar")
+    );
+    ReactDOM.render(
+        <GridBox data={items} />,
+        document.getElementById("gridbox")
+    );
+
     var tags = [];
     oc.tagsForDate(date).forEach(function (tag) {
         var tagText = tag[1];
@@ -436,16 +434,8 @@ new Hammer(window).on("swipe", function (ev) {
 //     document.getElementById("next")
 // );
 ReactDOM.render(
-    <Toolbar data={kToolbarItems} />,
-    document.getElementById("toolbar")
-);
-ReactDOM.render(
     <Explanations data={kExplanations} />,
     document.getElementById("explanation")
-);
-ReactDOM.render(
-    <GridBox data={kToolbarItems} />,
-    document.getElementById("gridbox")
 );
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,

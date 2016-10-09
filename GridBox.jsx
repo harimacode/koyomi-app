@@ -5,9 +5,12 @@ export default class GridBox extends React.Component {
         var elts = [];
         for (var item of this.props.data) {
             var name = item[0];
-            var className = item[1];
+            var value = item[1];
             elts.push(
-                <a href={'#' + name} className="box"><div className="title">{name}</div><div className={className}></div></a>
+                <a href={'#' + name} className="box">
+                    <div className="title">{name}</div>
+                    <div>{value}</div>
+                </a>
             );
         }
         return (
