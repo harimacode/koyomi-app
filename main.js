@@ -9,29 +9,10 @@ import OldDateMonth from "./OldDateMonth.jsx";
 import Explanations from "./Explanations.jsx";
 import CopyrightBox from "./CopyrightBox.jsx";
 
-function renderOldDateMonth(props) {
-    if (!props.date) {
-        props.date = new Date();
-    }
-    if (!props.subtitle) {
-        props.subtitle = "旧暦 0月0日"; 
-    }
-    return ReactDOM.render(
-        <OldDateMonth type="date"
-                      date={props.date}
-                      subtitle={props.subtitle}
-                      onPrevClick={prev}
-                      onCurrentClick={today}
-                      onNextClick={next} />,
-        document.getElementById("old-date-month")
-    );
-}
-renderOldDateMonth({});
-
 var kExplanations = [
     {
         name: "六輝",
-        description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)", 
+        description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)",
         items: [
             ["先勝", "せんがち", "戦いは朝から昼までよし。午前中は吉。"],
             ["友引", "ともびき", "勝負のつかない日。朝晩、夕方は吉。"],
@@ -188,16 +169,21 @@ function set(id, value) {
 function update() {
     // 月表示の更新
     var month = date.getMonth() + 1;
-    var yearMonth = [date.getFullYear(), month].join("/"); 
+    var yearMonth = [date.getFullYear(), month].join("/");
     document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
-    
+
     var month = date.getMonth() + 1; // 月は 0 始まり
     var jd  = oc.juliusDate(date);
     var old = oc.oldCalendar(jd);
-    renderOldDateMonth({
-        date: date,
-        subtitle: '旧暦 ' + old
-    });
+    ReactDOM.render(
+        <OldDateMonth type="date"
+            date={date}
+            subtitle={'旧暦 ' + old}
+            onPrevClick={prev}
+            onCurrentClick={today}
+            onNextClick={next} />,
+        document.getElementById("old-date-month")
+    );
 
     var newRokki = oc.rokki(old);
     var newEto = oc.eto(jd);
@@ -214,7 +200,6 @@ function update() {
         ['納音', newNattin],
     ];
     var onClick = function (e, name) {
-        e.preventDefault();
         jumpToHash(decodeURIComponent(name));
     };
     ReactDOM.render(
@@ -258,7 +243,7 @@ function update() {
         } else if (tag[1].indexOf("天天上") == 0) {
             tagText = tag[1].substr(0, 1) + "一" + tag[1].substr(1);
         }
-        tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
+        tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>');
     });
     set('tags', tags.join(" ･ "));
 }
@@ -316,7 +301,7 @@ ScrollAnimation.prototype = {
         var distance = this.mTo - this.mFrom;
         var y = this.mFrom + distance * this.easeInOutQuad(t);
         window.scroll(window.pageXOffset, y);
-        
+
         if (t < 1) {
             var that = this;
             setTimeout(function () {
@@ -339,7 +324,7 @@ function jumpToHash(aHash) {
     }
     var tbHeight = document.querySelector(".rekichu__toolbar").getBoundingClientRect().height;
     var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
-    
+
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
 }
 function gotoTop(e) {
@@ -348,16 +333,16 @@ function gotoTop(e) {
 }
 window.addEventListener("load", function (e) {
     common.removeClass(document.getElementById("koyomi"), "month");
-    
+
     var hash = common.parseHash(document.location.href);
     if (hash) {
         gotoDate(hash);
     } else {
         today();
     }
-    
+
     document.getElementById("today").addEventListener("click", today, false);
-    
+
     // runTests();
 }, false);
 window.addEventListener("hashchange", function (e) {
@@ -382,23 +367,15 @@ new Hammer(window).on("swipe", function (ev) {
         return;
     }
     switch (ev.direction) {
-    case Hammer.DIRECTION_LEFT:
-        next(ev);
-        break;
-    case Hammer.DIRECTION_RIGHT:
-        prev(ev);
-        break;
+        case Hammer.DIRECTION_LEFT:
+            next(ev);
+            break;
+        case Hammer.DIRECTION_RIGHT:
+            prev(ev);
+            break;
     }
 });
 
-// ReactDOM.render(
-//     <Button title="&laquo;" onClick={prev}/>,
-//     document.getElementById("prev")
-// );
-// ReactDOM.render(
-//     <Button title="&raquo;" onClick={next} />,
-//     document.getElementById("next")
-// );
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")
