@@ -27,6 +27,15 @@ function renderOldDateMonth(props) {
 }
 renderOldDateMonth({});
 
+var kToolbarItems = [
+    ['六輝', 'rokki'],
+    ['干支', 'eto'],
+    ['九星', 'kyusei'],
+    ['直', 'choku'],
+    ['宿', 'shuku'],
+    ['納音', 'nattin'],
+];
+
 var kExplanations = [
     {
         name: "六輝",
@@ -425,7 +434,7 @@ new Hammer(window).on("swipe", function (ev) {
 //     document.getElementById("next")
 // );
 ReactDOM.render(
-    <Toolbar />,
+    <Toolbar data={kToolbarItems}/>,
     document.getElementById("toolbar")
 );
 ReactDOM.render(
