@@ -3,9 +3,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
-import Toolbar from "./Toolbar.jsx";
+import Rekichu from "./Rekichu.jsx";
 import Button from "./Button.jsx";
-import GridBox from "./GridBox.jsx";
 import OldDateMonth from "./OldDateMonth.jsx";
 import Explanations from "./Explanations.jsx";
 import CopyrightBox from "./CopyrightBox.jsx";
@@ -215,12 +214,12 @@ function update() {
         ['納音', newNattin],
     ];
     ReactDOM.render(
-        <Toolbar data={items} />,
+        <Rekichu data={items} type="toolbar" />,
         document.getElementById("toolbar")
     );
     ReactDOM.render(
-        <GridBox data={items} />,
-        document.getElementById("gridbox")
+        <Rekichu data={items} />,
+        document.getElementById("grid")
     );
     ReactDOM.render(
         <Explanations data={kExplanations} marks={items} />,
@@ -338,7 +337,7 @@ function jumpToHash(aHash) {
     if (newBox) {
         common.addClass(newBox, "marked");
     }
-    var tbHeight = document.querySelector(".toolbar").getBoundingClientRect().height;
+    var tbHeight = document.querySelector(".rekichu--toolbar").getBoundingClientRect().height;
     var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
     
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
@@ -384,7 +383,7 @@ window.addEventListener("hashchange", function (e) {
     }
 }, false);
 window.addEventListener("scroll", function (e) {
-    var tb = document.querySelector(".toolbar");
+    var tb = document.querySelector(".rekichu--toolbar");
     var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
     common.removeClass(tb, "visible");
     if (tagsTop < 0) {

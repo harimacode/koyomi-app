@@ -1,4 +1,4 @@
-.toolbar {
+.rekichu--toolbar {
     background-color: #666666;
     position: fixed;
     top: -16.6vw;
@@ -8,11 +8,11 @@
     z-index: 2;
     width: 100%;
 }
-.toolbar.visible {
+.rekichu--toolbar.visible {
     top: 0;
     opacity: 1;
 }
-.toolbar .box {
+.rekichu--toolbar .box {
     padding: 0;
     margin: 0;
     display: block;
@@ -23,20 +23,20 @@
 
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
-    .toolbar {
+    .rekichu--toolbar {
         width: 42em;
         margin-left: calc((100% - 42em) / 2);
         margin-left: -webkit-calc((100% - 42em) / 2);
         margin-right: auto;
     }
-    .toolbar .box {
+    .rekichu--toolbar .box {
         width: 16.66%;
         height: 2em;
     }
 }
 @media (max-width: 768px) {
     /* モバイル用デザイン */
-    .toolbar .toolbar__content {
+    .rekichu--toolbar .rekichu__content {
         white-space: nowrap;
         width: 2em;
         overflow: hidden;
