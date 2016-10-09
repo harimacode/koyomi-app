@@ -337,7 +337,7 @@ function jumpToHash(aHash) {
     if (newBox) {
         common.addClass(newBox, "marked");
     }
-    var tbHeight = document.querySelector(".rekichu--toolbar").getBoundingClientRect().height;
+    var tbHeight = document.querySelector(".rekichu__toolbar").getBoundingClientRect().height;
     var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
     
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();

@@ -8,8 +8,8 @@ export default class Rekichu extends React.Component {
         this.handleScroll = this.handleScroll.bind(this);
     }
     handleScroll(e) {
-        var tb = document.querySelector(".rekichu--toolbar");
-        var gridBottom = document.querySelector(".rekichu--grid").getBoundingClientRect().bottom;
+        var tb = document.querySelector(".rekichu__toolbar");
+        var gridBottom = document.querySelector(".rekichu__grid").getBoundingClientRect().bottom;
         common.removeClass(tb, "rekichu--visible");
         if (gridBottom < 0) {
             common.addClass(tb, "rekichu--visible");
@@ -32,10 +32,10 @@ export default class Rekichu extends React.Component {
         }
         return (
             <div className="rekichu">
-                <div className="rekichu--toolbar">
+                <div className="rekichu__toolbar">
                     {elts}
                 </div>
-                <div className="rekichu--grid">
+                <div className="rekichu__grid">
                     {elts}
                 </div>
             </div>

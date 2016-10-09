@@ -30,7 +30,7 @@
     text-align: right;
 }
 
-.rekichu--toolbar {
+.rekichu__toolbar {
     background-color: #999999;
     position: fixed;
     top: -16.6vw;
@@ -44,7 +44,7 @@
     top: 0;
     opacity: 1;
 }
-.rekichu--toolbar .rekichu__item {
+.rekichu__toolbar .rekichu__item {
     padding: 0;
     margin: 0;
     display: block;
@@ -70,13 +70,13 @@
         bottom: 0.1em;
     }
 
-    .rekichu--toolbar {
+    .rekichu__toolbar {
         width: 42em;
         margin-left: calc((100% - 42em) / 2);
         margin-left: -webkit-calc((100% - 42em) / 2);
         margin-right: auto;
     }
-    .rekichu--toolbar .rekichu__item {
+    .rekichu__toolbar .rekichu__item {
         width: 16.66%;
         height: 2em;
     }
@@ -98,7 +98,7 @@
         bottom: 1vw;
     }
 
-    .rekichu--toolbar .rekichu__content {
+    .rekichu__toolbar .rekichu__content {
         white-space: nowrap;
         width: 2em;
         overflow: hidden;
