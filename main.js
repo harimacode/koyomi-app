@@ -358,9 +358,9 @@ window.addEventListener("load", function (e) {
     
     document.getElementById("today").addEventListener("click", today, false);
 
-    Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
-        aBox.addEventListener("click", function (e) {
-            var hash = common.parseHash(aBox.getAttribute("href"));
+    Array.prototype.forEach.call(document.querySelectorAll("a.rekichu__item"), function (aItem) {
+        aItem.addEventListener("click", function (e) {
+            var hash = common.parseHash(aItem.getAttribute("href"));
             if (hash) {
                 e.preventDefault();
                 jumpToHash(hash);

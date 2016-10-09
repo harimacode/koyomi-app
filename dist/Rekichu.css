@@ -1,38 +1,38 @@
 /* koyomi */
-.box:link {
+.rekichu__item:link {
     text-decoration: none;
 }
-.box:hover {
+.rekichu__item:hover {
     background-color: #cccccc;
 }
 
 /* index */
-.box {
+.rekichu__item {
     box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
     line-height: 1.0;
 }
-a.box:nth-child(2n):hover {
+a.rekichu__item:nth-child(2n):hover {
     background-color:#333333;
 }
-.box {
+.rekichu__item {
     background-color: #666666;
     color: white;
     display: inline-block;
     position: relative;
 }
-.box .title {
+.rekichu__title {
     color: #cccccc;
     text-align: left;
 }
-.box div:last-child {
+.rekichu__content {
     font-weight: bold;
     position: absolute;
     text-align: right;
 }
-.box:nth-child(2n+1) {
+.rekichu__item:nth-child(2n+1) {
     background-color: #999999;
 }
-.box:nth-child(2n+1) .title {
+.rekichu__item:nth-child(2n+1) .rekichu__title {
     color: white;
 }
 
@@ -50,7 +50,7 @@ a.box:nth-child(2n):hover {
     top: 0;
     opacity: 1;
 }
-.rekichu--toolbar .box {
+.rekichu--toolbar .rekichu__item {
     padding: 0;
     margin: 0;
     display: block;
@@ -62,17 +62,17 @@ a.box:nth-child(2n):hover {
 @media (min-width: 769px) {
     /* PC・タブレット用表示 */
     /* index */
-    .box {
+    .rekichu__item {
         font-size: 1.8em;
         margin: 0.3em;
         padding: 0.1em;
         width: 3.2em;
         height: 3.2em;
     }
-    .box .title {
+    .rekichu__title {
         font-size: 0.75em;
     }
-    .box div:last-child {
+    .rekichu__content {
         right: 0.1em;
         bottom: 0.1em;
     }
@@ -83,7 +83,7 @@ a.box:nth-child(2n):hover {
         margin-left: -webkit-calc((100% - 42em) / 2);
         margin-right: auto;
     }
-    .rekichu--toolbar .box {
+    .rekichu--toolbar .rekichu__item {
         width: 16.66%;
         height: 2em;
     }
@@ -91,17 +91,17 @@ a.box:nth-child(2n):hover {
 @media (max-width: 768px) {
     /* モバイル用デザイン */
     /* index */
-    .box {
+    .rekichu__item {
         font-size: 7vw;
         margin: 2vw;
         padding: 1vw;
         width: 24vw;
         height: 24vw;
     }
-    .box .title {
+    .rekichu__title {
         font-size: 5vw;
     }
-    .box div:last-child {
+    .rekichu__content {
         right: 1vw;
         bottom: 1vw;
     }
