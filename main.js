@@ -3,33 +3,16 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
-var Button = require("./Button.jsx");
-var OldDateMonth = require("./OldDateMonth.jsx");
-var Explanations = require("./Explanations.jsx");
-
-function renderOldDateMonth(props) {
-    if (!props.date) {
-        props.date = new Date();
-    }
-    if (!props.subtitle) {
-        props.subtitle = "旧暦 0月0日"; 
-    }
-    return ReactDOM.render(
-        <OldDateMonth type="date"
-                      date={props.date}
-                      subtitle={props.subtitle}
-                      onPrevClick={prev}
-                      onCurrentClick={today}
-                      onNextClick={next} />,
-        document.getElementById("old-date-month")
-    );
-}
-renderOldDateMonth({});
+import Rekichu from "./Rekichu.jsx";
+import Button from "./Button.jsx";
+import OldDateMonth from "./OldDateMonth.jsx";
+import Explanations from "./Explanations.jsx";
+import CopyrightBox from "./CopyrightBox.jsx";
 
 var kExplanations = [
     {
         name: "六輝",
-        description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)", 
+        description: "諸葛孔明が<strong>戦略</strong>として伝え、江戸時代流行し今も人気。(仏滅を空亡としています)",
         items: [
             ["先勝", "せんがち", "戦いは朝から昼までよし。午前中は吉。"],
             ["友引", "ともびき", "勝負のつかない日。朝晩、夕方は吉。"],
@@ -54,6 +37,7 @@ var kExplanations = [
             ["壬", "みずのえ", "“妊”に通じ、陽気を下に姙む意"],
             ["癸", "みずのと", "“揆”に同じく生命のない残物を清算して地ならしを行い、新たな生長を行う待機の状態"],
         ],
+        matcherForItems: (s) => s.charAt(0),
         items2: [
             ["子", "ね", "“孳”で、陽気が色々に発現しようとする動き"],
             ["丑", "うし", "“紐”で、生命エネルギーの様々な結合"],
@@ -68,6 +52,7 @@ var kExplanations = [
             ["戌", "いぬ", "同音“恤”であり、“滅”である。統一退蔵。"],
             ["亥", "い", "“核”で、生命の完全な収蔵含蓄"],
         ],
+        matcherForItems2: (s) => s.charAt(1),
         cite: "(表は <a href='https://ja.wikipedia.org/wiki/%E5%B9%B2%E6%94%AF#.E5.8D.81.E5.B9.B2'>干支 - Wikipedia</a> より引用)",
     },
     {
@@ -181,36 +166,51 @@ var kExplanations = [
 function set(id, value) {
     document.getElementById(id).innerHTML = value;
 }
-function sets(clazz, value) {
-    Array.prototype.forEach.call(document.querySelectorAll("." + clazz), function (e) {
-        e.innerHTML = value;
-    });
-}
 function update() {
     // 月表示の更新
     var month = date.getMonth() + 1;
-    var yearMonth = [date.getFullYear(), month].join("/"); 
+    var yearMonth = [date.getFullYear(), month].join("/");
     document.getElementById("gotoMonth").innerHTML = '<a href="month.html#' + yearMonth + '">&lt; <span class="keyNumber">'+ month +'</span>月</a>';
-    
+
     var month = date.getMonth() + 1; // 月は 0 始まり
     var jd  = oc.juliusDate(date);
     var old = oc.oldCalendar(jd);
-    renderOldDateMonth({
-        date: date,
-        subtitle: '旧暦 ' + old
-    });
+    ReactDOM.render(
+        <OldDateMonth type="date"
+            date={date}
+            subtitle={'旧暦 ' + old}
+            onPrevClick={prev}
+            onCurrentClick={today}
+            onNextClick={next} />,
+        document.getElementById("old-date-month")
+    );
+
     var newRokki = oc.rokki(old);
-    sets('rokki', newRokki);
     var newEto = oc.eto(jd);
-    sets('eto', newEto);
     var newKyusei = oc.kyusei(jd);
-    sets('kyusei', newKyusei);
     var newChoku = oc.choku(jd);
-    sets('choku', newChoku);
     var newShuku = oc.shuku(old);
-    sets('shuku', newShuku);
     var newNattin = oc.nattin(jd);
-    sets('nattin', newNattin);
+    var items = [
+        ['六輝', newRokki],
+        ['干支', newEto],
+        ['九星', newKyusei],
+        ['直', newChoku],
+        ['宿', newShuku],
+        ['納音', newNattin],
+    ];
+    var onClick = function (e, name) {
+        jumpToHash(decodeURIComponent(name));
+    };
+    ReactDOM.render(
+        <Rekichu data={items} onClick={onClick} />,
+        document.getElementById("rekichu")
+    );
+    ReactDOM.render(
+        <Explanations data={kExplanations} marks={items} />,
+        document.getElementById("explanation")
+    );
+
     var tags = [];
     oc.tagsForDate(date).forEach(function (tag) {
         var tagText = tag[1];
@@ -243,30 +243,9 @@ function update() {
         } else if (tag[1].indexOf("天天上") == 0) {
             tagText = tag[1].substr(0, 1) + "一" + tag[1].substr(1);
         }
-        tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>'); 
+        tags.push('<span class="tag ' + tag[0] + '">' + tagText + '</span>');
     });
     set('tags', tags.join(" ･ "));
-    
-    // 今解説に表がある項目について、マーカー表示します。
-    markItems([["六輝", newRokki], // 六輝
-        ["干支", newEto.charAt(0)], ["干支", newEto.charAt(1)], // 十干、十二支
-        ["九星", newKyusei], // 九星
-        ["直", newChoku], ["宿", newShuku], ["納音", newNattin]]); // 直、宿、納音
-}
-
-var marked;
-function markItems(toBeMarked) {
-    if (marked) {
-        marked.forEach(function (item) {
-            common.removeClass(item, "marked");
-        });
-    }
-    marked = [];
-    toBeMarked.forEach(function (item) {
-        var e = document.getElementById(item.join("_"));
-        common.addClass(e, "marked");
-        marked.push(e);
-    });
 }
 
 var date;
@@ -322,7 +301,7 @@ ScrollAnimation.prototype = {
         var distance = this.mTo - this.mFrom;
         var y = this.mFrom + distance * this.easeInOutQuad(t);
         window.scroll(window.pageXOffset, y);
-        
+
         if (t < 1) {
             var that = this;
             setTimeout(function () {
@@ -343,9 +322,9 @@ function jumpToHash(aHash) {
     if (newBox) {
         common.addClass(newBox, "marked");
     }
-    var tbHeight = document.getElementById("toolbar").getBoundingClientRect().height;
+    var tbHeight = document.querySelector(".rekichu__toolbar").getBoundingClientRect().height;
     var newY = newBox.getBoundingClientRect().top + window.pageYOffset;
-    
+
     new ScrollAnimation(0.25, newY - tbHeight * 1.25).start();
 }
 function gotoTop(e) {
@@ -354,26 +333,16 @@ function gotoTop(e) {
 }
 window.addEventListener("load", function (e) {
     common.removeClass(document.getElementById("koyomi"), "month");
-    
+
     var hash = common.parseHash(document.location.href);
     if (hash) {
         gotoDate(hash);
     } else {
         today();
     }
-    
+
     document.getElementById("today").addEventListener("click", today, false);
 
-    Array.prototype.forEach.call(document.querySelectorAll("a.box"), function (aBox) {
-        aBox.addEventListener("click", function (e) {
-            var hash = common.parseHash(aBox.getAttribute("href"));
-            if (hash) {
-                e.preventDefault();
-                jumpToHash(hash);
-            }
-        }, false);
-    });
-    
     // runTests();
 }, false);
 window.addEventListener("hashchange", function (e) {
@@ -388,14 +357,6 @@ window.addEventListener("hashchange", function (e) {
         }
     }
 }, false);
-window.addEventListener("scroll", function (e) {
-    var tb = document.getElementById("toolbar");
-    var tagsTop = document.getElementById("tags").getBoundingClientRect().top;
-    common.removeClass(tb, "visible");
-    if (tagsTop < 0) {
-        common.addClass(tb, "visible");
-    }
-}, false);
 
 new Hammer(window).on("swipe", function (ev) {
     if (ev.distance < 75) {
@@ -406,28 +367,20 @@ new Hammer(window).on("swipe", function (ev) {
         return;
     }
     switch (ev.direction) {
-    case Hammer.DIRECTION_LEFT:
-        next(ev);
-        break;
-    case Hammer.DIRECTION_RIGHT:
-        prev(ev);
-        break;
+        case Hammer.DIRECTION_LEFT:
+            next(ev);
+            break;
+        case Hammer.DIRECTION_RIGHT:
+            prev(ev);
+            break;
     }
 });
 
-// ReactDOM.render(
-//     <Button title="&laquo;" onClick={prev}/>,
-//     document.getElementById("prev")
-// );
-// ReactDOM.render(
-//     <Button title="&raquo;" onClick={next} />,
-//     document.getElementById("next")
-// );
-ReactDOM.render(
-    <Explanations data={kExplanations} />,
-    document.getElementById("explanation")
-);
 ReactDOM.render(
     <Button title="△" onClick={gotoTop} />,
     document.getElementById("top-container")
+);
+ReactDOM.render(
+    <CopyrightBox />,
+    document.getElementById("copyright-box")
 );

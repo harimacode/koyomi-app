@@ -1,17 +1,17 @@
-var React = require("react");
+import React from "react";
 
-module.exports = React.createClass({
-    handleClick: function (e) {
+export default class Button extends React.Component {
+    handleClick(e) {
         this.props.onClick(e);
-    },
-    render: function () {
+    }
+    render() {
         var cls = this.props.className + " button";
         return (
             <a href="#"
                className={cls}
-               onClick={this.handleClick}>
+               onClick={this.handleClick.bind(this)}>
                 {this.props.title}
             </a>
         );
     }
-});
+}

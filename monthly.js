@@ -1,8 +1,8 @@
 var Hammer = require("./hammer.min.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
-var Button = require("./Button.jsx");
-var OldDateMonth = require("./OldDateMonth.jsx");
+import OldDateMonth from "./OldDateMonth.jsx";
+import CopyrightBox from "./CopyrightBox.jsx";
 var oc = require("./harima-koyomi/old_calendar.js");
 var common = require("./common.js");
 
@@ -191,6 +191,11 @@ function update() {
     var tagger = (newMode == "") ? new DefaultTagger() : new ModeTagger(newMode);
     document.getElementById("monthlyCalendar").innerHTML = month.render(tagger);
 }
+
+ReactDOM.render(
+    <CopyrightBox />,
+    document.getElementById("copyright-box")
+);
 
 var month;
 function gotoMonthOfHash() {
