@@ -11,8 +11,9 @@ export default class ExplanationTable extends React.Component {
                 mark = matcher(item[1]);
             }
         }
-        var rows = this.props.items.map(function (aItem) {
-            var title = aItem[0];
+        var rows = [];
+        for (var item of this.props.items) {
+            var title = item[0];
             if (!Array.isArray(title)) {
                 title = [title, title];
             }
@@ -20,8 +21,11 @@ export default class ExplanationTable extends React.Component {
             if (title[0] === mark) {
                 cls += 'marked';
             }
-            var reading = aItem[1];
-            var desc = aItem[2];
+            var reading = item[1];
+            var descs = item[2];
+            if (!Array.isArray(descs)) {
+                descs = [descs];
+            }
             var id = name + '_' + title[0];
             var titleHtml = (
                 <span className={cls} id={id}>{title[1]}</span>
@@ -34,13 +38,22 @@ export default class ExplanationTable extends React.Component {
                     </div>
                 );
             }
-            return (
-                <tr key={id}>
-                    <th className="explanation-table__title-cell">{titleHtml}</th>
+            var count = descs.length;
+            var desc = descs.shift();
+            rows.push(
+                <tr key={id+count}>
+                    <th className="explanation-table__title-cell" rowSpan={count}>{titleHtml}</th>
                     <td className="explanation-table__text-cell">{desc}</td>
                 </tr>
             );
-        });
+            for (var desc of descs) {
+                rows.push(
+                    <tr key={id+descs.length}>
+                        <td className="explanation-table__text-cell">{desc}</td>
+                    </tr>
+                );
+            }
+        }
         return (
             <table className="explanation-table">
                 <tbody>
