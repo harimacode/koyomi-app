@@ -182,9 +182,10 @@ function renderOldDateMonth(props) {
 renderOldDateMonth({});
 
 function update() {
+    var date = new Date(month.year, month.month);
     renderOldDateMonth({
-        date: new Date(month.year, month.month),
-        subtitle: oc.heiseiYear(month.year) + " " + oc.jaMonth(month.month)
+        date: date,
+        subtitle: oc.jaYear(date) + " " + oc.jaMonth(month.month)
     });
     
     var newMode = document.getElementById("mode").value;
