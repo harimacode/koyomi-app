@@ -25,7 +25,8 @@ export default class Rekichu extends React.Component {
         var elts = [];
         for (var item of this.props.data) {
             elts.push(
-                <RekichuItem name={item[0]}
+                <RekichuItem key={item[0]}
+                             name={item[0]}
                              value={item[1]}
                              onClick={this.props.onClick} />
             );
