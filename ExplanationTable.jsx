@@ -25,6 +25,10 @@ export default class ExplanationTable extends React.Component {
             var descs = item[2];
             if (!Array.isArray(descs)) {
                 descs = [descs];
+            } else {
+                // 下で shift() することで、元のデータを破壊してしまっていた。
+                // ここでコピーすることで、修正。
+                descs = [...descs];
             }
             var id = name + '_' + title[0];
             var titleHtml = (
